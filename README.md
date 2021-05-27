@@ -1,16 +1,16 @@
-# Micro Display
+# Null Hub
 
-a micro display using a raspberry pi zero and mini PiTFT hat. testing out pulling this to the pi so maybe i can have them do automatic pulls...
+this is a base setup for my home automation and similar projects that i'm running on raspberry pis. the folder setup is to help me keep stuff organized and also because the folders have pretty icons in visual studio code.
 
-### Hardware 
+i'm going to try to get the basic features i want for the different pis. and i'm probably going to see about forking this repo for the different projects that will use this base.
 
- * all in one package for hardware: [Mini Color PiTFT Ad Blocking Pi-Hole Kit - No Soldering!](https://www.adafruit.com/product/4475)
- * raspberry pi zero wh: [Raspberry Pi Zero WH (Zero W with Headers)](https://www.adafruit.com/product/3708)
- * raspberry pi zero wh: [Adafruit Mini PiTFT - 135x240 Color TFT Add-on for Raspberry Pi](https://www.adafruit.com/product/4393)
+most of this project is currently private but my goal is to make as much of it available as open source and try to include instructions for setting up the different raspberry pi devices.
+
+i apologize for anybody looking for something useful now... i'll probably focus mostly on some of the smaller device projects before i'm ready to make key features like the hub available. but if any of this code helps you with something you're working on it that's awesome.
 
 ## Setup
 
-first run the raspberry pi config wizard and get everything setup so you can ssh into the pi and it's connected to your network. also make sure to enable the spi interface
+first run the raspberry pi config wizard and get everything setup so you can ssh into the pi and it's connected to your network. may also want to enable the serial, gpio, and spi interfaces depending on the project.
 
 ```bash
 sudo raspi-config
@@ -24,18 +24,6 @@ this is what i've used to setup a few raspberry pi zeros... slightly modified to
 
 ```bash
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install apache2 -y && sudo a2enmod rewrite && sudo service apache2 restart && sudo apt-get install php -y && sudo apt-get install libapache2-mod-php -y && sudo apt-get install mariadb-server -y && sudo apt-get install php-mysql -y && sudo service apache2 restart && sudo apt-get install python -y && sudo apt-get install python-serial -y && sudo apt-get install python-serial -y && sudo ln -s /var/www/html www && sudo chown -R pi:pi /var/www/html && sudo chmod 777 /var/www/html && sudo apt-get install git -y && sudo apt-get install python-urllib3 -y
-```
-
-#### complete mini pitft micro display setup command of epic doom
-
-```bash
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install apache2 -y && sudo a2enmod rewrite && sudo service apache2 restart && sudo apt-get install php -y && sudo apt-get install libapache2-mod-php -y && sudo apt-get install mariadb-server -y && sudo apt-get install php-mysql -y && sudo service apache2 restart && sudo apt-get install python -y && sudo apt-get install python-serial -y && sudo apt-get install python-serial -y && sudo ln -s /var/www/html www && sudo chown -R pi:pi /var/www/html && sudo chmod 777 /var/www/html && sudo apt-get install git -y && sudo apt-get install python-urllib3 -y && sudo apt-get install python3-pip -y && sudo pip3 install adafruit-circuitpython-rgb-display && sudo pip3 install --upgrade --force-reinstall spidev && sudo apt-get install ttf-dejavu -y && sudo apt-get install python3-pil -y && sudo apt-get install python3-numpy -y
-```
-
-#### complete eInk micro display setup command of epic doom
-
-```bash
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install apache2 -y && sudo a2enmod rewrite && sudo service apache2 restart && sudo apt-get install php -y && sudo apt-get install libapache2-mod-php -y && sudo apt-get install mariadb-server -y && sudo apt-get install php-mysql -y && sudo service apache2 restart && sudo apt-get install python -y && sudo apt-get install python-serial -y && sudo apt-get install python-serial -y && sudo ln -s /var/www/html www && sudo chown -R pi:pi /var/www/html && sudo chmod 777 /var/www/html && sudo apt-get install git -y && sudo apt-get install python-urllib3 -y && curl https://get.pimoroni.com/inkyphat | bash
 ```
 
 ### Individual commands
@@ -120,7 +108,7 @@ sudo apt-get install python-urllib3 -y
 sudo mysql -u root
 ```
 
-```sql
+```mysql
 [MariaDB] use mysql;
 [MariaDB] update user set plugin='' where User='root';
 [MariaDB] flush privileges;
@@ -133,53 +121,6 @@ This needs to be followed by the following command:
 mysql_secure_installation
 ```
 
-### Setup Mini PiTFT all in one maga command of doom
-
-this is going to be very slow and scary. just let it do its thing. the adafruit-circuitpython-rgb-dislay is the scariest and just kinda hangs. but it's ok. it's installing
-
-```bash
-sudo apt-get install python3-pip -y && sudo pip3 install adafruit-circuitpython-rgb-display && sudo pip3 install --upgrade --force-reinstall spidev && sudo apt-get install ttf-dejavu -y && sudo apt-get install python3-pil -y && sudo apt-get install python3-numpy -y
-```
-
-### Setup Mini PiTFT individual steps.
-
-the adafruit-circuitpython-rgb-dislay is the scariest and just kinda hangs. but it's ok. it's installing. also make sure to turn on the spi interface in the raspi-config
-
-```bash
-sudo apt-get install python3-pip -y
-```
-
-```bash
-sudo pip3 install adafruit-circuitpython-rgb-display
-```
-
-```bash
-sudo pip3 install --upgrade --force-reinstall spidev 
-```
-
-```bash
-sudo apt-get install ttf-dejavu -y
-```
-
-```bash
-sudo apt-get install python3-pil -y
-```
-
-```bash
-sudo apt-get install python3-numpy -y
-```
-
-see [adafruit](https://learn.adafruit.com/adafruit-mini-pitft-135x240-color-tft-add-on-for-raspberry-pi/python-setup) for examples and documentation of mini pitft
-
-
-### Setup for eInk display
-
-```bash
-curl https://get.pimoroni.com/inkyphat | bash
-```
-
-see [inky-phat](https://github.com/pimoroni/inky-phat) for examples and documentation of inky phat
-
 ## Cron Jobs
 
 ```bash
@@ -188,8 +129,8 @@ sudo crontab -e
 
 ```Apache config
 1 * * * * sh /var/www/html/gitpull.sh
-2 * * * * sh /var/www/html/plugins/NullSensors/gitpull.sh
-3 * * * * sh /var/www/html/plugins/NullWeather/gitpull.sh
+#2 * * * * sh /var/www/html/plugins/NullSensors/gitpull.sh
+#3 * * * * sh /var/www/html/plugins/NullWeather/gitpull.sh
 #4 * * * * sh /var/www/html/extensions/MealPlanner/gitpull.sh
 5 * * * * wget -O/dev/null -q http://localhost/helpers/validate_models.php
 
@@ -201,34 +142,14 @@ sudo crontab -e
 9 0 * * 1 wget -O/dev/null -q http://localhost/services/every_week.php
 ```
 
-### mini pitft cron job
-
-```bash
-crontab -e
-```
-
-```Apache config
-@reboot sudo sh /var/www/html/python/pitft/screen.sh
-```
-
-### eInk python cron job
-
-```bash
-crontab -e
-```
-
-```Apache config
-* * * * * sh /var/www/html/python/eInk/refresh.sh
-```
-
 ## Plugins
 
-* required for weather data: [NullWeather](https://github.com/sophiathekitty/NullWeather)
-* required for room temperature data: [NullSensors](https://github.com/sophiathekitty/NullSensors)
+* [NullWeather](https://github.com/sophiathekitty/NullWeather)
+* [NullWeather](https://github.com/sophiathekitty/NullSensors)
 
 ## Extensions
 
-* required for eInk display: [MealPlanner](https://github.com/sophiathekitty/MealPlanner)
+* [MealPlanner](https://github.com/sophiathekitty/MealPlanner)
 
 ## Tools
 
