@@ -1,6 +1,6 @@
 {
-    "name":"null micro display",
-    "short_name":"micro display",
+    "name":"Null Home Automation Hub",
+    "short_name":"Null Hub",
     "icons":[
         {
             "src":"/images/favicon/android-chrome-192x192.png",
