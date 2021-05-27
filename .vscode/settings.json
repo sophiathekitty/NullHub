@@ -1,0 +1,12 @@
+{
+    "vsicons.associations.folders": [
+        { "icon": "python", "extensions": ["python"], "format": "svg" },
+        { "icon": "public", "extensions": ["user"], "format": "svg" },
+        { "icon": "sso", "extensions": ["login","logout"], "format": "svg" },
+        { "icon": "server", "extensions": ["info","reboot","shutdown","servers"], "format": "svg" },
+        { "icon": "log", "extensions": ["details"], "format": "svg" },
+        { "icon": "notification", "extensions": ["tasks"], "format": "svg" },
+        { "icon": "theme", "extensions": ["colors","pallet"], "format": "svg" },
+        { "icon": "story", "extensions": ["sketchbook"], "format": "svg" }
+    ]
+}

@@ -1,0 +1,9 @@
+@charset "utf-8";
+@font-face{
+  font-family: 'Rimouski';
+  src: url(../fonts/rimouski\ sb.ttf);
+}
+@font-face{
+  font-family: 'ViceCitySans';
+  src: url(../fonts/ViceCitySans.otf);
+}

@@ -1,0 +1,3 @@
+class Weather extends Model {
+
+}
