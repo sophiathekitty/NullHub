@@ -2,9 +2,14 @@
 require_once("../includes/main.php");
 //$servers = new Servers();
 //$servers->ValidateTable();
-SyncRooms();
+//SyncRooms();
 //RemoteTasks::PullRemoteTasks();
 //print_r(Tasks::LoadDueTasks());
-echo clsDB::$db_g->get_err();
-echo clsDB::$db_g->last_sql;
+//echo clsDB::$db_g->get_err();
+//echo clsDB::$db_g->last_sql;
+echo LocalIp()."\n";
+echo LocalMac()."\n";
+//print_r(nMapHosts());
+//nMapCrawler::CheckHosts();
+print_r(Servers::GetHub());
 ?></pre>
