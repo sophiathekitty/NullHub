@@ -19,8 +19,8 @@
             "sizes":"32x32",
             "type":"image/png"
         }],
-    "theme_color":"#32ee61",
-    "background_color":"#063b14",
+    "theme_color":"#98ed8a#",
+    "background_color":"#2f4f4f",
     "display": "standalone",
     "scope":"/"
 }
