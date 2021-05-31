@@ -31,6 +31,9 @@ function SecondsToHours($seconds){
 function SecondsToDays($seconds){
     return ($seconds/60/60/24);
 }
+function SecondsToWeeks($seconds){
+    return ($seconds/60/60/24/7);
+}
 function MinutesToSeconds($minutes){
     return $minutes*60;
 }
@@ -40,12 +43,18 @@ function HoursToSeconds($hours){
 function DaysToSeconds($days){
     return $days*60*60*24;
 }
+function WeeksToSeconds($days){
+    return $days*60*60*24*7;
+}
 
 function MinutesToHours($minutes){
     return SecondsToHours(MinutesToSeconds($minutes));
 }
 function MinutesToDays($minutes){
     return SecondsToDays(MinutesToSeconds($minutes));
+}
+function MinutesToWeeks($minutes){
+    return SecondsToWeeks(MinutesToSeconds($minutes));
 }
 
 function HoursToMinutes($hours){
@@ -54,12 +63,28 @@ function HoursToMinutes($hours){
 function HoursToDays($hours){
     return SecondsToDays(HoursToSeconds($hours));
 }
+function HoursToWeeks($hours){
+    return SecondsToWeeks(HoursToSeconds($hours));
+}
 
 function DaysToMinutes($days){
     return SecondsToMinutes(DaysToSeconds($days));
 }
 function DaysToHours($days){
     return SecondsToHours(DaysToSeconds($days));
+}
+function DaysToWeeks($days){
+    return SecondsToWeeks(DaysToSeconds($days));
+}
+
+function WeeksToDays($weeks){
+    return SecondsToDays(WeeksToSeconds($weeks));
+}
+function WeeksToHours($weeks){
+    return SecondsToHours(WeeksToSeconds($weeks));
+}
+function WeeksToMinutes($weeks){
+    return SecondsToMinutes(WeeksToSeconds($weeks));
 }
 
 ?>

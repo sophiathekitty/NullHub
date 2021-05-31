@@ -1,7 +1,16 @@
 <?php
 class nMapCrawler {
+    private static function DoCrawlNetwork(){
+        switch(Settings::LoadSettingsVar('do_crawl_network','auto')){
+            case "yes":
+                return true;
+            case "no":
+                return false;
+        }
+        return Servers::IsHub();
+    }
     public static function FindHosts(){
-        if(!Servers::IsHub()) return null;
+        if(!nMapCrawler::DoCrawlNetwork()) return null;
         $ip = LocalIp();
         list($ip_a, $ip_b, $ip_c) = explode(".",$ip);
         $ip_root = "$ip_a.$ip_b.$ip_c.";
@@ -24,7 +33,7 @@ class nMapCrawler {
         return $hosts;
     }
     public static function CheckHosts(){
-        if(!Servers::IsHub()) return nMapCrawler::CheckHub();
+        if(!nMapCrawler::DoCrawlNetwork()) return nMapCrawler::CheckHub();
         $host = nMap::LoadNext();
         if($host['type'] == "pi"){
             $host = nMapCrawler::CheckPi($host);
@@ -45,7 +54,7 @@ class nMapCrawler {
         $host = nMapCrawler::CheckPi($host);
         if(defined('WeMoLightsPlugin')){
             // if the wemo lights plugin
-            // $host = WeMoModule::CheckWeMo($host); // speculative function call.... 
+            $host = WeMoSync::CheckWeMoServer($host); // speculative function call.... 
         }
         return $host;
     }

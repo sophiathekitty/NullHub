@@ -104,4 +104,9 @@ function FindPluginsName($path){
 }
 //echo "0.8\n";
 
+function LoadJsonArray($url){
+    $info = file_get_contents($url);
+    return json_decode($info,true);
+}
+
 ?>

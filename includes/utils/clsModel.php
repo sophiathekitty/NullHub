@@ -12,10 +12,13 @@ and it should be able to lint nicely... so probably do everything as static func
 class clsModel {
     public static $models = [];
     public static function ValidateTables(){
-        echo "Validate Model Tables --- \n";
+        echo "Validate Model Tables --- ".count(clsModel::$models)." \n";
+        $i = 0;
         foreach(clsModel::$models as $model){
-            echo "Model - ".$model->table_name." - \n";
+            $i++;
+            echo "$i Model - ".$model->table_name." - \n";
             $model->ValidateTable();
+            echo " - validated - \n";
         }
     }
     public function ValidateTable(){

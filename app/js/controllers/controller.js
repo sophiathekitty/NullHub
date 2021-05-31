@@ -18,7 +18,7 @@ class Controller {
         this.listenForEvent("change",selector,child_selector,callBack);
     }
     listenForEvent(event, selector, callBack){
-        $(selector).on(event,child_selector,callBack);
+        $(selector).on(event,null,callBack);
     }
     listenForEvent(event, selector, child_selector, callBack){
         $(selector).on(event,child_selector,callBack);
