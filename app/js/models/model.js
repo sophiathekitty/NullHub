@@ -3,12 +3,13 @@ class Model {
     static server_online = true;
     static server_errors = 0;
     constructor(name,get_url,save_url,cache_time){
+        this.prefix = this.prefix;
         this.name = name;
         this.get_url = get_url;
         this.save_url = save_url;
         this.pull_delay = cache_time;
         this.debug = false;
-        //this.pulled = new Date(Model.storage.getItem("model_"+this.name+"_date"));
+        //this.pulled = new Date(Model.storage.getItem(this.prefix+this.name+"_date"));
         if(this.debug){
             console.log("model created");
         }
@@ -34,16 +35,16 @@ class Model {
             this.pullData(callBack);
         }
         if(Model.storage.getItem(this.name+"_changed") === null)
-            callBack(JSON.parse(Model.storage.getItem("model_"+this.name)));
+            callBack(JSON.parse(Model.storage.getItem(this.prefix+this.name)));
         else
-            callBack(JSON.parse(Model.storage.getItem("model_"+this.name+"_changed")));
+            callBack(JSON.parse(Model.storage.getItem(this.prefix+this.name+"_changed")));
     }
     pullData(callBack){
         $.get(this.get_url).done(json=>{
             this.pulled = new Date();
             if(this.cache_time > 0){
-                Model.storage.setItem("model_"+this.name, JSON.stringify(json));
-                //Model.storage.setItem("model_"+this.name+"_date", this.pulled.toString());    
+                Model.storage.setItem(this.prefix+this.name, JSON.stringify(json));
+                //Model.storage.setItem(this.prefix+this.name+"_date", this.pulled.toString());    
             }
             Model.server_errors--;
             if(Model.server_errors < 0) Model.server_errors = 0;
@@ -53,14 +54,14 @@ class Model {
                 console.error(e);
             }
             Model.server_errors++;
-            callBack(JSON.parse(Model.storage.getItem("model_"+this.name)));
+            callBack(JSON.parse(Model.storage.getItem(this.prefix+this.name)));
         });
     }
     setData(data){
         Model.storage.setItem(this.name+"_changed",data);
     }
     pushData(callBack,errorCallback,failCallback){
-        var myData = JSON.parse(Model.storage.getItem("model_"+this.name+"_changed"));
+        var myData = JSON.parse(Model.storage.getItem(this.prefix+this.name+"_changed"));
         if(this.debug){
             console.log("module push");
             console.log(myData);

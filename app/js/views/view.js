@@ -1,7 +1,13 @@
 class View {
-    constructor(model,template){
+    constructor(model,template = null, item_template=null){
         this.model = model;
         this.template = template;
+        this.item_template = item_template;
+        /*
+        if(this.model instanceof Collection){
+            console.log("view's model is collection");
+        }
+        */
     }
     display(){
         //throw "You need to extend display function to display view"
@@ -23,6 +29,12 @@ class View {
         });
     }
     build(){
-        throw "You need to extend display function to display view"
+        //throw "You need to extend display function to display view"
+        this.model.getData(data=>{
+            console.log(data);
+            if(this.model instanceof Collection){
+                // build collection list view
+            }    
+        });
     }
 }

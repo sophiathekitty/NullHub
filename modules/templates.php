@@ -2,11 +2,21 @@
 class Templates {
     public static function FindTemplates(){
         global $root_path;
-        return Templates::CrawlFolder($root_path."templates/",[]);
+        $templates = Templates::CrawlFolder($root_path."templates/",[]);
+        $plugins = FindPlugins($root_path."plugins/");
+        foreach($plugins as $plugin){
+            $templates = Templates::CrawlFolder($plugin."templates/",$templates);
+        }
+        return $templates;
     }
     public static function SectionTemplates(){
         global $root_path;
-        return Templates::CrawlFolder($root_path."templates/sections/",[]);
+        $templates = Templates::CrawlFolder($root_path."templates/sections/",[]);
+        $plugins = FindPlugins($root_path."plugins/");
+        foreach($plugins as $plugin){
+            $templates = Templates::CrawlFolder($plugin."templates/sections/",$templates);
+        }
+        return $templates;
     }
     public static function HeaderTemplates(){
         global $root_path;
