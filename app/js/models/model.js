@@ -3,28 +3,30 @@ class Model {
     static server_online = true;
     static server_errors = 0;
     constructor(name,get_url,save_url,cache_time){
-        this.prefix = this.prefix;
+        this.prefix = "model_";
         this.name = name;
         this.get_url = get_url;
         this.save_url = save_url;
         this.pull_delay = cache_time;
-        this.debug = false;
-        //this.pulled = new Date(Model.storage.getItem(this.prefix+this.name+"_date"));
+        this.debug = true;
+        
+        this.pulled = new Date(Model.storage.getItem(this.prefix+this.name+"_pulled"));
         if(this.debug){
-            console.log("model created");
+            console.log("model created",this.prefix+this.name);
         }
         try{
             this.pullData(data=>{
                 if(this.debug){
-                    console.log(data);
+                    console.log("constructor pull data: ",data);
                 }
             })    
         } catch(err) {
             console.error(err);
         }
     }
-    getData(callBack){
+    getData(callBack,only_return_once = false){
         var date = new Date();
+        var returns = 0;
         if( Model.server_online &&
             (
                 this.pulled == null || 
@@ -32,20 +34,27 @@ class Model {
                 date.getTime() > this.pulled.getTime() + this.pull_delay
             )
         ){
+            console.log(this.prefix+this.name,"pull live data");
             this.pullData(callBack);
+            returns++;
         }
-        if(Model.storage.getItem(this.name+"_changed") === null)
+        console.log("get data... last pulled: ",this.pulled);
+        if(returns > 0 && only_return_once) return;
+        console.log(this.prefix+this.name,"use cached data");
+        if(Model.storage.getItem(this.prefix+this.name) === null) return;
+        if(Model.storage.getItem(this.prefix+this.name+"_changed") === null){
+            //console.log(this.prefix+this.name,"get basic item",Model.storage.getItem(this.prefix+this.name));
             callBack(JSON.parse(Model.storage.getItem(this.prefix+this.name)));
-        else
+        } else {
+            //console.log(this.prefix+this.name,"get changed item",Model.storage.getItem(this.prefix+this.name+"_changed"));
             callBack(JSON.parse(Model.storage.getItem(this.prefix+this.name+"_changed")));
+        }
     }
     pullData(callBack){
         $.get(this.get_url).done(json=>{
             this.pulled = new Date();
-            if(this.cache_time > 0){
-                Model.storage.setItem(this.prefix+this.name, JSON.stringify(json));
-                //Model.storage.setItem(this.prefix+this.name+"_date", this.pulled.toString());    
-            }
+            Model.storage.setItem(this.prefix+this.name, JSON.stringify(json));
+            Model.storage.setItem(this.prefix+this.name+"_pulled",this.pulled);
             Model.server_errors--;
             if(Model.server_errors < 0) Model.server_errors = 0;
             callBack(json);
@@ -105,7 +114,7 @@ class Model {
 
 class Collection extends Model {
     constructor(collection_name,item_name,get_url,save_url,id_name = "id"){
-        super(collection_name, get_url, save_url);
+        super(collection_name, get_url, save_url,1000*60*5);
         this.item_name = item_name;
         this.id_name = id_name;
     }
