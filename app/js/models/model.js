@@ -14,14 +14,12 @@ class Model {
         if(this.debug){
             console.log("model created",this.prefix+this.name);
         }
-        try{
+        if(!(Model.storage.getItem(this.prefix+this.name) === null)){
             this.pullData(data=>{
                 if(this.debug){
-                    console.log("constructor pull data: ",data);
+                    //console.log("constructor pull data: ",data);
                 }
-            })    
-        } catch(err) {
-            console.error(err);
+            });    
         }
     }
     getData(callBack,only_return_once = false){

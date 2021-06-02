@@ -8,8 +8,10 @@ if($min == "0" || $min == "5" || (int)$min == 0 || (int)$min == 5){
     $plugins = FindPlugins($root_path."plugins/");
     define('main_already_included',true);
     foreach($plugins as $plugin){
-        if(is_file($plugin."services/every_five_minute.php")){
-            require_once($plugin."services/every_five_minute.php");
+        echo "plugin: $plugin\n";
+        if(is_file($plugin."services/every_five_minutes.php")){
+            echo "plugin: $plugin has ever five minutes\n";
+            require_once($plugin."services/every_five_minutes.php");
         }
     }
 }

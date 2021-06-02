@@ -3,8 +3,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>null hub</title>
 
-    <link href="css/fonts.css" rel="stylesheet" type="text/css">
     <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="/css/plugins.css.php" rel="stylesheet" type="text/css">
     <script src="js/jquery-1.12.1.min.js"></script>
     <script src="js/models/model.js"></script>
     <script src="js/views/view.js"></script>
@@ -17,11 +17,12 @@
 </head>
 <body>
     <header>
-        <div id="user_stamp">
+        <div id="user_stamp" user_id="0">
             <div class="user">
                 <span var="name">Guest</span>
             </div>
             <nav class="login">
+                <a href="#logout">logout</a>
                 <a href="#login">login</a>
                 <a href="#signup">signup</a>
             </nav>

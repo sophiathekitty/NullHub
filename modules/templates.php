@@ -43,10 +43,16 @@ class Templates {
                 $css_file = substr($file,0,strlen($file)-4)."css";
                 $template = LoadJsonArray("http://".LocalIp().$local_path.$json_file);
                 $template['template'] = $url;
-                if(is_file($path.$css_file)) $templates['css'] = "http://".LocalIp().$local_path.$css_file;
+                $template['template_name'] = substr($file,0,strlen($file)-5);
+                //if(is_file($path.$css_file)) $templates['css'] = "http://".LocalIp().$local_path.$css_file;
                 if(isset($template['api'])) $template['api'] = "http://".LocalIp().$template['api'];
                 if(isset($template['item_template'])) $template['item_template'] = "http://".LocalIp().$template['item_template'];
-                
+                if(isset($template['models'])){
+                    for($i = 0; $i < count($template['models']); $i++){
+                        if(isset($template['models'][$i]['api'])) $template['models'][$i]['api'] = "http://".LocalIp().$template['models'][$i]['api'];
+                        if(isset($template['models'][$i]['item_template'])) $template['models'][$i]['item_template'] = "http://".LocalIp().$template['models'][$i]['item_template'];
+                    }
+                }
                 $templates[] = $template;
                 //echo "included\n";
             } elseif(is_dir($path.$file) && $file != ".." && $file != "."){

@@ -1,3 +1,18 @@
+@import url(fonts.css);
 body {
     background-color: darkslategray;
+    font-family: 'Rimouski', Arial, Helvetica, sans-serif;
+}
+a[href="#login"],
+a[href="#signup"],
+div[user_id="0"] a[href="#logout"] {
+    display: none;
+}
+div[user_id="0"] a[href="#login"],
+div[user_id="0"] a[href="#signup"],
+a[href="#logout"] {
+    display: inline-block;
+}
+h1 {
+    font-family:  Arial, Helvetica, sans-serif;
 }
