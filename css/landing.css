@@ -12,6 +12,12 @@ a:hover {
     color: whitesmoke;
     text-decoration: underline;
 }
+nav a:hover {
+    color: #98ed8a;
+    text-decoration-color: darkorange;
+    text-decoration-thickness: 0.1em;
+    text-underline-offset: 0.2em;
+}
 header {
     display: flex;
     flex-direction: column;
@@ -33,6 +39,14 @@ header h1 {
 footer {
     font-size: 0.75em;
 }
+footer nav a:hover {
+    color: #ff3bff;
+    text-decoration-color: #98ed8a;
+}
+footer nav a:hover:before,
+footer nav a:hover:after{
+    color: #98ed8a;
+}
 nav {
     display: flex;
     flex-direction: row;
@@ -43,6 +57,30 @@ nav a {
     margin: 0.5em;
     padding: 0.2em;
 }
+nav a::before,
+nav a::after{
+    display: inline-block;
+    font-size: 0.5em;
+    margin: 0.5em;
+    opacity: 0.5;
+    color: darkorange;
+    transform: translateY(-0.2em);
+}
+nav a:hover:before,
+nav a:hover:after{
+    opacity: 1;
+}
+nav a::before{
+    content: "~{";
+}
+nav a::after{
+    content: "}~";
+}
+.null {
+    white-space: nowrap;
+    color: #98ed8a;
+}
+
 b.null {
     font-weight: normal;
 }
@@ -61,19 +99,19 @@ b.null {
 }
 @media( min-width:600px){
     header {
-        padding: 1vw;
+        padding: 2vw;
     }
     section {
         font-size: 1.25em;
-        column-count: 2;
+        columns: 250px;
         column-gap: 3em;
-        max-width: 710px;
         margin-top: 5vw;
         margin-bottom: 5vw;
         margin-left: auto;
         margin-right: auto;
         padding-left: 3em;
         padding-right: 3em;
+        max-width: 100vh;
     }
     section h1 {
         column-span: all;
@@ -104,5 +142,15 @@ b.null {
         margin-top: 0.1em;
         margin-right: 0.3em;
         margin-bottom: 0.2em;
+    }
+    header .null::before{
+        width: 2em;
+        height: 2em;
+        margin-top: -0.4em;
+        margin-left: -0.4em;
+        margin-right: 0.15em;
+    }
+    footer {
+        font-size: 1em;
     }
 }
