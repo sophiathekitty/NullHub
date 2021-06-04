@@ -76,22 +76,28 @@ class View {
     }
     populate(selector,itm){
         Object.keys(itm).forEach(key=>{
-            //console.log(key,room[key]);
-            if($(selector)[0].hasAttribute(key)){
-                $(selector).attr(key,itm[key]);
-            }
-            if($(selector+" [var="+key+"]").length > 0){
-                if($(selector+" [var="+key+"]")[0].hasAttribute(key)){
-                    $(selector+" [var="+key+"]").attr(key,itm[key]);
+            if(key != "hour"){
+                //console.log(key,room[key]);
+                var val = itm[key];
+                if(val instanceof Array){
+                    val = val[0];
                 }
-                if($(selector+" [var="+key+"]")[0].hasAttribute("pallet_value")){
-                    $(selector+" [var="+key+"]").attr("pallet_value",Math.round(itm[key]));
-                }            
-                if($(selector+" [var="+key+"]").hasClass('bool') || $(selector+" [var="+key+"]")[0].hasAttribute("val")){
-                    $(selector+" [var="+key+"]").attr("val",itm[key]);
-                } else {
-                    $(selector+" [var="+key+"]").html(itm[key]);
-                }    
+                if($(selector)[0].hasAttribute(key)){
+                    $(selector).attr(key,val);
+                }
+                if($(selector+" [var="+key+"]").length > 0){
+                    if($(selector+" [var="+key+"]")[0].hasAttribute(key)){
+                        $(selector+" [var="+key+"]").attr(key,val);
+                    }
+                    if($(selector+" [var="+key+"]")[0].hasAttribute("pallet_value")){
+                        $(selector+" [var="+key+"]").attr("pallet_value",val);
+                    }            
+                    if($(selector+" [var="+key+"]").hasClass('bool') || $(selector+" [var="+key+"]")[0].hasAttribute("val")){
+                        $(selector+" [var="+key+"]").attr("val",val);
+                    } else {
+                        $(selector+" [var="+key+"]").html(val);
+                    }    
+                }
             }
         });
     }

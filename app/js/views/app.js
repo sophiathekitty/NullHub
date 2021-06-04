@@ -52,11 +52,11 @@ class AppView extends View{
                         var sectionCon = new SectionController(model,template,item_template);
                         template.getData(data=>{
                             //console.log("template data",data);
-                            console.log($("#sections #"+section['name']).length);
-                            if($("#sections #"+section['name']).length == 0) $("#sections").append(data);
+                            if($("#sections #"+section['template_name']).length == 0) $("#sections").append(data);
                             sectionCon.view.build();
                         },true);
                     }
+                    $("nav.sections").append("<a href=\"#"+section['template_name']+"\">"+section['template_name']+"</a>");
                 });
             }
         },true);
