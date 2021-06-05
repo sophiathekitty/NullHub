@@ -2,6 +2,12 @@ class Model {
     static storage = window.localStorage;
     static server_online = true;
     static server_errors = 0;
+    static constructor_requests_started = 0;
+    static constructor_requests_completed = 0;
+    static pull_requests_started = 0;
+    static pull_requests_completed = 0;
+    static push_requests_started = 0;
+    static push_requests_completed = 0;
     constructor(name,get_url,save_url,cache_time){
         this.prefix = "model_";
         this.name = name;
@@ -15,7 +21,12 @@ class Model {
             console.log("model created",this.prefix+this.name);
         }
         if(!(Model.storage.getItem(this.prefix+this.name) === null)){
+            Model.constructor_requests_started++;
             this.pullData(data=>{
+                Model.constructor_requests_completed++;
+                if(Model.constructor_requests_started == Model.constructor_requests_completed){
+                    console.log("in theory all the constructor pulls have finished");
+                }
                 if(this.debug){
                     //console.log("constructor pull data: ",data);
                 }
@@ -49,6 +60,7 @@ class Model {
         }
     }
     pullData(callBack){
+        Model.pull_requests_started++;
         $.get(this.get_url).done(json=>{
             this.pulled = new Date();
             Model.storage.setItem(this.prefix+this.name, JSON.stringify(json));
@@ -56,10 +68,15 @@ class Model {
             Model.server_errors--;
             if(Model.server_errors < 0) Model.server_errors = 0;
             callBack(json);
+            Model.pull_requests_completed++;
+            if(Model.pull_requests_started == Model.pull_requests_completed){
+                console.log("done loading for now.... (all active requests completed)");
+            }
         }).fail(e=>{
             if(this.debug){
                 console.error(e);
             }
+            Model.pull_requests_completed++;
             Model.server_errors++;
             callBack(JSON.parse(Model.storage.getItem(this.prefix+this.name)));
         });
@@ -74,6 +91,7 @@ class Model {
             console.log(myData);
         }
         if(myData && Model.server_online){
+            Model.push_requests_started++;
             $.ajax({
                 type: "POST",
                 url: this.save_url,
@@ -87,9 +105,11 @@ class Model {
                     if(callBack) callBack(data);
                     Model.storage.getItem(this.name+"_changed",data);
                     Model.server_errors--;
+                    Model.push_requests_completed++;
                     if(Model.server_errors < 0) Model.server_errors = 0;
                 },
                 error: e=>{
+                    Model.push_requests_completed++;
                     Model.server_errors++;
                     if(this.debug) {
                         console.log(this.name+": push error");
@@ -98,6 +118,7 @@ class Model {
                     if(errorCallback) errorCallback(e);
                 },
                 fail: res=>{
+                    Model.push_requests_completed++;
                     Model.server_errors++;
                     if(this.debug){
                         console.log(this.name+": push fail");

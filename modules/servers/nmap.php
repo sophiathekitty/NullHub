@@ -1,16 +1,26 @@
 <?php
 class nMapCrawler {
     private static function DoCrawlNetwork(){
+        echo "do crawl? ".Settings::LoadSettingsVar('do_crawl_network','auto')."\n";
         switch(Settings::LoadSettingsVar('do_crawl_network','auto')){
             case "yes":
+                echo "yes!\n";
                 return true;
             case "no":
+                echo "no!\n";
                 return false;
+        }
+        echo "auto!\n";
+        if(Servers::IsHub()){
+            echo "no really this is the hub!\n";
+            return true;
         }
         return Servers::IsHub();
     }
     public static function FindHosts(){
+        echo "nMapCrawler::FindHosts()\n";
         if(!nMapCrawler::DoCrawlNetwork()) return null;
+        echo "Find nMap Hosts\n";
         $ip = LocalIp();
         list($ip_a, $ip_b, $ip_c) = explode(".",$ip);
         $ip_root = "$ip_a.$ip_b.$ip_c.";
@@ -34,6 +44,7 @@ class nMapCrawler {
     }
     public static function CheckHosts(){
         if(!nMapCrawler::DoCrawlNetwork()) return nMapCrawler::CheckHub();
+        echo "Check nMap Hosts\n";
         $host = nMap::LoadNext();
         if($host['type'] == "pi"){
             $host = nMapCrawler::CheckPi($host);

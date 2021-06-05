@@ -1,6 +1,6 @@
 <pre><?php
 $min = substr(date("i"),1);
-echo "[$min]\n";
+echo "minute: $min == 0 or 5?\n";
 if($min == "0" || $min == "5" || (int)$min == 0 || (int)$min == 5){
     require_once("../includes/main.php");
     nMapCrawler::CheckHosts();

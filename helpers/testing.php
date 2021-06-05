@@ -12,4 +12,6 @@ echo LocalMac()."\n";
 //print_r(nMapHosts());
 //nMapCrawler::CheckHosts();
 print_r(Servers::GetHub());
+if(Servers::IsHub()) echo "this is the hub\n";
+nMapCrawler::CheckHosts();
 ?></pre>

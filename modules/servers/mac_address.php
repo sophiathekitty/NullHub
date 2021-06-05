@@ -17,12 +17,17 @@ function LocalMacAddress(){
 function LocalIp(){
     $ip = eth0Ip();
     if($ip) return $ip;
-    return wlan0Ip();
+    $ip = wlan0Ip();
+    if($ip) return $ip;
+    return enp4s0Ip();
 }
 function LocalMac(){
     $mac = eth0Mac();
     if($mac) return $mac;
     $mac = wlan0Mac();
+    if($mac) return $mac;
+    $mac = enp4s0Mac();
+    if($mac) return $mac;
     return LocalMacAddress();
 }
 function wlan0Ip(){
@@ -31,6 +36,14 @@ function wlan0Ip(){
 }
 function wlan0Mac(){
     $ifconfig = shell_exec("ifconfig wlan0");
+    return substr($ifconfig,strpos($ifconfig,"inet6")+6,strpos($ifconfig,"prefixlen") -( strpos($ifconfig,"inet6")+6) - 2);
+}
+function enp4s0Ip(){
+    $ifconfig = shell_exec("ifconfig enp4s0");
+    return substr($ifconfig,strpos($ifconfig,"inet ")+5,strpos($ifconfig,"netmask") - ( strpos($ifconfig,"inet ")+5) - 2);
+}
+function enp4s0Mac(){
+    $ifconfig = shell_exec("ifconfig enp4s0");
     return substr($ifconfig,strpos($ifconfig,"inet6")+6,strpos($ifconfig,"prefixlen") -( strpos($ifconfig,"inet6")+6) - 2);
 }
 function eth0Ip(){

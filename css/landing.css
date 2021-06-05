@@ -24,7 +24,7 @@ header {
     flex-grow: 1;
     font-size: 0.95em;
 }
-@media( min-width: 800px){
+@media( min-width: 1000px){
     header {
         flex-direction: row;
         font-size: 1.15em;
@@ -39,12 +39,13 @@ header h1 {
 footer {
     font-size: 0.75em;
 }
-footer nav a:hover {
-    color: #ff3bff;
+nav a[target="_blank"]:hover {
+    /*color: #ff3bff;*/
+    color: darkorange;
     text-decoration-color: #98ed8a;
 }
-footer nav a:hover:before,
-footer nav a:hover:after{
+nav a[target="_blank"]:before,
+nav a[target="_blank"]:after{
     color: #98ed8a;
 }
 nav {
@@ -87,7 +88,7 @@ b.null {
 .null::before{
     content: '';
     display: inline-block;
-    background-image: url(../images/favicon/android-icon-36x36.png);
+    background-image: url(../images/null\ icon.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
@@ -137,11 +138,13 @@ b.null {
         margin-top: 0px;
     }
     p:first-of-type:first-letter{
+        font-weight: bold;
         font-size: 2em;
         float: left;
         margin-top: 0.1em;
         margin-right: 0.3em;
         margin-bottom: 0.2em;
+        color: darkorange;
     }
     header .null::before{
         width: 2em;

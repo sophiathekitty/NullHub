@@ -4,5 +4,6 @@
     "type":"collection",
     "api":"/api/rooms",
     "item_id":"room_id",
+    "cache_time":1,
     "item_template":"/templates/items/room.html"
 }
