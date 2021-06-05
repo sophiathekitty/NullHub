@@ -109,4 +109,12 @@ function LoadJsonArray($url){
     return json_decode($info,true);
 }
 
+function endsWith( $haystack, $needle ) {
+    $length = strlen( $needle );
+    if( !$length ) {
+        return true;
+    }
+    return substr( $haystack, -$length ) === $needle;
+}
+
 ?>

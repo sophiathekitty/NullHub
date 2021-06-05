@@ -15,7 +15,7 @@ function CrawlPluginCSS($css,$path){
     while ($file = readdir($shared_models_dir)) { 
         //echo "<br><i>$file</i> ".is_dir($path.$file)."  ".is_dir($file."/")." <br>";
         // IF IT IS NOT A FOLDER, AND ONLY IF IT IS A .php WE ACCESS IT
-        if(!is_dir($file) && strpos($file, '.css')>0 && is_file($path.$file)) { 
+        if(!is_dir($file) && endsWith($file, '.css')>0 && is_file($path.$file)) { 
             //echo "Require: $path$file\n";
             //require_once($path.$file);
             //echo "included\n";
@@ -27,6 +27,9 @@ function CrawlPluginCSS($css,$path){
     return $css;
 }
 
-
-OutputCSSFromFileList($css);
+if(isset($_GET['min'])){
+    OutputCSSFromFileListMin($css);
+} else {
+    OutputCSSFromFileList($css);
+}
 ?>

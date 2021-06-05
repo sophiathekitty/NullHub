@@ -22,8 +22,8 @@ class View {
                     // build model
                     console.log("display model view",this.model.name);
                     this.model.getData(data=>{
-                        console.log(data);
-                        
+                        console.log("display data",data);
+                        this.populate("#"+this.model.name,data[this.model.name]);
                     });
                 }    
             });    

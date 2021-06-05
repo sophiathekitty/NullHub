@@ -23,6 +23,13 @@
     
     <link href="css/fonts.css" rel="stylesheet" type="text/css">
     <link href="css/landing.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery-1.12.1.min.js"></script>
+    
+    <script src="js/mvc/nullmvc.js.php"></script>
+    
+    <script src="js/landing.js"></script>
+    
+
 
 </head>
 <body>
@@ -30,17 +37,52 @@
         <h1 class="null">Null Home Hub</h1>
         <nav>
             <a href="/app" target="_top">app</a>
-            <a href="/phpMyAdmin" target="_top">phpMyAdmin</a>
+            <a href="/phpMyAdmin" target="_top">myAdmin</a>
             <a href="/api" target="_top">api</a>
             <a href="/helpers" target="_top">helpers</a>
         </nav>
     </header>
-    <section id="landing">
-        <h1>About</h1>
-        <p>this is the main hub project. i need to get enough of it working that i'd be happy living with it as the primary hub. until then this is more of a backup or dev hub project.</p>
-        <p>ideally multiple hubs should be able to exist on the same network. they should identify each other and have some logic for deciding which one is the primary hub.</p>
-        <p>this could also end up being the universal base for all the <b class="null">Null</b> devices.</p>
-    </section>
+    <div class="contents">
+        <section id="about">
+            <h1>about <span class="null">null</span> hub</h1>
+            <p>this is the main hub project. i need to get enough of it working that i'd be happy living with it as the primary hub. until then this is more of a backup or dev hub project.</p>
+            <p>ideally multiple hubs should be able to exist on the same network. they should identify each other and have some logic for deciding which one is the primary hub.</p>
+            <p>this could also end up being the universal base for all the <b class="null">Null</b> devices.</p>
+        </section>
+        <section id="info">
+            <h1>local info</h1>
+            <ul>
+                <li>
+                    <span class="key">name</span>
+                    <span class="value" var="name"></span>
+                </li>
+                <li>
+                    <span class="key">url</span>
+                    <span class="value" var="url"></span>
+                </li>
+                <li>
+                    <span class="key">type</span>
+                    <span class="value" var="type"></span>
+                </li>
+                <li>
+                    <span class="key">server</span>
+                    <span class="value" var="server"></span>
+                </li>
+                <li>
+                    <span class="key">mac_address</span>
+                    <span class="value" var="mac_address"></span>
+                </li>
+            </ul>
+        </section>
+        <section id="plugins">
+            <h1>plugins</h1>
+            <ul>
+                <li><a href="https://github.com/sophiathekitty/NullLights/" installed="1" plugin="NullLights">NullLights</a></li>
+                <li><a href="https://github.com/sophiathekitty/NullSensors/" installed="1" plugin="NullSensors">NullSensors</a></li>
+                <li><a href="https://github.com/sophiathekitty/NullWeather/" installed="1"  plugin="NullWeather">NullWeather</a></li>
+            </ul>
+        </section>
+    </div>
     <footer>
         <nav>
             <a href="https://github.com/sophiathekitty/NullHub#readme" target="_blank">readme</a>

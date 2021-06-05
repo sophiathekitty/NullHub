@@ -7,7 +7,17 @@ function OutputCSSFromFileList($css_files){
         include_once($css_file);
         echo "\n\n\n";
     }
-    if(json_last_error())
-        echo json_last_error_msg();    
-}    
+}
+function OutputCSSFromFileListMin($css_files){
+    header('Access-Control-Allow-Origin: *');
+    header("Content-type: text/css; charset: UTF-8");
+    $buffer = "";
+    foreach($css_files as $css_file){
+        $buffer .= file_get_contents($css_file);
+    }
+    $buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
+    $buffer = str_replace(': ', ':', $buffer);
+    $buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
+    echo $buffer;
+}  
 ?>

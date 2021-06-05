@@ -80,6 +80,7 @@ nav a::after{
 .null {
     white-space: nowrap;
     color: #98ed8a;
+    text-transform: lowercase;
 }
 
 b.null {
@@ -97,12 +98,13 @@ b.null {
     margin-top: 0.25em;
     margin-left: 0.25em;
     margin-right: 0.15em;
+    transform: translateY(0.1em);
 }
 @media( min-width:600px){
     header {
         padding: 2vw;
     }
-    section {
+    section#about {
         font-size: 1.25em;
         columns: 250px;
         column-gap: 3em;
@@ -125,7 +127,6 @@ b.null {
         left: 0px;
         right: 0px;
         padding: 2em;
-        background-color: darkslategray;
         z-index: 100;
     }
     footer nav {
@@ -133,6 +134,7 @@ b.null {
         align-content: center;
         align-items: center;
         flex-direction: row-reverse;
+        background-color: darkslategray;
     }
     p {
         margin-top: 0px;
@@ -152,8 +154,32 @@ b.null {
         margin-top: -0.4em;
         margin-left: -0.4em;
         margin-right: 0.15em;
+        transform: translateY(0em);
     }
     footer {
         font-size: 1em;
     }
+}
+#info ul {
+    padding: 0em;
+    margin: 0.1em;
+    list-style: none;
+}
+#info li {
+    padding: 0.2em;
+}
+#info li:nth-child(1),
+#info li:nth-child(3),
+#info li:nth-child(5),
+#info li:nth-child(7),
+#info li:nth-child(9){
+    background-color: rgba(14, 65, 65, 0.322);
+}
+#info li .key {
+    display: inline-block;
+    width: 7em;
+}
+#info li .value {
+    display: inline-block;
+    color: darkorange;
 }
