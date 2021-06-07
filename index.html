@@ -24,6 +24,7 @@
     <link href="css/fonts.css" rel="stylesheet" type="text/css">
     <link href="css/landing.css" rel="stylesheet" type="text/css">
     <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/markdown.min.js"></script>
     
     <script src="js/mvc/nullmvc.js.php"></script>
     
@@ -44,10 +45,13 @@
     </header>
     <div class="contents">
         <section id="about">
-            <h1>about <span class="null">null</span> hub</h1>
+            <h1 class="hub">about hub</h1>
             <p>this is the main hub project. i need to get enough of it working that i'd be happy living with it as the primary hub. until then this is more of a backup or dev hub project.</p>
             <p>ideally multiple hubs should be able to exist on the same network. they should identify each other and have some logic for deciding which one is the primary hub.</p>
             <p>this could also end up being the universal base for all the <b class="null">Null</b> devices.</p>
+            <h2 class="null">automation</h2>
+            <p>with the <a href="https://github.com/sophiathekitty/NullLights/" target="_blank">Null Lights</a> plugin <b class="null">Null</b> can control the lights and fans that are plugged into them. with the <a href="https://github.com/sophiathekitty/NullWeather/" target="_blank">Null Weather</a> plugin local sunrise and sunset times can be used to determine when lights should be one.</p>
+            <p>lights can be snoozed after set amounts of time. they can also be turned on when lights in a neighboring room are on; and snooze after those lights have been off for a short while.</p>
         </section>
         <section id="info">
             <h1>local info</h1>
@@ -58,7 +62,7 @@
                 </li>
                 <li>
                     <span class="key">url</span>
-                    <span class="value" var="url"></span>
+                    <a href="#" ip="url" class="value" var="url" target="_top"></a>
                 </li>
                 <li>
                     <span class="key">type</span>
@@ -72,14 +76,24 @@
                     <span class="key">mac_address</span>
                     <span class="value" var="mac_address"></span>
                 </li>
+                <li>
+                    <span class="key">main</span>
+                    <span class="value bool" var="main"></span>
+                </li>
+                <li>
+                    <span class="key">hub</span>
+                    <a href="#" ip="hub" class="value" var="hub_name" target="_blank"></a>
+                </li>
             </ul>
         </section>
-        <section id="plugins">
+        <section id="local_plugins">
             <h1>plugins</h1>
-            <ul>
-                <li><a href="https://github.com/sophiathekitty/NullLights/" installed="1" plugin="NullLights">NullLights</a></li>
-                <li><a href="https://github.com/sophiathekitty/NullSensors/" installed="1" plugin="NullSensors">NullSensors</a></li>
-                <li><a href="https://github.com/sophiathekitty/NullWeather/" installed="1"  plugin="NullWeather">NullWeather</a></li>
+            <ul id="plugins">
+            </ul>
+        </section>
+        <section id="local_extensions">
+            <h1>extensions</h1>
+            <ul id="extensions">                
             </ul>
         </section>
     </div>

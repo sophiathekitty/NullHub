@@ -79,6 +79,7 @@ class View {
         }
     }
     populate(selector,itm){
+        console.log("View Populate",selector,itm);
         Object.keys(itm).forEach(key=>{
             if(key != "hour"){
                 //console.log(key,room[key]);
@@ -86,7 +87,8 @@ class View {
                 if(val instanceof Array){
                     val = val[0];
                 }
-                if($(selector)[0].hasAttribute(key)){
+                console.log(key,val);
+                if($(selector)[0] && $(selector)[0].hasAttribute(key)){
                     $(selector).attr(key,val);
                 }
                 if($(selector+" [var="+key+"]").length > 0){
@@ -99,8 +101,28 @@ class View {
                     if($(selector+" [var="+key+"]").hasClass('bool') || $(selector+" [var="+key+"]")[0].hasAttribute("val")){
                         $(selector+" [var="+key+"]").attr("val",val);
                     } else {
-                        $(selector+" [var="+key+"]").html(val);
+                        if($(selector+" [var="+key+"]").hasClass('date')){
+                            var date = new Date(val);
+                            var txt = date.getFullYear() + "-";
+                            if(date.getMonth() < 10){
+                                txt += "0";
+                            }
+                            txt += date.getMonth() + "-";
+                            if(date.getDay() < 10){
+                                txt += "0";
+                            }
+                            txt += date.getDay();
+                            $(selector+" [var="+key+"]").html(txt);
+                        } else {
+                            $(selector+" [var="+key+"]").html(val);
+                        }
                     }    
+                }
+                if($(selector+" [link="+key+"]").length > 0){
+                    $(selector+" [link="+key+"]").attr("href",val);
+                }
+                if($(selector+" [ip="+key+"]").length > 0){
+                    $(selector+" [ip="+key+"]").attr("href","http://"+val+"/");
                 }
             }
         });
