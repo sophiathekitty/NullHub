@@ -1,13 +1,16 @@
 class View {
-    constructor(model,template = null, item_template = null){
+    static refresh_ratio = 1;
+    constructor(model,template = null, item_template = null, refresh_rate = 5000){
         this.model = model;
         this.template = template;
         this.item_template = item_template;
+        this.refresh_rate = refresh_rate
         /*
         if(this.model instanceof Collection){
             console.log("view's model is collection");
         }
         */
+        setTimeout(this.display,refresh_rate);
     }
     display(){
         //throw "You need to extend display function to display view"
@@ -21,13 +24,16 @@ class View {
                 } else if(this.model instanceof Model){
                     // build model
                     console.log("display model view",this.model.name);
+                    $("#"+this.model.name).addClass("loading");
                     this.model.getData(data=>{
+                        $("#"+this.model.name).removeClass("loading");
                         console.log("display data",data);
                         this.populate("#"+this.model.name,data[this.model.name]);
                     });
                 }    
             });    
         }
+        setTimeout(this.display,this.refresh_rate*View.refresh_ratio);
     }
     build(){
         if(this.model instanceof Array){
@@ -36,7 +42,9 @@ class View {
             this.model.forEach(model=>{
                 // build collection 
                 console.log("build view multi model ::",model);
+                $("#"+this.model.name).addClass("loading");
                 model.getData(data=>{
+                    $("#"+this.model.name).removeClass("loading");
                     console.log("build view multi model :: collection ::",data);
                     if(data != null){
                         if(model instanceof Collection){
@@ -56,12 +64,15 @@ class View {
             });
         } else {
             console.log("build view?");
+            $("#"+this.model.name).addClass("loading");
             this.model.getData(data=>{
+                $("#"+this.model.name).removeClass("loading");
                 if(data != null){
                     console.log("build view:",data);
                     if(this.model instanceof Collection){
                         // build collection list view
                         console.log("build collection view",this.model.name,this.model.item_name);
+                        $("#"+this.model.name).html("");
                         this.item_template.getData(html=>{
                             console.log("build collection view item template loaded....",data,html);
                             data[this.model.name].forEach((itm,index)=>{
@@ -79,7 +90,7 @@ class View {
         }
     }
     populate(selector,itm){
-        console.log("View Populate",selector,itm);
+        //console.log("View Populate",selector,itm);
         Object.keys(itm).forEach(key=>{
             if(key != "hour"){
                 //console.log(key,room[key]);
@@ -87,7 +98,7 @@ class View {
                 if(val instanceof Array){
                     val = val[0];
                 }
-                console.log(key,val);
+                //console.log(key,val);
                 if($(selector)[0] && $(selector)[0].hasAttribute(key)){
                     $(selector).attr(key,val);
                 }

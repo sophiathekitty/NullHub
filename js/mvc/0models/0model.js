@@ -67,7 +67,7 @@ class Model {
             Model.storage.setItem(this.prefix+this.name+"_pulled",this.pulled);
             Model.server_errors--;
             if(Model.server_errors < 0) Model.server_errors = 0;
-            callBack(json);
+            if(callBack) callBack(json);
             Model.pull_requests_completed++;
             if(Model.pull_requests_started == Model.pull_requests_completed){
                 console.log("done loading for now.... (all active requests completed)");
@@ -78,7 +78,7 @@ class Model {
             }
             Model.pull_requests_completed++;
             Model.server_errors++;
-            callBack(JSON.parse(Model.storage.getItem(this.prefix+this.name)));
+            if(callBack) callBack(JSON.parse(Model.storage.getItem(this.prefix+this.name)));
         });
     }
     setData(data){

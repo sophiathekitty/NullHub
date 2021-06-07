@@ -22,5 +22,6 @@
     "theme_color":"#98ed8a#",
     "background_color":"#2f4f4f",
     "display": "standalone",
-    "scope":"/"
+    "scope":"/",
+    "git":"https://github.com/sophiathekitty/NullHub"
 }

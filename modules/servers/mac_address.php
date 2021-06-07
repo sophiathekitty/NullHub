@@ -36,6 +36,9 @@ function wlan0Ip(){
 }
 function wlan0Mac(){
     $ifconfig = shell_exec("ifconfig wlan0");
+    if(strpos($ifconfig,"ether") > -1){
+        return substr($ifconfig,strpos($ifconfig,"ether")+6,strpos($ifconfig,"txqueuelen") -( strpos($ifconfig,"ether")+6) - 2);
+    }
     return substr($ifconfig,strpos($ifconfig,"inet6")+6,strpos($ifconfig,"prefixlen") -( strpos($ifconfig,"inet6")+6) - 2);
 }
 function enp4s0Ip(){
@@ -44,6 +47,9 @@ function enp4s0Ip(){
 }
 function enp4s0Mac(){
     $ifconfig = shell_exec("ifconfig enp4s0");
+    if(strpos($ifconfig,"ether") > -1){
+        return substr($ifconfig,strpos($ifconfig,"ether")+6,strpos($ifconfig,"txqueuelen") -( strpos($ifconfig,"ether")+6) - 2);
+    }
     return substr($ifconfig,strpos($ifconfig,"inet6")+6,strpos($ifconfig,"prefixlen") -( strpos($ifconfig,"inet6")+6) - 2);
 }
 function eth0Ip(){
@@ -52,7 +58,20 @@ function eth0Ip(){
 }
 function eth0Mac(){
     $ifconfig = shell_exec("ifconfig eth0");
+    if(strpos($ifconfig,"ether") > -1){
+        return substr($ifconfig,strpos($ifconfig,"ether")+6,strpos($ifconfig,"txqueuelen") -( strpos($ifconfig,"ether")+6) - 2);
+    }
     return substr($ifconfig,strpos($ifconfig,"inet6")+6,strpos($ifconfig,"prefixlen") -( strpos($ifconfig,"inet6")+6) - 2);
+}
+
+function gitHubUrl(){
+    global $root_path;
+    if(is_file($root_path."site.webmanifest")){
+        $info = file_get_contents($root_path."site.webmanifest");
+        $data = json_decode($info,true);
+        return $data['git'];
+    }
+    return "https://github.com/sophiathekitty/";
 }
 
 ?>

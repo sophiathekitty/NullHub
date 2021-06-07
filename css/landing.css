@@ -1,10 +1,10 @@
 html,body {
     background-color: #2f4f4f;
-    color: #fafad2;
+    color: rgb(202, 215, 228);
     font-family: 'VicCitySans', Arial, Helvetica, sans-serif;
 }
 a {
-    color: whitesmoke;
+    color: lightgray;
     text-decoration: none;
     font-family: 'Rimouski', Arial, Helvetica, sans-serif;
 }
@@ -196,6 +196,9 @@ section a {
     #local_extensions {
         grid-area: sidebar-c;
     }
+    #about h1{
+        margin-top: 0em;
+    }
 }
 #info, #local_plugins, #local_extensions {
     display: inline-block;
@@ -203,6 +206,17 @@ section a {
     min-width: 20em;
     width: 100%;
     max-width: 40em;
+}
+section h1, section h2 {
+    color: #98ed8a;
+}
+#info h1, #local_plugins h1, #local_extensions h1 {
+    color: lightyellow;
+    font-size: 1.3em;
+    background-color: #98ed8a66;
+    margin: 0px;
+    padding: 0.2em;
+    text-shadow: black 0.1em 0.1em 0.1em;
 }
 section ul {
     padding: 0em;
@@ -249,41 +263,57 @@ section a[target="_blank"]:hover {
     content: "true";
 }
 
-#local_plugins li {
+#local_plugins li,
+#local_extensions li {
     display: flex;
     flex-direction: row;
 }
-#local_plugins li [var="name"] {
+#local_plugins li [var="name"],
+#local_extensions li [var="name"] {
     flex-grow: 2;
 }
-
-#local_plugins li [var="hash"] {
+li [var="hash"],
+li [var="mac_address"],
+#local_plugins li [var="hash"],
+#local_extensions li [var="hash"] {
     font-style: italic;
     font-size: 0.65em;
-    color: lightseagreen;
     margin: 0.2em;
     margin-right: 1em;
 }
+li [var="hash"]{
+    color: lightseagreen !important;
+}
+li [var="hash"]::before,
+li [var="hash"]::after,
 #local_plugins li [var="hash"]::before,
-#local_plugins li [var="hash"]::after{
+#local_plugins li [var="hash"]::after,
+#local_extensions li [var="hash"]::before,
+#local_extensions li [var="hash"]::after{
     color: #98ed8a;
     opacity: 0.5;
     margin: 0.1em;
 }
-#local_plugins li [var="hash"]::before{
+li [var="hash"]::before,
+#local_plugins li [var="hash"]::before,
+#local_extensions li [var="hash"]::before{
     content: "{";
 }
-#local_plugins li [var="hash"]::after{
+li [var="hash"]::after,
+#local_plugins li [var="hash"]::after,
+#local_extensions li [var="hash"]::after{
     content: "}";
 }
 
-#local_plugins li [var="modified"] {
+#local_plugins li [var="modified"],
+#local_extensions li [var="modified"] {
     font-style: italic;
     font-size: 0.85em;
     color: darkorange;
     margin: 0.2em;
     margin-right: 1em;
 }
+
 
 
 .wemo_name {
@@ -338,4 +368,10 @@ section a[target="_blank"]:hover {
     background-repeat: no-repeat;
     background-position: center center;
     transform: translate(-0.2em,0.2em);
+}
+.loading h1 {
+    background-image: url(../images/loading.gif);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center right;
 }

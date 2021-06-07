@@ -45,13 +45,17 @@
     </header>
     <div class="contents">
         <section id="about">
-            <h1 class="hub">about hub</h1>
+            <h1 class="hub">about the null hub project</h1>
             <p>this is the main hub project. i need to get enough of it working that i'd be happy living with it as the primary hub. until then this is more of a backup or dev hub project.</p>
             <p>ideally multiple hubs should be able to exist on the same network. they should identify each other and have some logic for deciding which one is the primary hub.</p>
             <p>this could also end up being the universal base for all the <b class="null">Null</b> devices.</p>
-            <h2 class="null">automation</h2>
+            <h2>automation</h2>
             <p>with the <a href="https://github.com/sophiathekitty/NullLights/" target="_blank">Null Lights</a> plugin <b class="null">Null</b> can control the lights and fans that are plugged into them. with the <a href="https://github.com/sophiathekitty/NullWeather/" target="_blank">Null Weather</a> plugin local sunrise and sunset times can be used to determine when lights should be one.</p>
             <p>lights can be snoozed after set amounts of time. they can also be turned on when lights in a neighboring room are on; and snooze after those lights have been off for a short while.</p>
+            <p>with the <a href="" target="_blank">Null Sensors</a> and <a href="" target="_blank">Null Weather</a> you can have a window fan turn on when it's cooler outside and turn off when warmer outside.</p>
+            <h2>displays</h2>
+            <p>there are micro displays which show the time and weather. they also show notification. there's also an eInk display that show's what's for dinner.</p>
+            <p>planned displays include some sort of kiosk style display for TVs and monitors.</p>
         </section>
         <section id="info">
             <h1>local info</h1>
@@ -59,6 +63,10 @@
                 <li>
                     <span class="key">name</span>
                     <span class="value" var="name"></span>
+                </li>
+                <li>
+                    <span class="key">hash</span>
+                    <span class="value" var="hash"></span>
                 </li>
                 <li>
                     <span class="key">url</span>
@@ -93,7 +101,13 @@
         </section>
         <section id="local_extensions">
             <h1>extensions</h1>
-            <ul id="extensions">                
+            <ul id="extensions">
+                <li extension_id="" class="extension">
+                    <a href="https://github.com/sophiathekitty/" link="git" target="_blank" var="name">Example</a>
+                    <span var="hash">123456789</span>
+                    <span var="modified" class="date">2020-01-01</span>
+                    <a href="/extensions/MealPlanner/api" link="api">api</a>
+                </li>
             </ul>
         </section>
     </div>

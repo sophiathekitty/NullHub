@@ -104,4 +104,12 @@ function FolderChangedWindow($path,$start = null,$stop = null,$f1 = null,$f2 = n
     
     return [$start,$stop,$f1,$f2];
 }
+
+function FolderHash($path){
+    $api = FolderModifiedWindow($path."api/");
+    $models = FolderModifiedWindow($path."models/");
+    $modules = FolderModifiedWindow($path."modules/");
+    return hash("crc32b",$api[0].$api[1].$models[0].$models[1].$modules[0].$modules[1]);
+    //return hash("crc32b",FolderModifiedDate($path."api/").FolderModifiedDate($path."models/").FolderModifiedDate($path."modules/"));
+}
 ?>
