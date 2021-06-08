@@ -21,11 +21,18 @@ class AppView extends View{
                         var template = new Template(section['template_name'],section['template']);
                         var model;
                         var itm_template;
-                        if(section['type'] == "model")
+                        if(section['type'] == "model"){
                             model = new Model(section['item_name'],section['api'],section['api'],1000*60*5);
+
+                        }
                         if(section['type'] == "collection"){
                             model = new Collection(section['name'],section['item_name'],section['api'],section['api'],1000*60*5);
                             itm_template = new Template(section['item_name'],section['item_template']);
+                        }
+                        if(section['type'] == "hourly"){
+                            console.log("hourly section?");
+                            //model = new Collection(section['name'],section['item_name'],section['api'],section['api'],1000*60*5);
+                            //itm_template = new Template(section['item_name'],section['item_template']);
                         }
                         var sectionCon = new SectionController(model,template,itm_template);
                         template.getData(data=>{
@@ -47,6 +54,9 @@ class AppView extends View{
                             if(api.type == "collection"){
                                 model.push(new Collection(api['name'],api['item_name'],api['api'],api['api'],1000*60*5));
                                 if('item_template' in api) item_template = new Template(api['item_name'],api['item_template']);
+                            }
+                            if(api.type == "hourly"){
+                                console.log("the other hourly section build thing?");
                             }
                         });
                         var sectionCon = new SectionController(model,template,item_template);

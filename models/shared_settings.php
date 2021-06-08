@@ -27,6 +27,10 @@ class Settings extends clsModel {
         }
         return Settings::$settings;
     }
+    public static function LoadAllSettings(){
+        $settings = Settings::GetInstance();
+        return $settings->LoadAll();
+    }
     public static function LoadSettingsVar($name,$default = null){
         $settings = Settings::GetInstance();
         return $settings->LoadVar($name,$default);

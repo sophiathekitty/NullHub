@@ -1,57 +1,79 @@
 class View {
     static refresh_ratio = 1;
     constructor(model,template = null, item_template = null, refresh_rate = 5000){
+        console.log("ViewConstructor",model,template,item_template,refresh_rate);
         this.model = model;
         this.template = template;
         this.item_template = item_template;
         this.refresh_rate = refresh_rate
+        console.log("ViewConstructorVerify",this.model,this.template,this.item_template,this.refresh_rate);
+
         /*
         if(this.model instanceof Collection){
             console.log("view's model is collection");
         }
         */
-        setTimeout(this.display,refresh_rate);
+        setTimeout(this.refresh.bind(this),this.refresh_rate);
+    }
+    refresh(){
+        //console.log("refresh view",this.model.name);
+        //console.log("refresh ratio",View.refresh_ratio,this.refresh_rate*View.refresh_ratio);
+        this.display();
+        setTimeout(this.refresh.bind(this),this.refresh_rate*View.refresh_ratio);
+        View.refresh_ratio += 0.01;
     }
     display(){
-        //throw "You need to extend display function to display view"
-        if(this.model instanceof Array){
-            // multi model view
+        if(this.model){
+            //throw "You need to extend display function to display view"
+            if(this.model instanceof Array){
+                // multi model view
+            } else {
+                this.model.getData(data=>{
+                    if(this.model instanceof Collection){
+                        //console.log("display collection view",this.model.name);
+                        if($("#"+this.model.name+" ."+this.model.item_name).length != data[this.model.name].length){
+                            console.log("rebuilding?",$("#"+this.model.name+" ."+this.model.item_name).length,data[this.model.name].length);
+                            this.build();
+                        } else {
+                            // just cycle through all the items and populate...
+                            data[this.model.name].forEach((itm,index)=>{
+                                //console.log("just refresh item data","#"+this.model.name+" ."+this.model.item_name+" ["+this.model.item_name+"_id="+itm[this.model.id_name]+"]");
+                                this.populate("#"+this.model.name+" ."+this.model.item_name+"[index="+index+"]",itm);
+                            });
+                        }
+                    } else if(this.model instanceof Model){
+                        // build model
+                        //console.log("display model view",this.model.name);
+                        $("#"+this.model.name).addClass("loading");
+                        this.model.getData(data=>{
+                            $("#"+this.model.name).removeClass("loading");
+                            //console.log("display data",data);
+                            this.populate("#"+this.model.name,data[this.model.name]);
+                        });
+                    }    
+                });    
+            }
         } else {
-            this.model.getData(data=>{
-                if(this.model instanceof Collection){
-                    console.log("display collection view",this.model.name);
-    
-                } else if(this.model instanceof Model){
-                    // build model
-                    console.log("display model view",this.model.name);
-                    $("#"+this.model.name).addClass("loading");
-                    this.model.getData(data=>{
-                        $("#"+this.model.name).removeClass("loading");
-                        console.log("display data",data);
-                        this.populate("#"+this.model.name,data[this.model.name]);
-                    });
-                }    
-            });    
+            console.error("View::Display >> view missing model?");
         }
-        setTimeout(this.display,this.refresh_rate*View.refresh_ratio);
     }
     build(){
         if(this.model instanceof Array){
             // build multiple models
-            console.log("build view multi model");
+            //console.log("build view multi model");
             this.model.forEach(model=>{
                 // build collection 
-                console.log("build view multi model ::",model);
+                //console.log("build view multi model ::",model);
                 $("#"+this.model.name).addClass("loading");
                 model.getData(data=>{
                     $("#"+this.model.name).removeClass("loading");
-                    console.log("build view multi model :: collection ::",data);
+                    //console.log("build view multi model :: collection ::",data);
                     if(data != null){
                         if(model instanceof Collection){
                             this.item_template.getData(html=>{
                                 data[model.name].forEach((itm,index)=>{
                                     $(html).appendTo("#"+model.name).attr('index',index);
-                                    if('id' in itm) $("#"+model.name+" ."+model.item_name+"[index="+index+"]").attr(model.item_name+"_id",itm.id);
+                                    if('id' in itm) $("#"+model.name+" ."+model.item_name+"[index="+index+"]").attr(model.item_name+"_id",itm[model.id_name]);
                                     this.populate("#"+model.name+" ."+model.item_name+"[index="+index+"]",itm);
                                 });
     
@@ -63,27 +85,27 @@ class View {
                 },true);
             });
         } else {
-            console.log("build view?");
+            //console.log("build view?");
             $("#"+this.model.name).addClass("loading");
             this.model.getData(data=>{
                 $("#"+this.model.name).removeClass("loading");
                 if(data != null){
-                    console.log("build view:",data);
+                    //console.log("build view:",data);
                     if(this.model instanceof Collection){
                         // build collection list view
-                        console.log("build collection view",this.model.name,this.model.item_name);
+                        //console.log("build collection view",this.model.name,this.model.item_name);
                         $("#"+this.model.name).html("");
                         this.item_template.getData(html=>{
-                            console.log("build collection view item template loaded....",data,html);
+                            //console.log("build collection view item template loaded....",data,html);
                             data[this.model.name].forEach((itm,index)=>{
                                 $(html).appendTo("#"+this.model.name).attr('index',index);
-                                if('id' in itm) $("#"+this.model.name+" ."+this.model.item_name+"[index="+index+"]").attr(this.model.item_name+"_id",itm.id);
+                                if('id' in itm) $("#"+this.model.name+" ."+this.model.item_name+"[index="+index+"]").attr(this.model.item_name+"_id",itm[this.model.id_name]);
                                 this.populate("#"+this.model.name+" ."+this.model.item_name+"[index="+index+"]",itm);
                             });
                         },true);
                     } else if(this.model instanceof Model){
                         // build model
-                        console.log("build model view",this.model.name);
+                        //console.log("build model view",this.model.name);
                     }    
                 }
             },true);    
@@ -139,3 +161,6 @@ class View {
         });
     }
 }
+$(document).mousemove(function(e){
+    View.refresh_ratio = 1;
+})

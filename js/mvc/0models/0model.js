@@ -8,8 +8,8 @@ class Model {
     static pull_requests_completed = 0;
     static push_requests_started = 0;
     static push_requests_completed = 0;
-    constructor(name,get_url,save_url,cache_time = 300000){
-        this.prefix = "model_";
+    constructor(name,get_url,save_url,cache_time = 300000,prefix = "model_"){
+        this.prefix = prefix;
         this.name = name;
         this.get_url = get_url;
         this.save_url = save_url;
@@ -47,9 +47,9 @@ class Model {
             this.pullData(callBack);
             returns++;
         }
-        console.log("get data... last pulled: ",this.pulled);
+        //console.log("get data... last pulled: ",this.pulled);
         if(returns > 0 && only_return_once) return;
-        console.log(this.prefix+this.name,"use cached data");
+        //console.log(this.prefix+this.name,"use cached data");
         if(Model.storage.getItem(this.prefix+this.name) === null) return;
         if(Model.storage.getItem(this.prefix+this.name+"_changed") === null){
             //console.log(this.prefix+this.name,"get basic item",Model.storage.getItem(this.prefix+this.name));
@@ -92,8 +92,9 @@ class Model {
         }
         if(myData && Model.server_online){
             Model.push_requests_started++;
+            console.error("model push ajax is likely broken... because fuck anything ever working! >:C");
             $.ajax({
-                type: "POST",
+                type: "GET",
                 url: this.save_url,
                 dataType: "json",
                 data: myData,
@@ -132,15 +133,15 @@ class Model {
 }
 
 class Collection extends Model {
-    constructor(collection_name,item_name,get_url,save_url,id_name = "id"){
-        super(collection_name, get_url, save_url,1000*60*5);
-        this.prefix = "collection_";
+    constructor(collection_name,item_name,get_url,save_url,id_name = "id",prefix = "collection_"){
+        super(collection_name, get_url, save_url,1000*60*5,prefix);
+        //this.prefix = "collection_";
         this.item_name = item_name;
         this.id_name = id_name;
     }
     getItem(id,callBack){
         this.getData(data=>{
-            data[this.collection_name].forEach(item => {
+            data[this.name].forEach(item => {
                 if(item[this.id_name] == id) callBack(item);
             });
         })
@@ -148,16 +149,16 @@ class Collection extends Model {
     setItem(item){
         this.getData(data=>{
             var isNew = true;
-            for(i = 0; i < data[this.collection_name].length; i++){
-                if(data[this.collection_name][i][this.id_name] == item[this.id_name]){
-                    data[this.collection_name][i] = item;
-                    data[this.collection_name][i].edited = true;
+            for(var i = 0; i < data[this.name].length; i++){
+                if(data[this.name][i][this.id_name] == item[this.id_name]){
+                    data[this.name][i] = item;
+                    data[this.name][i].edited = true;
                     isNew = false;
                 }
             }
             if(isNew){
                 item.isNew = true;
-                data[this.collection_name].push(item);
+                data[this.name].push(item);
             }
             Model.storage.setItem(this.name+"_changed",data);
         })
