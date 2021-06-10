@@ -28,7 +28,7 @@ class ColorPallet extends Collection {
     /**
      * gets a simple color from the pallet
      * @param {String} color the name of the color in the pallet
-     * @param {function} callBack the callback function that gets the color string
+     * @param {function(string)} callBack the callback function that gets the color string
      * @param {String} alpha the hex alpha values to be added to the end of the color string
      */
     getColor(color,callBack,alpha = ""){
@@ -38,10 +38,30 @@ class ColorPallet extends Collection {
         });
     }
     /**
-     * gets a color from a pallet color that contains an array of colors.
+     * get a color from a pallet color that contains an array without blending between colors.
      * @param {String} color the name of the color in the pallet
      * @param {Number} index the value used to pick which color to return. ie: whole number percent (50 is 50%)
-     * @param {function} callBack the callback function that gets the color string
+     * @param {function(string)} callBack the callback function that gets the color string
+     * @param {String} alpha the hex alpha values to be added to the end of the color string
+     * @example
+     * // returns the color for june
+     * pallet.getColorIndex("month",6,color=>{
+     *      console.log(color);
+     * });
+     */
+    getColorIndex(color,index,callBack,alpha=""){
+        this.getData(data=>{
+            if(data){
+                callBack(data[color][index]+alpha);
+            } 
+        });
+
+    }
+    /**
+     * gets a color from a pallet color that contains an array of colors. blends between the two closest colors
+     * @param {String} color the name of the color in the pallet
+     * @param {Number} index the value used to pick which color to return. ie: whole number percent (50 is 50%)
+     * @param {function(string)} callBack the callback function that gets the color string
      * @param {String} alpha the hex alpha values to be added to the end of the color string
      * @example
      * // solid color

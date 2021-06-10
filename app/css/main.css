@@ -2,6 +2,8 @@
 body {
     background-color: darkslategray;
     font-family: 'Rimouski', Arial, Helvetica, sans-serif;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 a[href="#login"],
 a[href="#signup"],
@@ -38,11 +40,17 @@ header {
     #sections {
         max-width: 100vw;
         max-height: 75vh;
+        width: 100%;
         display: grid;
-        grid-template-columns: 12vw 82vw;
+        grid-column-gap: 1vw;
+        grid-template-columns: 18vw 80vw;
         grid-template-rows: 75vh;
         grid-template-areas: 
             "rooms details";
+    }
+    #sections section {
+        max-width: 100%;
+        width: 100%;
     }
     header {
         height: 20vh;
@@ -57,4 +65,58 @@ header {
     footer nav {
         display: none;
     }
+}
+
+section#rooms .room {
+    background-color: #344141;
+    padding: 0.5em;
+    margin: 0.2em;
+}
+Section#rooms {
+    overflow-y: auto;
+}
+section#rooms .room h1 {
+    display: flex;
+    flex-direction: row;
+    margin: 0em;
+}
+section#rooms .room h1 [var="name"] {
+    flex-grow: 1;
+}
+section#rooms .room [var="lights_on_in_room"],
+section#rooms .room [var="lights_on_in_neighbors"] {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-image: url(../img/light-off.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    z-index: 1;
+    transform: translate(-0.1em,0.1em);
+}
+section#rooms .room [var="lights_on_in_room"][val="1"],
+section#rooms .room [var="lights_on_in_neighbors"][val="1"] {
+    background-image: url(../img/light-on.png);
+}
+section#rooms .room [var="lights_on_in_neighbors"][val="2"]{
+    background-image: url(../img/light-on.png),url(../img/light-on.png);
+    background-size: 0.5em;
+    background-position: top left, bottom right;
+}
+section#rooms .room [var="lights_on_in_neighbors"][val="3"]{
+    background-image: url(../img/light-on.png),url(../img/light-on.png),url(../img/light-on.png);
+    background-size: 0.5em;
+    background-position: top left, top right, bottom right;
+}
+section#rooms .room [var="lights_on_in_neighbors"] {
+    margin-left: -0.75em;
+    width: 0.75em;
+    height: 0.75em;
+    z-index: 0;
+    transform: translate(0.1em,-0.1em);
+    background-size: 0.5em;
+}
+div#sections.no_room_temps nav.toggle_temperature.focus {
+    display: none !important;
 }

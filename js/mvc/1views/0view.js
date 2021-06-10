@@ -24,7 +24,7 @@ class View {
             console.log("view's model is collection");
         }
         */
-        setTimeout(this.refresh.bind(this),this.refresh_rate);
+        //setTimeout(this.refresh.bind(this),this.refresh_rate);
     }
     /**
      * Refresh the view with a dynamic refresh rate based on View.refresh_ratio
@@ -35,7 +35,7 @@ class View {
         //console.log("refresh view",this.model.name);
         //console.log("refresh ratio",View.refresh_ratio,this.refresh_rate*View.refresh_ratio);
         this.display();
-        setTimeout(this.refresh.bind(this),this.refresh_rate*View.refresh_ratio);
+        //setTimeout(this.refresh.bind(this),this.refresh_rate*View.refresh_ratio);
         View.refresh_ratio += 0.01;
     }
     /**

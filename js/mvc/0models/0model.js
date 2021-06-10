@@ -48,7 +48,7 @@ class Model {
     }
     /**
      * gets data either from local storage cache and/or pull live data from api
-     * @param {function} callBack the data is sent to this function
+     * @param {function(JSON)} callBack the data is sent to this function
      * @param {bool} only_return_once set to true so it doesn't return both the cached version and a pulled version if the cached version is out of date
      * @returns {void} will return early if set to only_return_once
      */
@@ -80,7 +80,7 @@ class Model {
     }
     /**
      * pulls data from the api
-     * @param {function} callBack sends pulled data to this function
+     * @param {function(JSON)} callBack sends pulled data to this function
      */
     pullData(callBack){
         Model.pull_requests_started++;
@@ -113,9 +113,9 @@ class Model {
     }
     /**
      * [untested?] pushes the data in local storage with the postfix _changed for this model to the save api
-     * @param {function} callBack called if push request was successful
-     * @param {function} errorCallback called if there is an error
-     * @param {function} failCallback called if the request failed
+     * @param {function(JSON)} callBack called if push request was successful
+     * @param {function(*)} errorCallback called if there is an error
+     * @param {function(*)} failCallback called if the request failed
      */
     pushData(callBack,errorCallback,failCallback){
         var myData = JSON.parse(Model.storage.getItem(this.prefix+this.name+"_changed"));
@@ -186,8 +186,8 @@ class Collection extends Model {
     }
     /**
      * gets an item from the data list
-     * @param {string|number} id 
-     * @param {function} callBack 
+     * @param {string|number} id the item id to be loaded
+     * @param {function(JSON)} callBack where the data is sent
      */
     getItem(id,callBack){
         this.getData(data=>{
