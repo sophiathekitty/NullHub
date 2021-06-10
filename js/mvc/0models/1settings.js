@@ -1,12 +1,21 @@
 class Settings extends Collection {
+    static settings;
     constructor(){
         super("settings","setting","/api/settings/","/api/settings/","name","settings_");
         this.pull_delay = 10000;
+    }
+    static loadVar(var_name,callBack){
+        if(Settings.settings == null) Settings.settings = new Settings();
+        Settings.settings.getVar(var_name,callBack);
     }
     getVar(var_name,callBack){
         this.getItem(var_name,data=>{
             if(data) callBack(data.value);
         });
+    }
+    static saveVar(var_name,value,callBack,errorCallback,failCallback){
+        if(Settings.settings == null) Settings.settings = new Settings();
+        Settings.settings.setVar(var_name,value,callBack,errorCallback,failCallback);
     }
     setVar(var_name,value,callBack,errorCallback,failCallback){
         this.debug = true;

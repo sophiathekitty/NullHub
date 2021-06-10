@@ -1,17 +1,17 @@
 html,body {
     background-color: #2f4f4f;
-    color: rgb(202, 215, 228);
+    color: #cad7e4;
     font-family: 'VicCitySans', Arial, Helvetica, sans-serif;
 }
 a {
-    color: lightgray;
+    color: #d3d3d3;
     text-decoration: none;
     font-family: 'Rimouski', Arial, Helvetica, sans-serif;
 }
 a:hover {
     color: #98ed8a;
     text-decoration: underline;
-    text-decoration-color: darkorange;
+    text-decoration-color: #ff8c00;
     text-decoration-thickness: 0.1em;
     text-underline-offset: 0.2em;
 }

@@ -7,6 +7,7 @@ require_once("../includes/main.php");
 //print_r(Tasks::LoadDueTasks());
 //echo clsDB::$db_g->get_err();
 //echo clsDB::$db_g->last_sql;
+/*
 echo LocalIp()."\n";
 echo LocalMac()."\n";
 //print_r(nMapHosts());
@@ -14,4 +15,6 @@ echo LocalMac()."\n";
 print_r(Servers::GetHub());
 if(Servers::IsHub()) echo "this is the hub\n";
 nMapCrawler::CheckHosts();
+*/
+require_once("../plugins/NullWeather/services/every_five_minutes.php");
 ?></pre>

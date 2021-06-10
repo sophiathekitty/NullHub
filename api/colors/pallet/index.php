@@ -1,8 +1,11 @@
 <?php
 require_once("../../../includes/main.php");
 $data = [];
-
-$data['pallet'] = FullColorPallet();
+if(isset($_GET['pallet'])){
+    $data['pallet'] = ColorPalletStamp($_GET['pallet']);
+} else {
+    $data['pallet'] = FullColorPallet();
+}
 
 OutputJson($data);
 ?>

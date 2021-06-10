@@ -5,6 +5,7 @@ require_once("../includes/main.php");
 echo "world\n";
 
 clsModel::ValidateTables();
+ValidateColors();
 // find extensions
 $extensions = FindLocalExtensions();
 foreach($extensions as $extension){

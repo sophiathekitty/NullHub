@@ -4,9 +4,7 @@ class AppView extends View{
         this.sections = Array();
     }
     display(){
-        this.sections.forEach(section=>{
-            section.display();
-        });
+        
     }
     build(){
         console.log("build!");
@@ -29,7 +27,7 @@ class AppView extends View{
                             model = new Collection(section['name'],section['item_name'],section['api'],section['api'],1000*60*5);
                             itm_template = new Template(section['item_name'],section['item_template']);
                         }
-                        if(section['type'] == "hourly"){
+                        if(section['type'] == "hourly_chart"){
                             console.log("hourly section?");
                             //model = new Collection(section['name'],section['item_name'],section['api'],section['api'],1000*60*5);
                             //itm_template = new Template(section['item_name'],section['item_template']);
@@ -51,12 +49,14 @@ class AppView extends View{
                         var model = new Array();
                         var item_template;
                         section.models.forEach(api=>{
+                            console.log("hourly? maybe?",api);
                             if(api.type == "collection"){
                                 model.push(new Collection(api['name'],api['item_name'],api['api'],api['api'],1000*60*5));
                                 if('item_template' in api) item_template = new Template(api['item_name'],api['item_template']);
                             }
-                            if(api.type == "hourly"){
+                            if(api.type == "hourly_chart"){
                                 console.log("the other hourly section build thing?");
+                                model.push(new HourlyChart(api['name'],api['item_name'],api['chart_name'],api['api']))
                             }
                         });
                         var sectionCon = new SectionController(model,template,item_template);
