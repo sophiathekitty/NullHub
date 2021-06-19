@@ -20,6 +20,7 @@ function LocalPluginInfo($verbose = false){
         $plugin['id'] = $name;
         $plugin['modified'] = FolderModifiedDate($root_path."plugins/".$plugin_path);
         if($verbose){
+            $plugin['files'] = FolderFileCount($root_path."plugins/".$plugin_path);
             $plugin['api_modified'] = FolderModifiedDate($root_path."plugins/".$plugin_path."api/");
             $plugin['models_modified'] = FolderModifiedDate($root_path."plugins/".$plugin_path."models/");
             $plugin['modules_modified'] = FolderModifiedDate($root_path."plugins/".$plugin_path."modules/");

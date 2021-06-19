@@ -1,10 +1,64 @@
 <?php
+
+
+function TestingFolderModified($path,$time = null){
+
+    //echo "IncludeFolder: $path \n";
+    $shared_models_dir = opendir($path);
+    // LOOP OVER ALL OF THE  FILES    
+    while ($file = readdir($shared_models_dir)) { 
+        //echo "<br><i>$file</i> ".is_dir($path.$file)."  ".is_dir($file."/")." <br>";
+        // IF IT IS NOT A FOLDER, AND ONLY IF IT IS A .php WE ACCESS IT
+        if(!is_dir($file) && is_file($path.$file)) { 
+            //echo "Require: $path$file\n";
+            if(is_null($time)){
+                $time = filemtime($path.$file);
+            } else if(filemtime($path.$file) > $time){
+                $time = filemtime($path.$file);
+            }
+            echo "\n".date("Y-m-d H:i:s",$time);
+            //require_once($path.$file);
+            //echo "included\n";
+        } elseif(is_dir($path.$file) && $file != ".." && $file != "."){
+            $time = TestingFolderModified($path.$file."/",$time);
+        }
+    }
+    // CLOSE THE DIRECTORY
+    closedir($shared_models_dir);
+    
+    if(is_null($time)) return 0;
+    return $time;
+}
+
+
 function FolderModifiedDate($path){
     $time = FolderModified($path);
     if($time == 0){
         return null;
     }
     return date("Y-m-d H:i:s",$time);
+}
+function FolderFileCount($path,$count = 0){
+
+    //echo "IncludeFolder: $path \n";
+    $shared_models_dir = opendir($path);
+    // LOOP OVER ALL OF THE  FILES    
+    while ($file = readdir($shared_models_dir)) { 
+        //echo "<br><i>$file</i> ".is_dir($path.$file)."  ".is_dir($file."/")." <br>";
+        // IF IT IS NOT A FOLDER, AND ONLY IF IT IS A .php WE ACCESS IT
+        if(!is_dir($file) && is_file($path.$file)) { 
+            //echo "Require: $path$file\n";
+            $count++;
+            //require_once($path.$file);
+            //echo "included\n";
+        } elseif(is_dir($path.$file) && $file != ".." && $file != "."){
+            $count = FolderFileCount($path.$file."/",$count);
+        }
+    }
+    // CLOSE THE DIRECTORY
+    closedir($shared_models_dir);
+    
+    return $count;
 }
 
 function FolderModified($path,$time = null){

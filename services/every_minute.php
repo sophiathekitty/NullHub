@@ -1,5 +1,6 @@
 <pre><?php
 require_once("../includes/main.php");
+//CheckOfflineHub(); // check if the main hub is offline or not
 // pull remote tasks once a minute if this isn't the hub
 RemoteTasks::PullRemoteTasks();
 SyncRoom();

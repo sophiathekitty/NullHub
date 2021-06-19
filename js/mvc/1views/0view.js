@@ -246,14 +246,15 @@ class View {
                         if($(selector+" [var="+key+"]"+mdl).hasClass('date')){
                             var date = new Date(val);
                             var txt = date.getFullYear() + "-";
-                            if(date.getMonth() < 10){
+                            if(date.getMonth()+1 < 10){
                                 txt += "0";
                             }
-                            txt += date.getMonth() + "-";
-                            if(date.getDay() < 10){
+                            txt += date.getMonth()+1 + "-";
+                            if(date.getDate() < 10){
                                 txt += "0";
                             }
-                            txt += date.getDay();
+                            txt += date.getDate();
+                            console.log("date:",date.toDateString(),"val:",val,"txt:",txt);
                             $(selector+" [var="+key+"]"+mdl).html(txt);
                         } else {
                             $(selector+" [var="+key+"]"+mdl).html(val);

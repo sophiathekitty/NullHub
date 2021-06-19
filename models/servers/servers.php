@@ -59,6 +59,13 @@ class Servers extends clsModel{
             'Default'=>"1",
             'Extra'=>""
         ],[
+            'Field'=>"offline",
+            'Type'=>"int(11)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"0",
+            'Extra'=>""
+        ],[
             'Field'=>"enabled",
             'Type'=>"tinyint(1)",
             'Null'=>"NO",
@@ -84,6 +91,12 @@ class Servers extends clsModel{
         if($hub) return $hub;
         return ['mac_address'=>LocalMacAddress(),'name'=>Settings::LoadSettingsVar('name','null device'),'url'=>LocalIp(),'type'=>Settings::LoadSettingsVar('type','device'),'server'=>Settings::LoadSettingsVar('server','pi0'),'main'=>Settings::LoadSettingsVar('main',1),'enabled'=>Settings::LoadSettingsVar('enabled',1),'online'=>1];
     }
+    public static function GetMain(){
+        $servers = Servers::GetInstance();
+        $hub = $servers->LoadWhere(['main'=>1],['server'=>'DESC']);
+        if($hub) return $hub;
+        return null;
+    }
     public static function IsHub(){
         $hub = Servers::GetHub();
         return ($hub['mac_address'] == LocalMacAddress());
@@ -106,7 +119,25 @@ class Servers extends clsModel{
         $servers = Servers::GetInstance();
         $data = $servers->CleanData($data);
         $server = $servers->LoadByMacAddress($data['mac_address']);
+        if(is_null($server)) $server = $servers->LoadByUrl($data['url']);
         if($server){
+            if(isset($data['online'])){
+                if((int)$data['online'] == 0){
+                    $data['offline'] = $server['offline'] + 1;
+                } else {
+                    $data['offline'] = 0;
+                }
+                if($data['offline'] > 2) {
+                    $data['online'] = 0;
+                } else {
+                    $data['online'] = 1;
+                }    
+            } else {
+                if((int)$server['online'] == 0 && isset($data['name'])){
+                    $data['online'] = 1;
+                    $data['offline'] = 0;
+                }
+            }
             return $servers->Save($data,['mac_address'=>$data['mac_address']]);
         }
         return $servers->Save($data);

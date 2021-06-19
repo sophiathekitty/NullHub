@@ -1,5 +1,7 @@
 <pre><?php
+echo "hello";
 require_once("../includes/main.php");
+echo " world";
 //$servers = new Servers();
 //$servers->ValidateTable();
 //SyncRooms();
@@ -16,5 +18,6 @@ print_r(Servers::GetHub());
 if(Servers::IsHub()) echo "this is the hub\n";
 nMapCrawler::CheckHosts();
 */
-require_once("../plugins/NullWeather/services/every_five_minutes.php");
+echo "\n\n".date("Y-m-d H:i:s",TestingFolderModified("../plugins/NullWeather/"));
+echo "\n\n".FolderFileCount("../plugins/NullWeather/");
 ?></pre>

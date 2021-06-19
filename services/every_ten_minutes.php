@@ -3,6 +3,7 @@ $min = substr(date("i"),1);
 echo "[$min]\n";
 if($min == "1" || (int)$min == 1){
     require_once("../includes/main.php");
+    CheckOfflineHub(); // check if the main hub is offline or not
     // find plugin services
     $plugins = FindPlugins($root_path."plugins/");
     define('main_already_included',true);

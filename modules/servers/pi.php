@@ -23,4 +23,12 @@ function TellOtherDeviceAboutMe($url){
     $data = json_decode($info);
     print_r($data);
 }
+function CheckOfflineHub(){
+    $main = Servers::GetMain();
+    if($main && (int)$main['online'] == 0 && $main['mac_address'] != LocalMac()){
+        Settings::SaveSettingsVar("Service::CheckOfflineHub",date("H:i:s"));
+        // i'm not the main so i wanna make sure it's online
+        GetRemoteServerInfo($main['url']);
+    }
+}
 ?>

@@ -28,6 +28,7 @@ function RefreshData(){
 
 
 
+var already_loaded = false;
 
 function LoadReadMe(){
     settings.getVar("type",data=>{
@@ -40,7 +41,6 @@ function LoadReadMe(){
         $.get(md).done(json=>{
             //$("#about").html(markdown.toHTML(json));
             $("#about").html(marked(json));
-            var already_loaded = false;
             plugins.model.getData(data=>{
                 console.log("load readme plugins",data);
                 if(!already_loaded){

@@ -52,7 +52,7 @@ class Model {
      * @param {bool} only_return_once set to true so it doesn't return both the cached version and a pulled version if the cached version is out of date
      * @returns {void} will return early if set to only_return_once
      */
-    getData(callBack,only_return_once = false){
+    getData(callBack,only_return_once = true){
         var date = new Date();
         var returns = 0;
         if( Model.server_online &&
@@ -194,7 +194,7 @@ class Collection extends Model {
             data[this.name].forEach(item => {
                 if(item[this.id_name] == id) callBack(item);
             });
-        })
+        },true);
     }
     /**
      * saves or adds an item to the _changed version of the data list
