@@ -8,5 +8,9 @@
         { "icon": "notification", "extensions": ["tasks"], "format": "svg" },
         { "icon": "theme", "extensions": ["colors","pallet"], "format": "svg" },
         { "icon": "story", "extensions": ["sketchbook"], "format": "svg" }
+    ],
+    "cSpell.words": [
+        "vals",
+        "wemos"
     ]
 }
