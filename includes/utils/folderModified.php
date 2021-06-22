@@ -30,7 +30,11 @@ function TestingFolderModified($path,$time = null){
     return $time;
 }
 
-
+/**
+ * the date of the latest modified file under the folder
+ * @param string $path the folder to crawl
+ * @return string the date of the latest modified file
+ */
 function FolderModifiedDate($path){
     $time = FolderModified($path);
     if($time == 0){
@@ -38,6 +42,12 @@ function FolderModifiedDate($path){
     }
     return date("Y-m-d H:i:s",$time);
 }
+/**
+ * finds the latest modified time for a folder and its sub folders
+ * @param string $path the folder path to crawl. will crawl all child folders
+ * @param int $count the number of files in the folder (passed to function when iterating through sub folders)
+ * @return int the number of files in a folder and its sub folders
+ */
 function FolderFileCount($path,$count = 0){
 
     //echo "IncludeFolder: $path \n";
@@ -60,7 +70,12 @@ function FolderFileCount($path,$count = 0){
     
     return $count;
 }
-
+/**
+ * finds the latest modified time for a folder and it's sub folders
+ * @param string $path the folder path to crawl. will crawl all child folders
+ * @param string|null $time the latest modified time (passed to function when iterating through sub folders)
+ * @return int the time of the latest modified file
+ */
 function FolderModified($path,$time = null){
 
     //echo "IncludeFolder: $path \n";
@@ -88,6 +103,15 @@ function FolderModified($path,$time = null){
     if(is_null($time)) return 0;
     return $time;
 }
+/**
+ * crawls a folder and finds the earliest modified time and latest modified time. calls itself for all child folders
+ * @param string $path the folder path to crawl. will crawl all child folders
+ * @param string|null $start the earliest modified time (passed to function when iterating through sub folders)
+ * @param string|null $end the latest modified time (passed to function when iterating through sub folders)
+ * @param string|null $f1 the earliest modified file (passed to function when iterating through sub folders)
+ * @param string|null $f2 the latest modified file (passed to function when iterating through sub folders)
+ * @return array [$start,$stop,$f1,$f2]
+ */
 function FolderModifiedWindow($path,$start = null,$stop = null,$f1 = null, $f2 = null){
 
     //echo "IncludeFolder: $path \n";
@@ -123,6 +147,15 @@ function FolderModifiedWindow($path,$start = null,$stop = null,$f1 = null, $f2 =
     
     return [$start,$stop,$f1,$f2];
 }
+/**
+ * crawls a folder and finds the earliest changed time and latest change time. calls itself for all child folders
+ * @param string $path the folder path to crawl. will crawl all child folders
+ * @param string|null $start the earliest changed time (passed to function when iterating through sub folders)
+ * @param string|null $end the latest changed time (passed to function when iterating through sub folders)
+ * @param string|null $f1 the earliest changed file (passed to function when iterating through sub folders)
+ * @param string|null $f2 the latest changed file (passed to function when iterating through sub folders)
+ * @return array [$start,$stop,$f1,$f2]
+ */
 function FolderChangedWindow($path,$start = null,$stop = null,$f1 = null,$f2 = null){
 
     //echo "IncludeFolder: $path \n";
@@ -158,12 +191,60 @@ function FolderChangedWindow($path,$start = null,$stop = null,$f1 = null,$f2 = n
     
     return [$start,$stop,$f1,$f2];
 }
-
+/**
+ * generates a hash from the modified ranges for the includes, api, models, and modules folders if they exist. 
+ * @param string $path the root path of the plugin/extension/main project
+ * @return string a crc32b hash of the folder modified ranges
+ */
 function FolderHash($path){
-    $api = FolderModifiedWindow($path."api/");
-    $models = FolderModifiedWindow($path."models/");
-    $modules = FolderModifiedWindow($path."modules/");
-    return hash("crc32b",$api[0].$api[1].$models[0].$models[1].$modules[0].$modules[1]);
+    $hash = "";
+    if(is_dir($path."includes/")){
+        $includes = FolderModifiedWindow($path."includes/");
+        $hash .= $includes[0].$includes[1];
+    }
+    if(is_dir($path."api/")){
+        $api = FolderModifiedWindow($path."api/");
+        $hash .= $api[0].$api[1];
+    }
+    if(is_dir($path."models/")){
+        $models = FolderModifiedWindow($path."models/");
+        $hash .= $models[0].$models[1];
+    }
+    if(is_dir($path."modules/")){
+        $modules = FolderModifiedWindow($path."modules/");
+        $hash .= $modules[0].$modules[1];
+    }
+    if($hash == ""){
+        return "hash failed";
+    }
+    return hash("crc32b",$hash);
     //return hash("crc32b",FolderModifiedDate($path."api/").FolderModifiedDate($path."models/").FolderModifiedDate($path."modules/"));
 }
+/**
+ * generates a hash from the modified ranges for the includes, api, models, and modules folders if they exist. 
+ * @param string $path the root path of the plugin/extension/main project
+ * @return string a crc32b hash of the folder modified ranges
+ */
+function FolderHashDate($path){
+    $time = 0;
+    if(is_dir($path."includes/")){
+        $t = FolderModified($path."includes/");
+        if($time < $t) $time = $t;
+    }
+    if(is_dir($path."api/")){
+        $t = FolderModified($path."api/");
+        if($time < $t) $time = $t;
+    }
+    if(is_dir($path."models/")){
+        $t = FolderModified($path."models/");
+        if($time < $t) $time = $t;
+    }
+    if(is_dir($path."modules/")){
+        $t = FolderModified($path."modules/");
+        if($time < $t) $time = $t;
+    }
+    return date("Y-m-d H:i:s",$time);
+    //return hash("crc32b",FolderModifiedDate($path."api/").FolderModifiedDate($path."models/").FolderModifiedDate($path."modules/"));
+}
+
 ?>

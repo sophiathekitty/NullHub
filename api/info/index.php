@@ -14,6 +14,7 @@ $data = [
 		'main' => $settings->LoadVar('main',0),
 		'dev' => $settings->LoadVar('dev',"production"),
 		'hash' => FolderHash($root_path.$settings->LoadVar('path',"/")),
+		'modified' => FolderHashDate($root_path.$settings->LoadVar('path',"/")),
 		'path' => $settings->LoadVar('path',"/"),
 		'server' => $settings->LoadVar('server',"pi"),
 		'mac_address' => LocalMac(),
