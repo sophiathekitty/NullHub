@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * gets an organized pallet of colors
+ * @return array json array of color pallets
+ */
 function FullColorPallet(){
     $pallet = [];
     $colors = new Colors();
@@ -25,6 +28,11 @@ function FullColorPallet(){
     }
     return $pallet;
 }
+/**
+ * a parsed color pallet
+ * @param string $p the name of the pallet
+ * @return array a json array for a color pallet
+ */
 function ColorPalletStamp($p){
     $pallet = [];
     $colors = new Colors();

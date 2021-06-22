@@ -113,11 +113,20 @@ class clsModel {
     public function LoadFieldBetween($field,$start,$end){
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `$field` BETWEEN '$start' AND '$end';");
     }
+    public function LoadFieldBetweenWhere($where_string,$field,$start,$end){
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE $where_string AND `$field` BETWEEN '$start' AND '$end';");
+    }
     public function LoadFieldHour($field,$hour){
         if($hour < 10) $hour = "0$hour";
         $start = $hour.":00:00";
         $end = $hour.":59:59";
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE TIME(`$field`) BETWEEN '$start' AND '$end';");
+    }
+    public function LoadFieldHourWhere($where_string,$field,$hour){
+        if($hour < 10) $hour = "0$hour";
+        $start = $hour.":00:00";
+        $end = $hour.":59:59";
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE $where_string AND TIME(`$field`) BETWEEN '$start' AND '$end';");
     }
     public function LoadFieldBetweenTime($field,$start,$end){
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE TIME(`$field`) BETWEEN '$start' AND '$end';");

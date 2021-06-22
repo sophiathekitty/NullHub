@@ -7,7 +7,7 @@ class RoomStamp {
         $room['IsBedtimeHours'] = $this->IsBedtimeHours($room);
         $room['IsDayInside'] = $this->IsDayInside($room);
         $room['IsDaytime'] = $this->IsDaytime($room);
-
+        return $room;
     }
     private function IsTimeToGetUp($room){
         return (

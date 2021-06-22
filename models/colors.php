@@ -27,11 +27,18 @@ class Colors extends clsModel {
         ]
     ];
 
-    public static $colors;
-    public static function GetInstance(){
+    private static $colors;
+    private static function GetInstance(){
         if(is_null(Colors::$colors)) Colors::$colors = new Colors();
         return Colors::$colors;
     }
+    /**
+     * get a color or set it to the default if color is missing
+     * @param string $id the name of the color
+     * @param string $pallet the name of the pallet if adding default
+     * @param string $default defines a default color to use if color is missing
+     * @return string the hex color code
+     */
     public static function GetColor($id,$pallet = "general",$default = null){
         $colors = Colors::GetInstance();
         $color = $colors->LoadColor($id);
@@ -41,16 +48,47 @@ class Colors extends clsModel {
         }
         return $color['color'];
     }
-
+    /**
+     * saves a color
+     * @param string $id the name of the color
+     * @param string $pallet the name of the pallet if adding default
+     * @param string $default defines a default color to use if color is missing
+     * @return array returns the mysql save report
+     */
+    public static function SetColor($id,$color,$pallet = "general"){
+        $colors = Colors::GetInstance();
+        return $colors->SaveColor($id,$color,$pallet);
+    }
+    /**
+     * saves a color
+     * @param string $id the name of the color
+     * @param string $pallet the name of the pallet if adding default
+     * @param string $default defines a default color to use if color is missing
+     * @return array returns the mysql save report
+     */
     public function SaveColor($id,$color,$pallet = "general"){
         return $this->Save(['id'=>$id,'color'=>$color,'pallet'=>$color],['id'=>$id]);
     }
+    /**
+     * load a color by name
+     * @param string $id the name of the color
+     * @return string the hex color code
+     */
     public function LoadColor($id){
         return $this->LoadById($id);
     }
+    /**
+     * loads a pallet by it's name
+     * @param string $pallet the name of the pallet to load
+     * @return array returns the array of table rows for colors in pallet
+     */
     public function LoadPallet($pallet){
         return $this->LoadAllWhere(['pallet'=>$pallet]);
     }
+    /**
+     * a list of the available pallets
+     * @return array a list of pallet names
+     */
     public function PalletsList(){
         $rows = clsDB::$db_g->select("SELECT DISTINCT `pallet` FROM `".$this->table_name."`");
         $pallets = [];
