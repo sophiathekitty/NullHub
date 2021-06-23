@@ -35,8 +35,11 @@ $plugins = FindPlugins($root_path."plugins/");
 //echo "0.6\n";
 
 foreach($plugins as $plugin){
+    //echo "0.6.0 $plugin\n";
     IncludeFolder($plugin."models/");
+    //echo "0.6.1 $plugin\n";
     IncludeFolder($plugin."modules/"); 
+    //echo "0.6.2 $plugin\n";
 }
 
 //echo "0.7\n";

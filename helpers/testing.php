@@ -18,6 +18,6 @@ print_r(Servers::GetHub());
 if(Servers::IsHub()) echo "this is the hub\n";
 nMapCrawler::CheckHosts();
 */
-echo "\n\n".date("Y-m-d H:i:s",TestingFolderModified("../plugins/NullWeather/"));
-echo "\n\n".FolderFileCount("../plugins/NullWeather/");
+//echo "\n\n".date("Y-m-d H:i:s",TestingFolderModified("../plugins/NullWeather/"));
+//echo "\n\n".FolderFileCount("../plugins/NullWeather/");
 ?></pre>

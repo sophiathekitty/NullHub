@@ -1,16 +1,17 @@
 <?php
-/* 
-ok... so if  i'm going to bother having a model class it should solve some basic problems
-
-1. be able to install it's table
-2. be able to validate and update it's table
-
-and it should be able to lint nicely... so probably do everything as static functions
-*/
-
-
+/**
+ * ok... so if  i'm going to bother having a model class it should solve some basic problems
+ * 
+ * 1. be able to install it's table
+ * 2. be able to validate and update it's table
+ * 
+ * and it should be able to lint nicely... so probably do everything as static functions
+ */
 class clsModel {
     public static $models = [];
+    /**
+     * validates the tables for all the registered models
+     */
     public static function ValidateTables(){
         echo "Validate Model Tables --- ".count(clsModel::$models)." \n";
         $i = 0;
@@ -21,6 +22,9 @@ class clsModel {
             echo " - validated - \n";
         }
     }
+    /**
+     * validates the model's table
+     */
     public function ValidateTable(){
         if(!clsDB::$db_g->has_table($this->table_name)){
             clsDB::$db_g->install_table($this->table_name,$this->fields);
@@ -54,6 +58,12 @@ class clsModel {
             }
         }
     }
+    /**
+     * check if the model's table has a field
+     * @param array $table the table structure
+     * @param array $field the data array for a field
+     * @return string Changed | Missing | Found
+     */
     private function TableHasField($table,$field){
         foreach($table as $f){
             if($f['Field'] == $field['Field']){
@@ -67,30 +77,56 @@ class clsModel {
         }
         return "Missing";
     }
+    /**
+     * checks if a database field is still present in the model
+     * @param array $field field data array
+     * @return bool false if the field is present in the model
+     */
     private function TableHasDepreciatedField($field){
         foreach($this->fields as $f){
             if($field['Field'] == $f['Field']) return false;
         }
         return true;
     }
-
+    /**
+     * loads all of the rows in the table
+     * @return array database rows
+     */
     public function LoadAll(){
         return clsDB::$db_g->safe_select($this->table_name);
     }
-
+    /**
+     * loads by the `id` field
+     * @param string|int $id the id of the record to be loaded
+     * @return array|null returns the data array for the table row loaded or null if now rows found
+     */
     public function LoadById($id){
         $rows = clsDB::$db_g->safe_select($this->table_name,['id'=>$id]);
         if(count($rows) > 0) return $rows[0];
         return null;
     }
+    /**
+     * does a where search and can order the results
+     * @param array $where ['key'=>'value']
+     * @return array|null returns the data array for the table rows loaded or null if now rows found
+     */
     public function LoadWhere($where,$order = null){
         $rows = clsDB::$db_g->safe_select($this->table_name,$where,$order);
         if(count($rows) > 0) return $rows[0];
         return null;
     }
+    /**
+     * does a where search and can order the results
+     * @param array $where ['key'=>'value']
+     * @return array returns the array for the table rows loaded
+     */
     public function LoadAllWhere($where,$order = null){
         return clsDB::$db_g->safe_select($this->table_name,$where,$order);
     }
+    /**
+     * loads the most recently created (uses created field in table)
+     * @return array|null returns the data array for the table rows loaded or null if now rows found
+     */
     public function LoadMostRecentlyCreated(){
         $rows = clsDB::$db_g->safe_select($this->table_name,null,['created'=>"DESC"]);
         if(count($rows) > 0) return $rows[0];
@@ -148,12 +184,20 @@ class clsModel {
         }
         return ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'row'=>$row];
     }
-
+    /**
+     * prunes the table of old rows
+     * @param string $field the name of the field used for dating rows
+     * @param int $seconds how many seconds back to go before pruning
+     */
     public function PruneField($field,$seconds){
         $d = date("Y-m-d H:i:s",time()-$seconds);
         clsDB::$db_g->_query("DELETE FROM `".$this->table_name."` WHERE `$field` < '$d';");
     }
-
+    /**
+     * strips out extra fields from data so it can be used to insert or update database
+     * @param array $data keyed array of data
+     * @return array keyed array of data stripped down to just the keys that are fields in the table
+     */
     public function CleanData($data){
         $clean = [];
         foreach($this->fields as $field){
@@ -170,6 +214,12 @@ class clsModel {
         }
         return true;
     }
+    /**
+     * strips out fields and cleans data object of fields that aren't in the table so it can be used to with safe inserts and safe updates.
+     * @param array $data keyed array of data
+     * @param array|null $fields array of field data arrays to strip out of the data
+     * @return array keyed array of data stripped down to just the keys that are fields in the table
+     */
     public function CleanDataSkipFields($data, $fields = null){
         $clean = [];
         foreach($this->fields as $field){
@@ -178,7 +228,12 @@ class clsModel {
             }
         }
         return $clean;
-    }    // this needs to be overwritten by the individual models
+    }
+    /**
+     * strips out id field and cleans data object of fields that aren't in the table so it can be used to with safe inserts and safe updates.
+     * @param array $data keyed array of data
+     * @return array keyed array of data stripped down to just the keys that are fields in the table
+     */
     public function CleanDataSkipId($data){
         return $this->CleanDataSkipFields($data,['id']);
         $clean = [];
@@ -188,7 +243,8 @@ class clsModel {
             }
         }
         return $clean;
-    }    // this needs to be overwritten by the individual models
+    }
+    // this needs to be overwritten by the individual models
     public $table_name = "Example";
     public $fields = [
         [
