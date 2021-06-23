@@ -1,5 +1,6 @@
 <pre><?php
 require_once("../includes/main.php");
+Settings::SaveSettingsVar("Services::EveryWeekStart",date("m-d H:i:s"));
 // find plugin services
 $plugins = FindPlugins($root_path."plugins/");
 define('main_already_included',true);
@@ -8,4 +9,5 @@ foreach($plugins as $plugin){
         require_once($plugin."services/every_week.php");
     }
 }
+Settings::SaveSettingsVar("Services::EveryWeekDone",date("m-d H:i:s"));
 ?></pre>

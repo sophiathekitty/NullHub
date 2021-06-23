@@ -1,5 +1,6 @@
 <pre><?php
 require_once("../includes/main.php");
+Settings::SaveSettingsVar("Services::EveryHourStart",date("m-d H:i:s"));
 SyncRooms();
 nMapCrawler::FindHosts();
 // find plugin services
@@ -10,4 +11,5 @@ foreach($plugins as $plugin){
         require_once($plugin."services/every_hour.php");
     }
 }
+Settings::SaveSettingsVar("Services::EveryHourDone",date("m-d H:i:s"));
 ?></pre>
