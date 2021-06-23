@@ -1,7 +1,7 @@
 <?php
-function LocalExtensions(){
+function LocalExtensions($verbose = false){
     global $root_path;
-    return ExtensionsFolder($root_path,"extensions/");
+    return ExtensionsFolder($root_path,"extensions/",$verbose);
 }
 
 
@@ -22,7 +22,7 @@ function FindLocalExtensions(){
 }
 
 
-function ExtensionsFolder($root,$path){
+function ExtensionsFolder($root,$path, $verbose = false){
     $extensions = [];
     //echo "$root$path\n";
     $shared_models_dir = opendir($root.$path);
@@ -55,7 +55,18 @@ function ExtensionsFolder($root,$path){
             $extension['api'] = "http://".LocalIp().Settings::LoadSettingsVar('path',"/").$path.$file."/api";
             $extension['hash'] = FolderHash($root.$path.$file."/"); //hash("crc32b",FolderModifiedDate($root.$path.$file."/api/").FolderModifiedDate($root.$path.$file."/models/").FolderModifiedDate($root.$path.$file."/modules/"));
             $extension['modified'] = date("Y-m-d H:i:s",FolderModified($root.$path.$file."/"));
-            $extensions[] = $extension;
+            if($verbose){
+                $extension['files'] = FolderFileCount($root.$path.$file."/");
+                $extension['folders'] = [];
+                $extension['folders']['api'] = FolderModifiedDate($root.$path.$file."/api/");
+                $extension['folders']['app'] = FolderModifiedDate($root.$path.$file."/app/");
+                $extension['folders']['includes'] = FolderModifiedDate($root.$path.$file."/includes/");
+                $extension['folders']['models'] = FolderModifiedDate($root.$path.$file."/models/");
+                $extension['folders']['modules'] = FolderModifiedDate($root.$path.$file."/modules/");
+                $extension['folders']['python'] = FolderModifiedDate($root.$path.$file."/python/");
+                $extension['folders']['templates'] = FolderModifiedDate($root.$path.$file."/templates/");    
+            }
+                $extensions[] = $extension;
         }
     }
     // CLOSE THE DIRECTORY

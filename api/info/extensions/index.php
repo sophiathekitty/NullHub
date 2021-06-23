@@ -1,6 +1,8 @@
 <?php
 require_once("../../../includes/main.php");
 $data = [];
-$data['extensions'] = LocalExtensions();//FindPluginsName($root_path."plugins/");
+$verbose = false;
+if(isset($_GET['verbose'])) $verbose = true;
+$data['extensions'] = LocalExtensions($verbose);//FindPluginsName($root_path."plugins/");
 OutputJson($data);
 ?>

@@ -21,11 +21,12 @@ function LocalPluginInfo($verbose = false){
         $plugin['modified'] = FolderModifiedDate($root_path."plugins/".$plugin_path);
         if($verbose){
             $plugin['files'] = FolderFileCount($root_path."plugins/".$plugin_path);
-            $plugin['api_modified'] = FolderModifiedDate($root_path."plugins/".$plugin_path."api/");
-            $plugin['models_modified'] = FolderModifiedDate($root_path."plugins/".$plugin_path."models/");
-            $plugin['modules_modified'] = FolderModifiedDate($root_path."plugins/".$plugin_path."modules/");
-            $plugin['python_modified'] = FolderModifiedDate($root_path."plugins/".$plugin_path."python/");
-            $plugin['templates_modified'] = FolderModifiedDate($root_path."plugins/".$plugin_path."templates/");    
+            $plugin['folders'] = [];
+            $plugin['folders']['api'] = FolderModifiedDate($root_path."plugins/".$plugin_path."api/");
+            $plugin['folders']['models'] = FolderModifiedDate($root_path."plugins/".$plugin_path."models/");
+            $plugin['folders']['modules'] = FolderModifiedDate($root_path."plugins/".$plugin_path."modules/");
+            $plugin['folders']['python'] = FolderModifiedDate($root_path."plugins/".$plugin_path."python/");
+            $plugin['folders']['templates'] = FolderModifiedDate($root_path."plugins/".$plugin_path."templates/");    
         }
         $plugin['hash'] = FolderHash($root_path."plugins/".$plugin_path);//hash("crc32b",FolderModifiedDate($root_path."plugins/".$plugin_path."api/").FolderModifiedDate($root_path."plugins/".$plugin_path."models/").FolderModifiedDate($root_path."plugins/".$plugin_path."modules/"));
         $plugins[] = $plugin;

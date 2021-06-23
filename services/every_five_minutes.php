@@ -3,7 +3,7 @@ $min = substr(date("i"),1);
 echo "minute: $min == 0 or 5?\n";
 if($min == "0" || $min == "5" || (int)$min == 0 || (int)$min == 5){
     require_once("../includes/main.php");
-    Settings::SaveSettingsVar("Services::EveryFiveMinutesStart",date("m-d H:i:s"));
+    Settings::SaveSettingsVar("Services::EveryFiveMinutesStart",date("H:i:s"));
 
     nMapCrawler::CheckHosts();
     // find plugin services
@@ -16,7 +16,7 @@ if($min == "0" || $min == "5" || (int)$min == 0 || (int)$min == 5){
             require_once($plugin."services/every_five_minutes.php");
         }
     }
-    Settings::SaveSettingsVar("Services::EveryFiveMinutesDone",date("m-d H:i:s"));
+    Settings::SaveSettingsVar("Services::EveryFiveMinutesDone",date("H:i:s"));
 }
 
 ?></pre>

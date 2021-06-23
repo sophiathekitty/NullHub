@@ -30,7 +30,7 @@ $data = [
 		]
 	];
 $data['apis'] = LocalPluginApis(LocalAPIs());
-$data['extensions'] = LocalExtensions();//FindLocalExtensions();
-$data['plugins'] = LocalPluginInfo();//FindPluginsName($root_path."plugins/");
+$data['extensions'] = LocalExtensions(true);//FindLocalExtensions();
+$data['plugins'] = LocalPluginInfo(true);//FindPluginsName($root_path."plugins/");
 OutputJson($data);
 ?>

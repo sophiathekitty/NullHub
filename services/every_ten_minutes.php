@@ -3,7 +3,7 @@ $min = substr(date("i"),1);
 echo "[$min]\n";
 if($min == "1" || (int)$min == 1){
     require_once("../includes/main.php");
-    Settings::SaveSettingsVar("Services::EveryTenMinutesStart",date("m-d H:i:s"));
+    Settings::SaveSettingsVar("Services::EveryTenMinutesStart",date("H:i:s"));
     CheckOfflineHub(); // check if the main hub is offline or not
     // find plugin services
     $plugins = FindPlugins($root_path."plugins/");
@@ -13,6 +13,6 @@ if($min == "1" || (int)$min == 1){
             require_once($plugin."services/every_teb_minute.php");
         }
     }
-    Settings::SaveSettingsVar("Services::EveryTenMinutesDone",date("m-d H:i:s"));
+    Settings::SaveSettingsVar("Services::EveryTenMinutesDone",date("H:i:s"));
 }
 ?></pre>

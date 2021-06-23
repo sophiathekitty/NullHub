@@ -1,6 +1,6 @@
 <pre><?php
 require_once("../includes/main.php");
-Settings::SaveSettingsVar("Services::EveryYearStart",date("m-d H:i:s"));
+Settings::SaveSettingsVar("Services::EveryYearStart",date("Y"));
 // find plugin services
 $plugins = FindPlugins($root_path."plugins/");
 define('main_already_included',true);
@@ -9,5 +9,5 @@ foreach($plugins as $plugin){
         require_once($plugin."services/every_year.php");
     }
 }
-Settings::SaveSettingsVar("Services::EveryYearDone",date("m-d H:i:s"));
+Settings::SaveSettingsVar("Services::EveryYearDone",date("Y"));
 ?></pre>
