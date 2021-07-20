@@ -180,9 +180,10 @@ class clsModel {
         } else {
             // record already exists so update it
             $id = clsDB::$db_g->safe_update($this->table_name,$data,$where);
+            $sql = clsDB::$db_g->last_sql;
             $row = $this->LoadWhere($where);
         }
-        return ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'row'=>$row];
+        return ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'sql'=>$sql,'row'=>$row];
     }
     /**
      * prunes the table of old rows

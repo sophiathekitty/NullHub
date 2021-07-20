@@ -20,4 +20,5 @@ nMapCrawler::CheckHosts();
 */
 //echo "\n\n".date("Y-m-d H:i:s",TestingFolderModified("../plugins/NullWeather/"));
 //echo "\n\n".FolderFileCount("../plugins/NullWeather/");
+echo PullRemoteSensors::Sync();
 ?></pre>

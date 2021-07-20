@@ -13,5 +13,10 @@ foreach($plugins as $plugin){
         require_once($plugin."services/every_minute.php");
     }
 }
+// extensions 
+$extensions = LocalExtensions();
+foreach($extensions as $extension){
+    $info = file_get_contents($extension['path']."services/every_minute.php");
+}
 Settings::SaveSettingsVar("Services::EveryMinuteDone",date("H:i:s"));
 ?></pre>
