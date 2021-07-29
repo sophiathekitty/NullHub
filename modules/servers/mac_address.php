@@ -15,6 +15,8 @@ function LocalMacAddress(){
     return $mac_address;
 }
 function LocalIp(){
+    $ip = wlp3s0Ip();
+    if($ip) return $ip;
     $ip = eth0Ip();
     if($ip) return $ip;
     $ip = wlan0Ip();
@@ -22,6 +24,8 @@ function LocalIp(){
     return enp4s0Ip();
 }
 function LocalMac(){
+    $mac = wlp3s0Mac();
+    if($mac) return $mac;
     $mac = eth0Mac();
     if($mac) return $mac;
     $mac = wlan0Mac();
@@ -34,6 +38,7 @@ function wlan0Ip(){
     $ifconfig = shell_exec("ifconfig wlan0");
     return substr($ifconfig,strpos($ifconfig,"inet ")+5,strpos($ifconfig,"netmask") - ( strpos($ifconfig,"inet ")+5) - 2);
 }
+
 function wlan0Mac(){
     $ifconfig = shell_exec("ifconfig wlan0");
     if(strpos($ifconfig,"ether") > -1){
@@ -47,6 +52,17 @@ function enp4s0Ip(){
 }
 function enp4s0Mac(){
     $ifconfig = shell_exec("ifconfig enp4s0");
+    if(strpos($ifconfig,"ether") > -1){
+        return substr($ifconfig,strpos($ifconfig,"ether")+6,strpos($ifconfig,"txqueuelen") -( strpos($ifconfig,"ether")+6) - 2);
+    }
+    return substr($ifconfig,strpos($ifconfig,"inet6")+6,strpos($ifconfig,"prefixlen") -( strpos($ifconfig,"inet6")+6) - 2);
+}
+function wlp3s0Ip(){
+    $ifconfig = shell_exec("ifconfig wlp3s0");
+    return substr($ifconfig,strpos($ifconfig,"inet ")+5,strpos($ifconfig,"netmask") - ( strpos($ifconfig,"inet ")+5) - 2);
+}
+function wlp3s0Mac(){
+    $ifconfig = shell_exec("ifconfig wlp3s0");
     if(strpos($ifconfig,"ether") > -1){
         return substr($ifconfig,strpos($ifconfig,"ether")+6,strpos($ifconfig,"txqueuelen") -( strpos($ifconfig,"ether")+6) - 2);
     }

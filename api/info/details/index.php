@@ -24,7 +24,7 @@ $data = [
 		'is_hub' => Servers::IsHub(),
 		'hub' => "http://".$hub['url']."/",
 		'hub_name' => $hub['name'],
-		'mac_address' => LocalMac(),
+		'mac_address' => Settings::LoadSettingsVar("mac_address",LocalMac()),
 		'name' => $settings->LoadVar('name',"null device"),
 		'git' => gitHubUrl()
 		]

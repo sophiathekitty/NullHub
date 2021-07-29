@@ -17,7 +17,7 @@ $data = [
 		'modified' => FolderHashDate($root_path.$settings->LoadVar('path',"/")),
 		'path' => $settings->LoadVar('path',"/"),
 		'server' => $settings->LoadVar('server',"pi"),
-		'mac_address' => LocalMac(),
+		'mac_address' => Settings::LoadSettingsVar("mac_address",LocalMac()),
 		'name' => $settings->LoadVar('name',"null device"),
 		'git' => gitHubUrl()
 		]
