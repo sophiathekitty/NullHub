@@ -179,8 +179,6 @@ git clone https://github.com/sophiathekitty/MealPlanner.git
 cd www && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullLights.git && git clone https://github.com/sophiathekitty/NullSensors.git && cd ../extensions && git clone https://github.com/sophiathekitty/MealPlanner.git && cd ~/
 ```
 
-```
-
 ## Cron Jobs
 
 ```bash
