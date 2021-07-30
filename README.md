@@ -131,6 +131,56 @@ This needs to be followed by the following command:
 mysql_secure_installation
 ```
 
+## Install from Git
+
+```bash
+cd www
+```
+
+```bash
+git clone https://github.com/sophiathekitty/NullHub.git .
+```
+
+```bash
+mkdir plugins
+```
+
+```bash
+mkdir extensions
+```
+
+```bash
+cd plugins
+```
+
+```bash
+git clone https://github.com/sophiathekitty/NullWeather.git
+```
+
+```bash
+git clone https://github.com/sophiathekitty/NullLights.git
+```
+
+```bash
+git clone https://github.com/sophiathekitty/NullSensors.git
+```
+
+```bash
+cd ../extensions
+```
+
+```bash
+git clone https://github.com/sophiathekitty/MealPlanner.git
+```
+
+### All at once
+
+```bash
+cd www && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullLights.git && git clone https://github.com/sophiathekitty/NullSensors.git && cd ../extensions && git clone https://github.com/sophiathekitty/MealPlanner.git && cd ~/
+```
+
+```
+
 ## Cron Jobs
 
 ```bash
@@ -139,9 +189,9 @@ sudo crontab -e
 
 ```Apache config
 1 * * * * sh /var/www/html/gitpull.sh
-#2 * * * * sh /var/www/html/plugins/NullSensors/gitpull.sh
-#3 * * * * sh /var/www/html/plugins/NullWeather/gitpull.sh
-#4 * * * * sh /var/www/html/extensions/MealPlanner/gitpull.sh
+2 * * * * sh /var/www/html/plugins/NullSensors/gitpull.sh
+3 * * * * sh /var/www/html/plugins/NullWeather/gitpull.sh
+4 * * * * sh /var/www/html/extensions/MealPlanner/gitpull.sh
 5 * * * * wget -O/dev/null -q http://localhost/helpers/validate_models.php
 
 * * * * * wget -O/dev/null -q http://localhost/services/every_minute.php
