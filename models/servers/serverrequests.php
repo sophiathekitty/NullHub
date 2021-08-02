@@ -68,7 +68,7 @@ class ServerRequests extends clsModel{
         $server['online'] = 0;
         if(!is_null($content) && $content != "") $server['online'] = 1;
         $requests = ServerRequests::GetInstance();
-        $requests->PruneField('created',DaysToSeconds(Settings::LoadSettingsVar('latency_log_days',5)));
+        $requests->PruneField('created',DaysToSeconds(Settings::LoadSettingsVar('latency_log_days',1)));
         $requests->Save(["guid"=>md5($mac_address.$server["last_ping"].$api),"mac_address"=>$mac_address,"api"=>$api,"latency"=>$latency,"online"=>$server['online']]);
         Servers::SaveServer($server);
         if($online = 0) return null;
