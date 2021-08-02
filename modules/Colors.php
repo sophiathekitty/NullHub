@@ -54,4 +54,29 @@ function ColorPalletStamp($p){
     }
     return $pallet;
 }
+
+function SyncColorPallets(){
+    if(Servers::IsHub()) return;
+    $pallets = ServerRequests::LoadHubJSON("/api/colors/?pallet=1");
+    foreach($pallets['pallet'] as $pallet => $colors){
+        if(is_array($colors)) {
+            foreach($colors as $id => $color){
+                if(is_array($color)){
+                    if(count($color) == 2){
+                        Colors::SetColor($id."_min",$color[0],$pallet);
+                        Colors::SetColor($id."_max",$color[1],$pallet);
+                    } else {
+                        for($i = 0; $i < count($color); $i++){
+                            Colors::SetColor($id."_".$i,$color[$i],$pallet);
+                        }
+                    }
+                } else {
+                    Colors::SetColor($id,$color,$pallet);
+                }
+            }
+        } else {
+            Colors::SetColor($pallet,$colors);
+        }
+    }
+}
 ?>
