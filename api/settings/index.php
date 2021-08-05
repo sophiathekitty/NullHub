@@ -6,6 +6,8 @@ $data['get'] = $_GET;
 $data['request'] = $_REQUEST;
 if(isset($_GET['name'],$_GET['value'])){
     $data = Settings::SaveSettingsVar($_GET['name'],$_GET['value']);
+} elseif(isset($_GET['name'],$_GET['default'])){
+    $data = Settings::LoadSettingsVar($_GET['name'],$_GET['default']);
 } elseif(isset($_GET['name'])){
     $data = Settings::LoadSettingsVar($_GET['name']);
 } else {
