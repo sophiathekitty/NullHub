@@ -195,6 +195,20 @@ class clsModel {
         clsDB::$db_g->_query("DELETE FROM `".$this->table_name."` WHERE `$field` < '$d';");
     }
     /**
+     * delete all records where `$field` = '$value'
+     * @param string $field the name of the field used for dating rows
+     * @param string $value the value the field needs to be for the row to be deleted
+     */
+    public function DeleteFieldValue($field,$value){
+        clsDB::$db_g->_query("DELETE FROM `".$this->table_name."` WHERE `$field` = '$value';");
+    }
+    /**
+     * delete all records in table and reset auto_increment
+     */
+    public function Truncate(){
+        clsDB::$db_g->_query("TRUNCATE `".$this->table_name."`;");
+    }
+    /**
      * strips out extra fields from data so it can be used to insert or update database
      * @param array $data keyed array of data
      * @return array keyed array of data stripped down to just the keys that are fields in the table

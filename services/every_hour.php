@@ -2,6 +2,7 @@
 require_once("../includes/main.php");
 Settings::SaveSettingsVar("Services::EveryHourStart",date("H:i:s"));
 SyncRooms();
+SyncServers();
 nMapCrawler::FindHosts();
 // find plugin services
 $plugins = FindPlugins($root_path."plugins/");

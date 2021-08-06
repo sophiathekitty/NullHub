@@ -67,6 +67,22 @@ class nMap extends clsModel{
         $nmap = nMap::GetInstance();
         return $nmap->LoadWhere(['ip'=>$ip]);
     }
+    public static function ForgetUnknown(){
+        $nmap = nMap::GetInstance();
+        $nmap->DeleteFieldValue('type','unknown');
+    }
+    public static function ForgetPi(){
+        $nmap = nMap::GetInstance();
+        $nmap->DeleteFieldValue('type','pi');
+    }
+    public static function ForgetWeMo(){
+        $nmap = nMap::GetInstance();
+        $nmap->DeleteFieldValue('type','wemo');
+    }
+    public static function ForgetAll(){
+        $nmap = nMap::GetInstance();
+        $nmap->Truncate();
+    }
 }
 
 if(defined('VALIDATE_TABLES')){

@@ -1,6 +1,7 @@
 <pre><?php
 require_once("../includes/main.php");
 Settings::SaveSettingsVar("Services::EveryDayStart",date("m-d"));
+nMap::ForgetUnknown();
 // find plugin services
 $plugins = FindPlugins($root_path."plugins/");
 define('main_already_included',true);

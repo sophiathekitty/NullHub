@@ -53,6 +53,10 @@ class ServerRequests extends clsModel{
         if(is_null(ServerRequests::$servers)) ServerRequests::$servers = new Servers();
         return ServerRequests::$servers;
     }
+    /**
+     * loads api data from the hub
+     * @param string $api the api path "/api/info/"
+     */
     public static function LoadHubJSON($api){
         $hub = Servers::GetHub();
         return ServerRequests::LoadRemoteJSON($hub['mac_address'],$api);
