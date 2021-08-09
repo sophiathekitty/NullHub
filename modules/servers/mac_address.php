@@ -24,6 +24,9 @@ function LocalIp(){
     return enp4s0Ip();
 }
 function LocalMac(){
+    return Settings::LoadSettingsVar("mac_address",LocalMacCache());
+}
+function LocalMacCache(){
     $mac = wlp3s0Mac();
     if($mac) return $mac;
     $mac = eth0Mac();
