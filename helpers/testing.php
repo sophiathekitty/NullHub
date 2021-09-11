@@ -21,5 +21,20 @@ nMapCrawler::CheckHosts();
 //echo "\n\n".date("Y-m-d H:i:s",TestingFolderModified("../plugins/NullWeather/"));
 //echo "\n\n".FolderFileCount("../plugins/NullWeather/");
 //echo PullRemoteSensors::Sync();
-SyncServers();
+//SyncServers();
+if($_GET['ip']){
+    $data = GoogleIPStatus($_GET['ip']);
+    print_r($data);
+    echo "\n\n".$_GET['ip'];
+} else {
+    $data = GoogleWiFiStatus();
+    print_r($data);
+    $data = GoogleIPStatus("192.168.86.49");
+    echo "\n\n192.168.86.49\n";
+    print_r($data);
+    $data = GoogleIPStatus("192.168.86.50");
+    echo "\n\n192.168.86.50\n";
+    print_r($data);
+
+}
 ?></pre>

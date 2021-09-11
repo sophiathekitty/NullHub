@@ -16,12 +16,20 @@ function LocalMacAddress(){
 }
 function LocalIp(){
     $ip = wlp3s0Ip();
-    if($ip) return $ip;
+    if(IsValidIP($ip)) return $ip;
     $ip = eth0Ip();
-    if($ip) return $ip;
+    if(IsValidIP($ip)) return $ip;
     $ip = wlan0Ip();
-    if($ip) return $ip;
+    if(IsValidIP($ip)) return $ip;
     return enp4s0Ip();
+}
+function IsValidIP($ip){
+    if($ip){
+        $start = substr($ip,0,3);
+        if($start == "192") return true;
+        if($start == "10.") return true;    
+    }
+    return false;
 }
 function LocalMac(){
     return Settings::LoadSettingsVar("mac_address",LocalMacCache());
