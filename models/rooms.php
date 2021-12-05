@@ -93,6 +93,13 @@ class Rooms extends clsModel{
             'Key'=>"",
             'Default'=>"0",
             'Extra'=>""
+        ],[
+            'Field'=>"modified",
+            'Type'=>"datetime",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"current_timestamp()",
+            'Extra'=>"on update current_timestamp()"
         ]
     ];
 
@@ -110,6 +117,7 @@ class Rooms extends clsModel{
         if(is_null($room)){
             $rooms->Save($data);
         } else {
+            $room['modified'] = date("Y-m-d H:i:s");
             $rooms->Save($data,['id'=>$data['id']]);
         }
     }

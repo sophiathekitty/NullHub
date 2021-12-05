@@ -82,7 +82,7 @@ if(!defined('MYSQL_CLASS')){
 		 * @param array $where keyed array of where search ["key"=>"value","foo"=>"bar"]
 		 * @return string the compiled string "\`key\` = 'value' AND \`foo\` = 'bar'"
 		 */
-		function where_safe_string($where){
+		function where_safe_string($where, $table = null){
 			$regex = array("/\"/","/\'/");
 			$replace = array("&quot;","&apos;");
 			$where = preg_replace($regex,$replace,$where);
@@ -90,7 +90,10 @@ if(!defined('MYSQL_CLASS')){
 			$sql = "";
 			foreach($where as $key => $value){
 				if(!$first) $sql .= " AND";
-				$sql .= " `$key` = '$value'";
+				if(is_null($table))
+					$sql .= " `$key` = '$value'";
+				else
+					$sql .= " `$table`.`$key` = '$value'";
 				$first = false;
 			}
 			return $sql;

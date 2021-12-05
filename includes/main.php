@@ -62,7 +62,27 @@ function IncludeFolder($path){
     // CLOSE THE DIRECTORY
     closedir($shared_models_dir);
 }
-
+function IncludeFolderDebug($path){
+    //echo "IncludeFolder: $path \n";
+    Settings::SaveSettingsVar("debug-IncludeFolder--path",$path);
+    $shared_models_dir = opendir($path);
+    // LOOP OVER ALL OF THE  FILES    
+    while ($file = readdir($shared_models_dir)) { 
+        //echo "<br><i>$file</i> ".is_dir($path.$file)."  ".is_dir($file."/")." <br>";
+        // IF IT IS NOT A FOLDER, AND ONLY IF IT IS A .php WE ACCESS IT
+        if(!is_dir($file) && strpos($file, '.php')>0 && is_file($path.$file)) { 
+            Settings::SaveSettingsVar("debug-IncludeFolder--file",$path.$file);
+            //echo "Require: $path$file\n";
+            require_once($path.$file);
+            Settings::SaveSettingsVar("debug-IncludeFolder--included",$path.$file);
+            //echo "included\n";
+        } elseif(is_dir($path.$file) && $file != ".." && $file != "."){
+            IncludeFolder($path.$file."/");
+        }
+    }
+    // CLOSE THE DIRECTORY
+    closedir($shared_models_dir);
+}
 function FindPlugins($path){
     //echo "FindPlugins: $path \n";
     $plugins = [];

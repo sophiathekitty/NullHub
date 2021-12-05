@@ -59,6 +59,44 @@ class clsModel {
         }
     }
     /**
+     * get a list of the data fields. ignores all the meta data fields
+     * @return array list of data fields
+     */
+    public function DataFields(){
+        $fields = [];
+        foreach($this->fields as $field){
+            if(     $field['Key'] == "" &&
+                    $field['Field'] != "created" &&
+                    $field['Field'] != "modified" &&
+                    $field['Field'] != "id" &&
+                    $field['Field'] != "guid" &&
+                    strpos($field['Field'],"_id") == -1
+            ){
+                $fields[] = $field['Field'];
+            }
+        }
+        return $fields;
+    }
+    /**
+     * get a list of the meta data fields. ignores all the data fields
+     * @return array list of meta data fields
+     */
+    public function MetaDataFields(){
+        $fields = [];
+        foreach($this->fields as $field){
+            if(     $field['Key'] != "" ||
+                    $field['Field'] == "created" ||
+                    $field['Field'] == "modified" ||
+                    $field['Field'] == "id" ||
+                    $field['Field'] == "guid" ||
+                    strpos($field['Field'],"_id") != -1
+            ){
+                $fields[] = $field['Field'];
+            }
+        }
+        return $fields;
+    }
+    /**
      * check if the model's table has a field
      * @param array $table the table structure
      * @param array $field the data array for a field
@@ -69,7 +107,7 @@ class clsModel {
             if($f['Field'] == $field['Field']){
                 if(strtolower($f['Type']) != strtolower($field['Type'])) return "Changed";
                 if(strtolower($f['Null']) != strtolower($field['Null'])) return "Changed";
-                if(strtolower($f['Key']) != strtolower($field['Key'])) return "Changed";
+                if(strtolower($f['Key']) != strtolower($field['Key']) && strtolower($field['Key']) != "index") return "Changed";
                 if(str_replace("()","",strtolower($f['Default'])) != str_replace("()","",strtolower($field['Default']))) return "Changed";
                 if(str_replace("()","",strtolower($f['Extra'])) != str_replace("()","",strtolower($field['Extra']))) return "Changed";
                 return "Found";
@@ -259,6 +297,64 @@ class clsModel {
         }
         return $clean;
     }
+    /**
+     * joins another model with this one. this should be the linking table
+     * @param clsModel $model instance of the model to be joined with this one
+     * @param string $on field to join the tables on `my_table`.`$on` = `model_table`.`$model_on`
+     * @param string $model_on field to join the tables on `my_table`.`$on` = `model_table`.`$model_on`
+     * @param array $model_where where array for fields in model being passed to this function
+     * @param array $where where array for fields in the model the function is being called on
+     * @return array keyed array of data from joined tables
+     */
+    public function JoinWhere($model, $on, $model_on ,$model_where, $where = null){
+        //echo $this->table_name. " - ".$model->table_name."\n";
+        $sql = "SELECT * FROM `".$this->table_name."` INNER JOIN ";
+        $sql .= "`".$model->table_name."` on `".$model->table_name."`.`$model_on` = `".$this->table_name."`.`$on`";
+        $sql .= " WHERE ";
+        if(!is_null($model_where)) $sql .= clsDB::$db_g->where_safe_string($model_where,$model->table_name);
+        $sql .= " ";
+        if(!is_null($where)) $sql .= clsDB::$db_g->where_safe_string($where,$this->table_name);
+        //echo $sql."\n\n";
+        $rows = clsDB::$db_g->select($sql);
+        echo clsDB::$db_g->get_err();
+        return $rows;
+    }    
+    /**
+     * joins another model with this one. this should be the linking table
+     * @param clsModel $model instance of the model to be joined with this one
+     * @param array $fields list of fields to select from the model running this function
+     * @param array $model_fields list of fields to select from the model passed to this function
+     * @param string $on field to join the tables on `my_table`.`$on` = `model_table`.`$model_on`
+     * @param string $model_on field to join the tables on `my_table`.`$on` = `model_table`.`$model_on`
+     * @param array $model_where where array for fields in model being passed to this function
+     * @param array $where where array for fields in the model the function is being called on
+     * @return array keyed array of data from joined tables
+     */
+    public function JoinFieldsWhere($model, $fields, $model_fields, $on, $model_on ,$model_where, $where = null){
+        $sql = "SELECT ";
+        // fields
+        $first = true;
+        foreach($fields as $field){
+            if(!$first) $sql .= ", ";
+            $first = false;
+            $sql .= "`".$this->table_name."`.`$field`";
+        }
+        foreach($model_fields as $field){
+            if(!$first) $sql .= ", ";
+            $first = false;
+            $sql .= "`".$model->table_name."`.`$field`";
+        }
+        $sql .= " FROM `".$this->table_name."` INNER JOIN ";
+        $sql .= "`".$model->table_name."` on `".$model->table_name."`.`$model_on` = `".$this->table_name."`.`$on`";
+        $sql .= " WHERE ";
+        if(!is_null($model_where)) $sql .= clsDB::$db_g->where_safe_string($model_where,$model->table_name);
+        $sql .= " ";
+        if(!is_null($where)) $sql .= clsDB::$db_g->where_safe_string($where,$this->table_name);
+        //echo "\n\n".$sql."\n\n";
+        $rows = clsDB::$db_g->select($sql);
+        echo clsDB::$db_g->get_err();
+        return $rows;
+    }
     // this needs to be overwritten by the individual models
     public $table_name = "Example";
     public $fields = [
@@ -271,5 +367,27 @@ class clsModel {
             "Extra"=>"auto_increment"
         ]
     ];
+    public $hourly_type = "";
+    public function __construct()
+    {
+        if($this->hourly_type != "") $this->add_hourly_fields();
+    }
+    public function add_hourly_fields()
+    {
+        if($this->hourly_type == "") return;
+        foreach($this->fields as $field){
+            if($field['Field'] == "h0") return;
+        }
+        for($i = 0; $i < 24; $i++){
+            $this->fields[] = [
+                'Field'=>"h".$i,
+                'Type'=>$this->hourly_type,
+                'Null'=>"NO",
+                'Key'=>"",
+                'Default'=>"",
+                'Extra'=>""
+            ];
+        }    
+    }
 }
 ?>
