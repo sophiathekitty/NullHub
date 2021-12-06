@@ -156,6 +156,7 @@ class clsModel {
     /**
      * does a where search and can order the results
      * @param array $where ['key'=>'value']
+     * @param array|null $order keyed array for order ["key"=>"ASC","foo"=>"DESC"] leave null to not include ORDER BY
      * @return array returns the array for the table rows loaded
      */
     public function LoadAllWhere($where,$order = null){
@@ -170,41 +171,105 @@ class clsModel {
         if(count($rows) > 0) return $rows[0];
         return null;
     }
+    /**
+     * load WHERE `$field` > '$datetime'
+     * @param string $field the name of the field to search by
+     * @param string $datetime the date to search by YYYY:MM:DD HH:MM:SS
+     */
     public function LoadFieldAfter($field,$datetime){
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `$field` > '$datetime';");
     }
+    /**
+     * load WHERE `$field` < '$datetime'
+     * @param string $field the name of the field to search by
+     * @param string $datetime the date to search by YYYY:MM:DD HH:MM:SS
+     */
     public function LoadFieldBefore($field,$datetime){
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `$field` < '$datetime';");
     }
+    /**
+     * load WHERE $where AND `$field` > '$datetime'
+     * @param array $where a keyed array to build where text ['field'=>$value]
+     * @param string $field the name of the field to search by
+     * @param string $datetime the date to search by YYYY:MM:DD HH:MM:SS
+     */
     public function LoadWhereFieldAfter($where,$field,$datetime){
         $where_txt = clsDB::$db_g->where_safe_string($where);
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE $where_txt AND `$field` > '$datetime';");
     }
+    /**
+     * load WHERE $where AND `$field` < '$datetime'
+     * @param array $where a keyed array to build where text ['field'=>$value]
+     * @param string $field the name of the field to search by
+     * @param string $datetime the date to search by YYYY:MM:DD HH:MM:SS
+     */
     public function LoadWhereFieldBefore($where,$field,$datetime){
         $where_txt = clsDB::$db_g->where_safe_string($where);
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE $where_txt AND `$field` < '$datetime';");
     }
+    /**
+     * load WHERE `$field` BETWEEN '$start' AND '$end'
+     * @param string $field the name of the field to search by
+     * @param string $start start date YYYY:MM:DD HH:MM:SS
+     * @param string $end end date YYYY:MM:DD HH:MM:SS
+     * @return array the table array $rows[0][$field]
+     */
     public function LoadFieldBetween($field,$start,$end){
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `$field` BETWEEN '$start' AND '$end';");
     }
+    /**
+     * load WHERE $where_string AND `$field` BETWEEN '$start' AND '$end'
+     * @param string $where_string a WHERE string ex: `field` = 'value'
+     * @param string $field the name of the field to search by
+     * @param string $start start date YYYY:MM:DD HH:MM:SS
+     * @param string $end end date YYYY:MM:DD HH:MM:SS
+     * @return array the table array $rows[0][$field]
+     */
     public function LoadFieldBetweenWhere($where_string,$field,$start,$end){
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE $where_string AND `$field` BETWEEN '$start' AND '$end';");
     }
+    /**
+     * load WHERE TIME(`$field`) BETWEEN '$hour:00:00' AND '$hour:59:59'
+     * @param string $field the field to search hour by
+     * @param int $hour the hour of the day to search for
+     * @return array the table array $rows[0][$field]
+     */
+
     public function LoadFieldHour($field,$hour){
         if($hour < 10) $hour = "0$hour";
         $start = $hour.":00:00";
         $end = $hour.":59:59";
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE TIME(`$field`) BETWEEN '$start' AND '$end';");
     }
+    /**
+     * load WHERE $where_string AND TIME(`$field`) BETWEEN '$hour:00:00' AND '$hour:59:59'
+     * @param string $where_string a WHERE string ex: `field` = 'value'
+     * @param string $field the field to search hour by
+     * @param int $hour the hour of the day to search for
+     * @return array the table array $rows[0][$field]
+     */
     public function LoadFieldHourWhere($where_string,$field,$hour){
         if($hour < 10) $hour = "0$hour";
         $start = $hour.":00:00";
         $end = $hour.":59:59";
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE $where_string AND TIME(`$field`) BETWEEN '$start' AND '$end';");
     }
+    /**
+     * load WHERE TIME(`$field`) BETWEEN '$start' AND '$end'
+     * @param string $field the name of the field to search by
+     * @param string $start start time HH:MM:SS
+     * @param string $end end time HH:MM:SS
+     * @return array the table array $rows[0][$field]
+     */
     public function LoadFieldBetweenTime($field,$start,$end){
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE TIME(`$field`) BETWEEN '$start' AND '$end';");
     }
+    /**
+     * Save data to the table
+     * @param array $data the keyed data array to save ['field_name'=>$field_value]
+     * @param array|null $where (optional) keyed data array of where to save ['id'=>$id]
+     * @return array a save report ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'sql'=>$sql,'row'=>$row]
+     */
     public function Save($data,$where = null){
         // check for matching record
         $id = null;
@@ -260,6 +325,12 @@ class clsModel {
         }
         return $clean;
     }
+    /**
+     * should this field be included
+     * @param string $field the field name to see if it should be skipped
+     * @param array|null $skips the list of fields to skip ['field1','field2']
+     * @return bool return true if no skips or if field wasn't found in skips list
+     */
     private function SkipField($field,$skips){
         if(is_null($skips)) return true;
         foreach($skips as $skip){
@@ -368,10 +439,16 @@ class clsModel {
         ]
     ];
     public $hourly_type = "";
+    /**
+     * constructor function
+     */
     public function __construct()
     {
         if($this->hourly_type != "") $this->add_hourly_fields();
     }
+    /**
+     * adds 'h0' through 'h23' fields with type $this->hourly_type if $this->hourly_type has been set by the model extending clsModel
+     */
     public function add_hourly_fields()
     {
         if($this->hourly_type == "") return;
