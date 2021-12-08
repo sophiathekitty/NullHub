@@ -201,7 +201,7 @@ section a {
     #local_extensions {
         grid-area: sidebar-c;
     }
-    #stats {
+    #stats, #servers {
         grid-area: sidebar-d;
     }
     #about h1{

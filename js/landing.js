@@ -37,8 +37,10 @@ function LoadReadMe(){
         if(data == "hub"){
             md = "/HUB.md";
             $("title").html("Null [Hub]");
-        } else {
+        } else if(data == "" || data == "device") {
             $("title").html("Null [Device]");
+        } else {
+            $("title").html("Null ["+data.charAt(0).toUpperCase()+data.slice(1)+"]");
         }
         //md = "README.md";
         $.get(md).done(json=>{
