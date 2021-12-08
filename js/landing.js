@@ -35,7 +35,10 @@ function LoadReadMe(){
         console.log("load readme type",data);
         var md = "/DEVICE.md";
         if(data == "hub"){
-            md = "/HUB.md";;
+            md = "/HUB.md";
+            $("title").html("Null [Hub]");
+        } else {
+            $("title").html("Null [Device]");
         }
         //md = "README.md";
         $.get(md).done(json=>{

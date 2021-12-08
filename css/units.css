@@ -1,0 +1,111 @@
+[unit]::after{
+	content: attr(unit);
+}
+.percent::after,
+[unit="percent"]::after{
+	content: '%';
+}
+.fahrenheit::after,
+[unit="fahrenheit"]::after,
+[unit="air fry"]::after{
+	content: '°';
+}
+.celsius::after,
+[unit="celsius"]::after{
+    content: '°';
+}
+
+[unit="MetersPerSeconds"]::after{
+    content: 'm/s';
+}
+[unit="am"]::after{
+    content: 'am';
+}
+[unit="pm"]::after{
+    content: 'pm';
+}
+
+[unit="days"]::after{
+    content: 'days';
+}
+[unit="hours"]::after{
+    content: 'hrs';
+}
+[unit="minutes"]::after{
+    content: 'mins';
+}
+[unit="day"]::after{
+    content: 'day';
+}
+[unit="hour"]::after{
+    content: 'hr';
+}
+[unit="minute"]::after{
+    content: 'min';
+}
+
+[unit="lb"]::after,
+[unit="lbs"]::after{
+    content: 'lbs';
+}
+[unit="tbsp"]::after{
+    content: 'tbsp';
+}
+[unit="tsp"]::after{
+    content: 'tsp';
+}
+[unit="cup"]::after,
+[unit="cups"]::after{
+    content: 'cups';
+}
+[unit="oz"]::after{
+    content: 'oz';
+}
+[unit="slow"]::after,
+[unit="ricecooker"]::after,
+[unit="microwave"]::after,
+[unit="stove"]::after,
+[unit="oven"]::after {
+    content: none;
+}
+/*
+[unit="can"]::after{
+    content: 'can';
+}
+[unit="bag"]::after{
+    content: 'bag';
+}
+[unit="pack"]::after{
+    content: 'pack';
+}
+[unit="packet"]::after{
+    content: 'packet';
+}
+[unit="onion"]::after{
+    content: 'onion';
+}
+[unit="clove"]::after{
+    content: 'clove';
+}
+[unit="fish"]::after{
+    content: 'fish';
+}
+[unit="carrot"]::after{
+    content: 'carrot';
+}
+[unit="apple"]::after{
+    content: 'apple';
+}
+[unit="orange"]::after{
+    content: 'orange';
+}
+[unit="potato"]::after{
+    content: 'potato';
+}
+[unit="head"]::after{
+    content: 'head';
+}
+[unit="bulb"]::after{
+    content: 'bulb';
+}
+*/

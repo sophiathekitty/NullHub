@@ -64,13 +64,18 @@ class clsModel {
      */
     public function DataFields(){
         $fields = [];
+        //print_r($this->fields);
         foreach($this->fields as $field){
+            //print_r($field);
             if(     $field['Key'] == "" &&
                     $field['Field'] != "created" &&
                     $field['Field'] != "modified" &&
                     $field['Field'] != "id" &&
                     $field['Field'] != "guid" &&
-                    strpos($field['Field'],"_id") == -1
+                    $field['Null'] == "NO" &&
+                    strpos($field['Field'],"_min") == false &&
+                    strpos($field['Field'],"_max") == false &&
+                    strpos($field['Field'],"_id") == false
             ){
                 $fields[] = $field['Field'];
             }

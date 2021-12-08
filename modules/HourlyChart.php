@@ -6,9 +6,19 @@ class HourlyChart {
     /**
      * calculate the ranges for numeric fields in a chart (will skip non numeric fields if included... why include those? developer proofing....)
      * @param array $chart an array containing an hourly chart
+     * @param clsModel $model the model related to the chart
      * @param array $fields a list of fields to generate ranges for
      */
-    public function Range($chart,$fields){
+    public static function Ranges($chart,$model){
+        return HourlyChart::Range($chart,$model->DataFields());
+
+    }
+    /**
+     * calculate the ranges for numeric fields in a chart (will skip non numeric fields if included... why include those? developer proofing....)
+     * @param array $chart an array containing an hourly chart
+     * @param array $fields a list of fields to generate ranges for
+     */
+    public static function Range($chart,$fields){
         $ranges = [];
         foreach($fields as $field){
             if(is_numeric($chart[0][$field]))
@@ -34,10 +44,23 @@ class HourlyChart {
      * @return array|null the averages for an hour (single hour item in hourly chart) returns null if no data sent
      */
     public function HourlyAverages($data,$hour,$fields){
-        if(count($data) < 1) return null; // return if there's no data to process
         // setup averages array
+        if($hour < 10){
+            $hour = "0".$hour;
+        }
+        $averages = $this->Averages($data,$fields);
+        $averages['hour'] = (string)$hour;
+        return $averages;
+    }
+    /**
+     * calculate the hourly averages for a set of data. for numeric fields the average value and min/max range will be found. for string fields the most common occurrence will be found.
+     * @param array $data an array of data to be averaged
+     * @param array $fields a list of fields to average
+     * @return array|null the averages for an hour (single hour item in hourly chart) returns null if no data sent
+     */
+    public function Averages($data,$fields){
+        if(count($data) < 1) return null; // return if there's no data to process
         $averages = [      
-            "hour" => $hour,
             "count" => count($data)
         ];
         foreach($fields as $field){
@@ -50,9 +73,6 @@ class HourlyChart {
                 // figure out which string is most common
                 $averages[$field] = [];
             }
-        }
-        if($hour < 10){
-            $averages['hour'] = "0".$hour;
         }
         // main data processing
         foreach($data as $h){
