@@ -1,5 +1,5 @@
 /**
- * Model
+ * Model 
  * base data loading class that handles loading data from the api and caching it in local storage
  * it will load data from local storage and pull updates to this data when it's out of date
  */
@@ -171,8 +171,8 @@ class Model {
 class Collection extends Model {
     /**
      * creates a collection. collections default the cache time to 5 minutes
-     * @param {string} collection_name the name of the root model ie: rooms
-     * @param {string} item_name the name of items ie: room
+     * @param {string} collection_name the name of the root model ie: rooms <section id="rooms"></section>
+     * @param {string} item_name the name of items ie: room <div class="room"></div>
      * @param {string} get_url the api url for loading data
      * @param {string} save_url the api url for saving data
      * @param {string} id_name the name of id field in the model data. ie: "id" or "hour" or "name"
@@ -180,7 +180,6 @@ class Collection extends Model {
      */
     constructor(collection_name,item_name,get_url,save_url,id_name = "id",prefix = "collection_"){
         super(collection_name, get_url, save_url,1000*60*5,prefix);
-        //this.prefix = "collection_";
         this.item_name = item_name;
         this.id_name = id_name;
     }

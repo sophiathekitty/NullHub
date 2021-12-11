@@ -10,6 +10,8 @@ if(isset($_GET['name'],$_GET['value'])){
     $data = Settings::LoadSettingsVar($_GET['name'],$_GET['default']);
 } elseif(isset($_GET['name'])){
     $data = Settings::LoadSettingsVar($_GET['name']);
+} elseif(isset($_GET['pallet'])){
+    $data['settings'] = Settings::LoadSettingsPallet($_GET['pallet']);
 } else {
     $data['settings'] = Settings::LoadAllSettings();
 }

@@ -1,6 +1,6 @@
 /**
  * View
- * handles the main functions of building and displaying the interface elements
+ * handles the main functions of building and displaying the interface elements 
  */
 class View {
     static refresh_ratio = 1;
@@ -12,12 +12,12 @@ class View {
      * @param {Number} refresh_rate // how long in milliseconds to wait before refreshing. (is multiplied by View.refresh_ratio)
      */
     constructor(model,template = null, item_template = null, refresh_rate = 60000){
-        console.log("ViewConstructor",model,template,item_template,refresh_rate);
+        //console.log("ViewConstructor",model,template,item_template,refresh_rate);
         this.model = model;
         this.template = template;
         this.item_template = item_template;
         this.refresh_rate = refresh_rate
-        console.log("ViewConstructorVerify",this.model,this.template,this.item_template,this.refresh_rate);
+        //console.log("ViewConstructorVerify",this.model,this.template,this.item_template,this.refresh_rate);
 
         /*
         if(this.model instanceof Collection){
@@ -107,6 +107,7 @@ class View {
      * Builds the view
      */
     build(){
+        console.log("View::build----"+this.model.name);
         if(this.model instanceof Array){
             // build multiple models
             //console.log("build view multi model");
@@ -192,7 +193,10 @@ class View {
                         //console.log("build collection view",this.model.name,this.model.item_name);
                         $("#"+this.model.name).html("");
                         this.item_template.getData(html=>{
-                            //console.log("build collection view item template loaded....",data,html);
+                            //console.log("build collection view item template loaded....",this.model.name,data,html);
+                            console.log(this.model.name);
+                            console.log(data);
+                            console.log(data[this.model.name]);
                             data[this.model.name].forEach((itm,index)=>{
                                 $(html).appendTo("#"+this.model.name).attr('index',index);
                                 if('id' in itm) $("#"+this.model.name+" ."+this.model.item_name+"[index="+index+"]").attr(this.model.item_name+"_id",itm[this.model.id_name]);

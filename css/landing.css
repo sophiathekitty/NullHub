@@ -1,7 +1,7 @@
 html,body {
     background-color: #2f4f4f;
     color: #cad7e4;
-    font-family: 'VicCitySans', Arial, Helvetica, sans-serif;
+    font-family: 'ViceCitySans', Arial, Helvetica, sans-serif;
 }
 a {
     color: #d3d3d3;
@@ -195,13 +195,13 @@ section a {
     #info {
         grid-area: sidebar-a;
     }
-    #local_plugins,#settings {
+    #local_plugins,#stats {
         grid-area: sidebar-b;
     }
     #local_extensions {
         grid-area: sidebar-c;
     }
-    #stats, #servers {
+    #settings, #servers {
         grid-area: sidebar-d;
     }
     #about h1{
@@ -218,7 +218,7 @@ section a {
 section h1, section h2 {
     color: #98ed8a;
 }
-#info h1, #local_plugins h1, #local_extensions h1, #settings h1 {
+#info h1, #local_plugins h1, #local_extensions h1, #settings h1, #stats h1 {
     color: lightyellow;
     font-size: 1.3em;
     background-color: #98ed8a66;
@@ -240,16 +240,16 @@ section li {
 section li:nth-child(odd){
     background-color: rgba(14, 65, 65, 0.322);
 }
-#info li .value::after, #settings li .value::after{
+#info li .value::after, #settings li .value::after, #stats li .value::after{
     color: whitesmoke;
     font-size: 0.75em;
     margin-left: 0.5em;
 }
-#info li .key, #settings li .key {
+#info li .key, #settings li .key, #stats li .key {
     display: inline-block;
     width: 7em;
 }
-#info li .value, #settings li .value {
+#info li .value, #settings li .value, #stats li .value {
     display: inline-block;
     color: darkorange;
 }
@@ -257,7 +257,7 @@ section li:nth-child(odd){
     color: whitesmoke;
     
 }
-#info li a:hover, #settings li a:hover{
+#info li a:hover, #settings li a:hover, #stats li a:hover{
     color: #98ed8a;
     
 }

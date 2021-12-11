@@ -32,6 +32,9 @@ function SaveSettingVar($name,$value){
  */
 class Settings extends clsModel {
     private static $settings = null;
+    /**
+     * @return Settings
+     */
     private static function GetInstance(){
         if(is_null(Settings::$settings)){
             Settings::$settings = new Settings();
@@ -45,6 +48,19 @@ class Settings extends clsModel {
     public static function LoadAllSettings(){
         $settings = Settings::GetInstance();
         return $settings->LoadAll();
+    }
+    /**
+     * loads a settings var
+     * @param string $pallet the prefix to search with "weather_"
+     * @return array an array of settings
+     */
+    public static function LoadSettingsPallet($pallet){
+        $settings = [];
+        $rows = clsDB::$db_g->select("SELECT * FROM `Settings` WHERE `name` LIKE '$pallet%'");
+        foreach($rows as $row){
+            $settings[$row['name']] = $row['value'];
+        }
+        return $settings;
     }
     /**
      * loads a settings var
