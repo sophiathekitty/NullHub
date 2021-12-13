@@ -23,8 +23,12 @@ class HourlyView extends View {
                 console.log("HourlyView::build::item_template--"+this.model.chart_name);
                 // i think we actually have the info in the model to do the view builds?
                 this.item_template.getData(html=>{
+                    console.log("HourlyView::build::loadTemplate--"+this.model.chart_name);
                     this.model.getData(json=>{
-                        console.log(this.model.name);
+                        console.log("HourlyView::build::getData--"+this.model.chart_name);
+                        $("#"+this.model.chart_name).html("<div class=\"time_bar\"></div>");
+                        MoveTimeBar();
+                        console.log("HourlyView::build::json",json);
                         json[this.model.item_name].forEach(hour=>{
                             var h = Number(hour.hour);
                             var am = "am";
@@ -35,6 +39,7 @@ class HourlyView extends View {
                             if(h==0) h = 12;
                             $(html).appendTo("#"+this.model.chart_name).attr("hour",hour.hour).attr("hour_txt",h+am);
                         });
+                        this.display();
                     });
                 });
             }

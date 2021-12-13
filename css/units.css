@@ -17,6 +17,11 @@
 
 [unit="MetersPerSeconds"]::after{
     content: 'm/s';
+    content: 'm/h';
+}
+[unit="mph"]::after,
+[unit="MilesPerHour"]::after{
+    content: 'mph';
 }
 [unit="am"]::after{
     content: 'am';

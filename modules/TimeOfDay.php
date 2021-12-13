@@ -163,5 +163,22 @@ class TimeOfDay {
         }
         return true;
     }
+    /**
+     * is the moon out?
+     * @return bool returns true if there is moonrise data and the moon is out
+     */
+    public static function MoonOut(){
+        $moonrise = SEttings::LoadSettingsVar('moonrise_txt');
+        $moonset = SEttings::LoadSettingsVar('moonset_txt');
+        list($rise_hour,$rise_min) = explode(":",$moonrise);
+        list($set_hour,$set_min) = explode(":",$moonset);
+        $h = (int)date('H');
+        $m = (int)date('i');
+        if($h > $rise_hour && $h < $set_hour) return true;
+        if($h == $rise_hour && $m > $rise_min) return true;
+        if($h == $set_hour && $m < $set_min) return true;
+        return false;
+    }
+
 }
 ?>

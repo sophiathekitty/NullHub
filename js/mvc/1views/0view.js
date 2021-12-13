@@ -76,7 +76,7 @@ class View {
             } else {
                 this.model.getData(data=>{
                     if(this.model instanceof Collection){
-                        //console.log("display collection view",this.model.name);
+                        console.log("display collection view",this.model.name,this.model);
                         if($("#"+this.model.name+" ."+this.model.item_name).length != data[this.model.name].length){
                             console.log("rebuilding?",$("#"+this.model.name+" ."+this.model.item_name).length,data[this.model.name].length);
                             this.build();
