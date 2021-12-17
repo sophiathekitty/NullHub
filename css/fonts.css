@@ -1,9 +1,21 @@
 @charset "utf-8";
 @font-face{
-  font-family: 'Rimouski';
-  src: url(/fonts/rimouski\ sb.ttf);
-}
-@font-face{
   font-family: 'ViceCitySans';
   src: url(/fonts/ViceCitySans.otf);
+}
+@font-face{
+  font-family: 'BodoAmat';
+  src: url(/fonts/BodoAmat.otf);
+}
+@font-face{
+  font-family: 'Rounded_Elegance';
+  src: url(/fonts/Rounded_Elegance.ttf);
+}
+@font-face{
+  font-family: 'OdinRounded';
+  src: url(/fonts/OdinRounded-Bold.otf);
+}
+@font-face{
+  font-family: 'BorisBlackBloxx';
+  src: url(/fonts/BorisBlackBloxx.ttf);
 }

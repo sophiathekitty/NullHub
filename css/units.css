@@ -7,9 +7,7 @@
 }
 .fahrenheit::after,
 [unit="fahrenheit"]::after,
-[unit="air fry"]::after{
-	content: '°';
-}
+[unit="air fry"]::after,
 .celsius::after,
 [unit="celsius"]::after{
     content: '°';
@@ -48,7 +46,7 @@
 [unit="minute"]::after{
     content: 'min';
 }
-
+/*
 [unit="lb"]::after,
 [unit="lbs"]::after{
     content: 'lbs';
@@ -66,6 +64,7 @@
 [unit="oz"]::after{
     content: 'oz';
 }
+*/
 [unit="slow"]::after,
 [unit="ricecooker"]::after,
 [unit="microwave"]::after,
@@ -73,44 +72,3 @@
 [unit="oven"]::after {
     content: none;
 }
-/*
-[unit="can"]::after{
-    content: 'can';
-}
-[unit="bag"]::after{
-    content: 'bag';
-}
-[unit="pack"]::after{
-    content: 'pack';
-}
-[unit="packet"]::after{
-    content: 'packet';
-}
-[unit="onion"]::after{
-    content: 'onion';
-}
-[unit="clove"]::after{
-    content: 'clove';
-}
-[unit="fish"]::after{
-    content: 'fish';
-}
-[unit="carrot"]::after{
-    content: 'carrot';
-}
-[unit="apple"]::after{
-    content: 'apple';
-}
-[unit="orange"]::after{
-    content: 'orange';
-}
-[unit="potato"]::after{
-    content: 'potato';
-}
-[unit="head"]::after{
-    content: 'head';
-}
-[unit="bulb"]::after{
-    content: 'bulb';
-}
-*/

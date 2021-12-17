@@ -52,6 +52,7 @@ function LoadReadMe(){
                     data.plugins.forEach(plugin=>{
                         $.get(plugin.local+"ABOUT.md").done(json=>{
                             $("#about").append(marked(json));
+                            $("#about a").attr("target","_blank");
                         });
                     });    
                 }

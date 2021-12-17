@@ -174,10 +174,13 @@ class TimeOfDay {
         list($set_hour,$set_min) = explode(":",$moonset);
         $h = (int)date('H');
         $m = (int)date('i');
+        if($rise_hour > $set_hour){
+            $set_hour += 24;
+        }
         if($h > $rise_hour && $h < $set_hour) return true;
         if($h == $rise_hour && $m > $rise_min) return true;
-        if($h == $set_hour && $m < $set_min) return true;
-        return false;
+        if($h == $set_hour && $m < $set_min) return true;    
+    return false;
     }
 
 }

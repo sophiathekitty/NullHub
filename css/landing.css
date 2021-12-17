@@ -3,10 +3,21 @@ html,body {
     color: #cad7e4;
     font-family: 'ViceCitySans', Arial, Helvetica, sans-serif;
 }
+p, p a {
+    font-family: Arial, Helvetica, sans-serif;
+}
 a {
+    display: inline-block;
     color: #d3d3d3;
     text-decoration: none;
-    font-family: 'Rimouski', Arial, Helvetica, sans-serif;
+    font-family: 'OdinRounded', 'ViceCitySans', Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+}
+nav a {
+    font-family: 'BorisBlackBloxx', 'OdinRounded', Arial, Helvetica, sans-serif;
+}
+h1 {
+    font-family: 'BorisBlackBloxx', 'OdinRounded', Arial, Helvetica, sans-serif;
 }
 a:hover {
     color: #98ed8a;
