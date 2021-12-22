@@ -13,6 +13,7 @@ function MoveTimeBar(){
     var percent = secs / (60*60*24);
     percent *= 100;
     $(".time_bar").css("left",percent+"%");
+    /*
     var hours = date.getHours();
     var am = "am";
     if(hours > 12){
@@ -36,6 +37,7 @@ function MoveTimeBar(){
     $("#date").html(day_of_week[date.getDay()]+", "+months[date.getMonth()]+" "+date.getDate());
     $("#date").attr("date",months[date.getMonth()]+""+date.getDate());
     $("body").attr("date",months[date.getMonth()]+""+date.getDate());
+    */
 }
 function DateToTimeString(date){
     var hours = date.getHours();

@@ -1,0 +1,76 @@
+#info, #local_plugins, #local_extensions {
+    display: inline-block;
+    vertical-align: top;
+    min-width: 20em;
+    width: 100%;
+    max-width: 40em;
+}
+section h1, section h2 {
+    color: var(--null);
+}
+#info h1, #local_plugins h1, #local_extensions h1, #settings h1, #stats h1 {
+    color: var(--list_header_text);
+    font-size: 1.3em;
+    background-color: var(--list_header_back);
+    margin: 0px;
+    padding: 0.2em;
+    text-shadow: var(--shadow) 0.1em 0.1em 0.1em;
+}
+section ul {
+    padding: 0em;
+    margin: 0.1em;
+    margin-left: auto;
+    margin-right: auto;
+    list-style: none;
+    max-width: 20em;
+}
+section li {
+    padding: 0.2em;
+}
+section li:nth-child(even){
+    background-color: var(--list_even);
+}
+li .value::after {
+    color: var(--text);
+    font-size: 0.75em;
+    margin-left: 0.5em;
+}
+li .key {
+    display: inline-block;
+    width: 7em;
+}
+li .value {
+    display: inline-block;
+    color: var(--list_value);
+}
+li a.value[target="_blank"]:hover{
+    color: var(--text) !important;
+    
+}
+li a:hover {
+    color: var(--null);
+    
+}
+section a:hover {
+    color: var(--null);
+    text-decoration-color: var(--highlight);
+}
+section a[target="_blank"]:hover {
+    color: var(--highlight);
+    text-decoration-color: var(--null);
+}
+
+
+
+/* this is a way to hide the link text and just show the icon
+nav.sections a {
+    visibility: hidden;
+    font-size: 0rem;
+}
+
+nav.sections a::before {
+    visibility: visible;
+    content: 'test';
+    font-size: 1rem;
+}
+*/

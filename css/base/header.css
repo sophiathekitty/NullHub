@@ -1,0 +1,23 @@
+header {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    font-size: 0.95em;
+}
+header h1 {
+    display: inline-flex;
+    margin: 0.1em;
+    padding: 0em;
+    font-size: 2em;
+}
+@media( min-width: 1000px){
+    header {
+        flex-direction: row;
+        font-size: 1.15em;
+    }
+}
+@media( min-width:600px){
+    header {
+        padding: 2vw;
+    }
+}

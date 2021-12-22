@@ -346,6 +346,27 @@ class View {
         var min = date.getMinutes()
         return (((((hours+offset)*60) + min) / (24*60))*100)+"%";
     }
+    /**
+     * convert 13:23 to 1:23pm
+     * @param {string} time 
+     */
+    Time24to12(time){
+        var t = time.split(":");
+        var h = Number(t[0]);
+        var m = t[1];
+        if(h > 12){
+            h -= 12;
+        }
+        if(h == 0) h = 12;
+        return h+":"+m;
+    }
+    Time24toAM(time){
+        var am = "am";
+        var t = time.split(":");
+        var h = Number(t[0]);
+        if(h >= 12) am = "pm";
+        return am;
+    }
 }
 /**
  * ReMapper

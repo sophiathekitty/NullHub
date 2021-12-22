@@ -1,112 +1,119 @@
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Null Hub</title>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Null Hub</title>
+        <link rel="apple-touch-icon" sizes="57x57" href="/images/favicon/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="/images/favicon/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/images/favicon/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/images/favicon/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/images/favicon/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/images/favicon/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="/images/favicon/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <meta name="msapplication-TileColor" content="#fafad2">
+        <meta name="msapplication-TileImage" content="/images/favicon/ms-icon-144x144.png">
+        <meta name="theme-color" content="#98ed8a">
+        
+        <link href="/css/base.css.php" rel="stylesheet" type="text/css">
+        <script src="js/jquery-1.12.1.min.js"></script>
+        <script src="js/marked.min.js"></script>
 
-    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/images/favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <meta name="msapplication-TileColor" content="#fafad2">
-    <meta name="msapplication-TileImage" content="/images/favicon/ms-icon-144x144.png">
-    <meta name="theme-color" content="#98ed8a">
-    
-    <link href="css/fonts.css" rel="stylesheet" type="text/css">
-    <link href="css/landing.css" rel="stylesheet" type="text/css">
-    <script src="js/jquery-1.12.1.min.js"></script>
-    <script src="js/marked.min.js"></script>
-
-    <script src="js/mvc/nullmvc.js.php"></script>
-    
-    <script src="js/landing.js"></script>
-    
-
-
-</head>
-<body>
-    <header>
-        <h1 class="null">Null Home</h1>
-        <nav>
-            <a href="/app" target="_top">app</a>
-            <a href="/phpMyAdmin" target="_blank">myAdmin</a>
-            <a href="/api" target="_blank">api</a>
-            <a href="/helpers" target="_blank">helpers</a>
-        </nav>
-    </header>
-    <div class="contents">
-        <section id="about">
-        </section>
-        <section id="info">
-            <h1>local info</h1>
-            <ul>
-                <li>
-                    <span class="key">name</span>
-                    <span class="value" var="name"></span>
-                </li>
-                <li>
-                    <span class="key">hash</span>
-                    <span class="value" var="hash"></span>
-                </li>
-                <li>
-                    <span class="key">url</span>
-                    <a href="#" ip="url" class="value" var="url" target="_top"></a>
-                </li>
-                <li>
-                    <span class="key">type</span>
-                    <span class="value" var="type"></span>
-                </li>
-                <li>
-                    <span class="key">server</span>
-                    <span class="value" var="server"></span>
-                </li>
-                <li>
-                    <span class="key">mac_address</span>
-                    <span class="value" var="mac_address"></span>
-                </li>
-                <li>
-                    <span class="key">main</span>
-                    <span class="value bool" var="main"></span>
-                </li>
-                <li>
-                    <span class="key">hub</span>
-                    <a href="#" ip="hub" class="value" var="hub_name" target="_blank"></a>
-                </li>
-            </ul>
-        </section>
-        <section id="local_plugins">
-            <h1>plugins</h1>
-            <ul id="plugins">
-            </ul>
-        </section>
-        <section id="local_extensions">
-            <h1>extensions</h1>
-            <ul id="extensions">
-                <li extension_id="" class="extension">
-                    <a href="https://github.com/sophiathekitty/" link="git" target="_blank" var="name">Example</a>
-                    <span var="hash">123456789</span>
-                    <span var="modified" class="date">2020-01-01</span>
-                    <a href="/extensions/MealPlanner/api" link="api">api</a>
-                </li>
-            </ul>
-        </section>
-    </div>
-    <footer>
-        <nav>
-            <a href="https://github.com/sophiathekitty/NullHub#readme" target="_blank" class="github">readme</a>
-            <a href="https://github.com/sophiathekitty/NullHub/issues" target="_blank" class="github">issues</a>
-            <a href="https://github.com/sophiathekitty/NullHub/projects" target="_blank" class="github">projects</a>
-            <a href="https://github.com/sophiathekitty/NullHub/wiki" target="_blank" class="github">wiki</a>
-            <a href="/services" target="_blank">services</a>
-        </nav>
-    </footer>
-</body>
+        <script src="js/mvc/nullmvc.js.php"></script>
+        <script src="js/com/"></script>
+        
+        <script src="js/landing.js"></script>
+    </head>
+    <body class="landing NullHub" dev="debug">
+        <header>
+            <h1 class="null">Null Home</h1>
+            <nav>
+                <a href="/app" target="_top">app</a>
+                <a href="/phpMyAdmin" class="dev" target="_blank">myAdmin</a>
+                <a href="/api" class="dev" target="_blank">api</a>
+                <a href="/helpers" class="dev" target="_blank">helpers</a>
+            </nav>
+            <div id="user" user_id="0" level="0" verified="0" login="false">
+                <span var="username">Guest</span>
+                <input type="text" var="username" placeholder="name" />
+                <input type="password" var="password" placeholder="pass" />    
+                <a href="#" action="login">login</a>
+                <a href="#" action="signup">signup</a>
+                <a href="#" action="cancel">cancel</a>
+                <a href="#" action="logout">logout</a>
+            </div>
+        </header>
+        <main class="contents" class="model sidebar top">
+            <section id="about" class="main"></section>
+            <section class="sidebar stamp" id="clock_stamp">
+                <div id="clock" time="1:23" time_of_day="day" day="mon" slide="day" class="clock">
+                    <div class="sky">
+                        <div class="sun"></div>
+                        <div class="moon"><div class="disc"></div></div>    
+                    </div>
+                    <div var="time" unit="am">12:34</div>
+                    <div var="day_of_week">Mon</div>
+                    <div var="date">12/20/2021</div>
+                    <div var="sunrise" unit="am">7:17</div>
+                    <div var="sunset" unit="pm">4:37</div>
+                </div>
+            </section>
+            <section id="info" class="sidebar top">
+                <h1>local info</h1>
+                <ul>
+                    <li>
+                        <span class="key">name</span>
+                        <span class="value" var="name"></span>
+                    </li>
+                    <li>
+                        <span class="key">url</span>
+                        <a href="#" ip="url" class="value" var="url" target="_top"></a>
+                    </li>
+                    <li>
+                        <span class="key">type</span>
+                        <span class="value" var="type"></span>
+                    </li>
+                    <li>
+                        <span class="key">server</span>
+                        <span class="value" var="server"></span>
+                    </li>
+                    <li>
+                        <span class="key">mac_address</span>
+                        <span class="value" var="mac_address"></span>
+                    </li>
+                    <li>
+                        <span class="key">main</span>
+                        <span class="value bool" var="main"></span>
+                    </li>
+                    <li>
+                        <span class="key">hub</span>
+                        <a href="#" ip="hub" class="value" var="hub_name" target="_blank"></a>
+                    </li>
+                </ul>
+            </section>
+            <section id="local_plugins" class="model sidebar middle">
+                <h1>plugins</h1>
+                <ul id="plugins">
+                </ul>
+            </section>
+            <section id="local_extensions" class="model sidebar bottom">
+                <h1>extensions</h1>
+                <ul id="extensions">
+                </ul>
+            </section>
+        </main>
+        <footer>
+            <nav>
+                <a href="https://github.com/sophiathekitty/NullHub#readme" target="_blank" class="github">readme</a>
+                <a href="https://github.com/sophiathekitty/NullHub/issues" target="_blank" class="github">issues</a>
+                <a href="/services" class="dev" target="_blank">services</a>
+            </nav>
+        </footer>
+    </body>
+</html>

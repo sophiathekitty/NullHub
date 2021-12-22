@@ -1,0 +1,51 @@
+nav a[target="_blank"]:hover {
+    color: var(--highlight);
+    text-decoration-color: var(--null);
+}
+nav a[target="_blank"]:before,
+nav a[target="_blank"]:after{
+    color: var(--null);
+}
+nav {
+    display: flex;
+    flex-direction: row;
+    font-size: 1.25em;
+    flex-wrap: wrap;
+}
+nav a {
+    margin: 0.5em;
+    padding: 0.2em;
+}
+nav a::before,
+nav a::after{
+    display: inline-block;
+    font-size: 0.5em;
+    margin: 0.5em;
+    opacity: 0.5;
+    color: var(--highlight);
+    transform: translateY(-0.2em);
+    transition: opacity 710ms;
+}
+nav a:hover:before,
+nav a:hover:after{
+    opacity: 1;
+}
+nav a::before{
+    content: "~{";
+}
+nav a::after{
+    content: "}~";
+}
+a {
+    transition: all 420ms;
+}
+a:hover {
+    color: var(--null);
+    text-decoration: underline;
+    text-decoration-color: var(--highlight);
+    text-decoration-thickness: 0.1em;
+    text-underline-offset: 0.2em;
+}
+[dev="production"] a.dev {
+    display: none;
+}

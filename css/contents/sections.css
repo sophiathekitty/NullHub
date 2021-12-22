@@ -1,0 +1,50 @@
+section ul {
+    padding: 0em;
+    margin: 0.1em;
+    margin-left: auto;
+    margin-right: auto;
+    list-style: none;
+    max-width: 20em;
+}
+section li {
+    padding: 0.2em;
+}
+section li:nth-child(odd){
+    background-color: var(--list_odd);
+}
+#info li .value::after, #settings li .value::after, #stats li .value::after{
+    color: var(--text);
+    font-size: 0.75em;
+    margin-left: 0.5em;
+}
+#info li .key, #settings li .key, #stats li .key {
+    display: inline-block;
+    width: 7em;
+}
+#info li .value, #settings li .value, #stats li .value {
+    display: inline-block;
+    color: var(--highlight);
+}
+#info li a[target="_blank"]:hover{
+    color: wvar(--text);
+    
+}
+#info li a:hover, #settings li a:hover, #stats li a:hover{
+    color: var(--null);
+    
+}
+section a:hover {
+    color: var(--null);
+    text-decoration-color: var(--highlight);
+}
+section a[target="_blank"]:hover {
+    color: var(--highlight);
+    text-decoration-color: var(--null);
+}
+
+
+@media( min-width:800px){
+    #about h1{
+        margin-top: 0em;
+    }
+}

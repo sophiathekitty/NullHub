@@ -1,0 +1,60 @@
+/* based on: https://codepen.io/shamir/pen/YGbbNX */
+.moon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    background-color: #fff;
+    transform: translateZ(0);
+}
+.moon::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #222;
+    width: 50%;
+    height: 100%;
+}
+.moon[stage="waning crescent"]::before {
+    left:50%;
+}
+.moon[stage="waning gibbous"]::before {
+    left:50%;
+}
+.moon[stage="last quarter"]::before {
+    left:50%;
+}
+.moon[stage="waxing gibbous"]::before {
+    left:0%;
+}
+.moon[stage="waxing crescent"]::before {
+    left:0%;
+}
+.disc {
+    transform-style: preserve-3d;
+    width: 100%;
+    height: 100%;
+}
+.disc::before, .disc::after {
+    content: " ";
+    display: block;
+    transform-style: preserve-3d;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+}
+.disc::before {
+    background-color: #222;
+}
+.disc::after {
+    background-color: #fff;
+    transform: rotateY(180deg);
+}

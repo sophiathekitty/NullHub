@@ -1,4 +1,8 @@
 <?php
+function HasPlugin($plugin){
+    global $root_path;
+    return is_dir($root_path."plugins/".$plugin);
+}
 function PluginAPIs($plugin){
     global $root_path;
     $apis = [];

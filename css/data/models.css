@@ -1,0 +1,56 @@
+.bool[val="0"]::before{
+    content: "false";
+}
+.bool[val="1"]::before{
+    content: "true";
+}
+section ul li {
+    display: flex;
+    flex-direction: row;
+}
+
+li [var="hash"],
+li [var="mac_address"] {
+    font-style: italic;
+    font-size: 0.65em;
+    margin: 0.2em;
+    margin-right: 1em;
+}
+li [var="hash"],
+li [var="mac_address"]{
+    color: var(--hash) !important;
+}
+li [var="hash"]::before,
+li [var="hash"]::after,
+li [var="mac_address"]::before,
+li [var="mac_address"]::after{
+    color: var(--null);
+    opacity: 0.5;
+    margin: 0.1em;
+}
+li [var="hash"]::before,
+li [var="mac_address"]::before{
+    content: "{";
+}
+li [var="hash"]::after,
+li [var="mac_address"]::after{
+    content: "}";
+}
+
+li .value {
+    font-style: italic;
+    font-size: 0.85em;
+    color: var(--list_value);
+    margin: 0.2em;
+    margin-right: 1em;
+    flex-grow: 1;
+}
+li a:first-of-type {
+    flex-grow: 2;
+}
+.loading h1 {
+    background-image: url(/images/loading.gif);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center right;
+}

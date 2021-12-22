@@ -1,0 +1,33 @@
+.null {
+    white-space: nowrap;
+    color: var(--null);
+    text-transform: lowercase;
+}
+
+b.null {
+    font-weight: normal;
+}
+.null::before{
+    content: '';
+    display: inline-block;
+    background-image: url(/images/null\ icon.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 0.75em;
+    height: 0.75em;
+    margin-top: 0.25em;
+    margin-left: 0.25em;
+    margin-right: 0.15em;
+    transform: translateY(0.1em);
+}
+@media( min-width:600px){
+    header .null::before{
+        width: 2em;
+        height: 2em;
+        margin-top: -0.4em;
+        margin-left: -0.4em;
+        margin-right: 0.15em;
+        transform: translateY(0em);
+    }
+}

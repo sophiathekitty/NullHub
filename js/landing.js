@@ -6,12 +6,14 @@ var weather_pallet = ColorPallet.getPallet("weather");
 weather_pallet.getColorLerp("temp",68,color=>{
     console.log("color",color);
 });
+var clock = new ClockController();
 //info.model.pull_delay = 60000;
 $(document).ready(function(){
     // load the server info
     info.display();
     plugins.build();
     extensions.build();
+    clock.ready();
     //window.refreshData = setInterval(RefreshData,10000);
     LoadReadMe();
 });
@@ -42,6 +44,7 @@ function LoadReadMe(){
         } else {
             $("title").html("Null ["+data.charAt(0).toUpperCase()+data.slice(1)+"]");
         }
+        $("body").addClass(data);
         //md = "README.md";
         $.get(md).done(json=>{
             //$("#about").html(markdown.toHTML(json));

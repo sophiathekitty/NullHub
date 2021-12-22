@@ -1,0 +1,29 @@
+@media( min-width:600px){
+    p {
+        margin-top: 0px;
+    }
+    p:first-of-type:first-letter{
+        font-weight: bold;
+        font-size: 2em;
+        float: left;
+        margin-top: 0.1em;
+        margin-right: 0.3em;
+        margin-bottom: 0.2em;
+        color: var(--highlight);
+        font-family: 'OdinRounded', 'Days', 'ViceCitySans', Arial, Helvetica, sans-serif;
+        text-transform: uppercase;
+    }
+    section#about {
+        font-size: 1.25em;
+        columns: 250px;
+        column-gap: 2em;
+    }
+    section h1 {
+        column-span: all;
+    }
+    main,
+    .contents{
+        margin-bottom: 20em;
+    }
+
+}

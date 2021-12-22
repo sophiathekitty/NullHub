@@ -1,0 +1,44 @@
+#user input,
+#user [action="cancel"],
+#user[login="true"] span[var="username"],
+#user[login="signup"] span[var="username"],
+#user[login="true"] [action="signup"],
+#user[login="signup"] [action="login"],
+#user[user_id="0"] [action="logout"]{
+    display: none;
+}
+#user[login="true"] input,
+#user[login="signup"] input,
+#user[login="true"] [action="cancel"],
+#user[login="signup"] [action="cancel"] {
+    display: block;
+}
+#user {
+    display:flex;
+    margin: auto;
+    margin-right: 5em;
+    align-items: stretch;
+}
+#user [var="username"] {
+    margin-right: 1em;
+}
+#user a {
+    font-size: 0.75em;
+    margin: 0.25em;
+    align-self: baseline;
+}
+#user[login="true"] [action="login"],
+#user[login="signup"] [action="signup"] {
+    font-size: 1em;
+    margin: 0.25em;
+    margin-bottom: 0em;
+}
+input[var="username"]::before{
+    content: 'name';
+}
+input[var="password"]::before{
+    content: 'pass';
+}
+input::before{
+    font-size: 0.65em;
+}

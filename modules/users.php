@@ -1,22 +1,57 @@
 <?php
+/**
+ * handles user sessions
+ */
 class UserSession {
     public static $user_session = null;
     public static $session = null;
     public static $user_logins = null;
     public static $users = null;
     public static $servers = null;
-
+    /**
+     * get the the static instance of this class UserSession::$user_session
+     */
     public static function GetUserSession(){
         if(is_null(UserSession::$user_session)){
             UserSession::$user_session = new UserSession();
         }
         return UserSession::$user_session;
     }
+    /**
+     * get the session UserSession::$session
+     */
     public static function GetUserSessionArray(){
         UserSession::GetUserSession();
         return UserSession::$session;
     }
-
+    /**
+     * gets the clean session data for user api
+     */
+    public static function CleanSessionData(){
+        $session = UserSession::GetUserSessionArray();
+        if(!is_null($session['user'])){
+            $session['user']['password'] = "[redacted]";
+        } else {
+            $session['user'] = ['id'=>0,'username'=>"guest",'level'=>0,'verified'=>0];
+        }
+        if(!is_null($session['token']) && $session['token'] != ""){
+            $session['user']['verified'] = 1;
+        } else {
+            $session['user']['verified'] = 0;
+        }
+        return $session;
+    }    
+    /**
+    * checks that the user level is equal to or above a threshold
+    */
+    public static function UserLevelCheck($level = 3){
+        $session = UserSession::GetUserSessionArray();
+        if(!is_null($session['user']) && $session['user']['level'] >= $level) return true;
+        return false;
+    }
+    /** 
+     * constructor sets up models and sets up session stuff
+     */
     public function __construct()
     {
         $this->SetupModels();
@@ -31,6 +66,9 @@ class UserSession {
         UserSession::$user_logins->Ping(UserSession::$session['id']);
         return UserSession::$session;
     }
+    /**
+     * sets up the static models and whatnot and tries to load the user session by ip from the database
+     */
     private function SetupModels(){
         if(is_null(UserSession::$user_logins)){
             UserSession::$user_logins = new UserLogins();
@@ -45,11 +83,15 @@ class UserSession {
             UserSession::$session = UserSession::$user_logins->LoadByIp($this->UserIpAddress());
         }
     }
-    // get the user ip address
+    /**
+     * get the user ip address
+     */
     public function UserIpAddress(){
         return $_SERVER['REMOTE_ADDR'];
     }
-
+    /**
+     * login a server by it's ip address
+     */
     private function LoginServer($session){
         $server = UserSession::$servers->LoadByUrl($this->UserIpAddress());
         if(!is_null($server)){
@@ -63,8 +105,11 @@ class UserSession {
         UserSession::$users->Ping($session['user_id']);
         return $session;
     }
-
-    // login
+    /**
+     * login with a username and password
+     * @param string $username
+     * @param string $password
+     */
     public function LoginUserSession($username,$password){
         $user = UserSession::$users->GetUser($username);
         $session = UserSession::$session;
@@ -81,7 +126,11 @@ class UserSession {
         }
         return $session;
     }
-    // signup
+    /**
+     * create user with username and password
+     * @param string $username
+     * @param string $password
+     */
     public function SignupUserSession($username,$password){
         $user = UserSession::$users->GetUser($username);
         $session = UserSession::$session;
@@ -94,11 +143,19 @@ class UserSession {
         }
         return $session;
     }
-
-    // utility functions
-    // hash a password
+    /**
+     * utility functions
+     */
+    /**
+     * hash a password
+     * @param string $username
+     * @param string $password
+     */
     public function PasswordHash($username,$password){
-        return md5($username.$password.$username);
+        $default = "";
+        if(Servers::IsMain()) $default = md5(date("Y-m-d H:i:s"));
+        $salt = Settings::LoadSettingsVar("salt",$default);
+        return md5($username.$salt.$password.$salt.$username);
     }
 
     // create a new user token
@@ -113,20 +170,6 @@ class UserSession {
     }
     public function LogoutUserSession(){
         UserSession::$session = UserSession::$user_logins->LogoutUserSession(UserSession::$session['id']);
-    }
-    public static function CleanSessionData(){
-        $session = UserSession::GetUserSessionArray();
-        if(!is_null($session['user'])){
-            $session['user']['password'] = "[redacted]";
-        } else {
-            $session['user'] = ['id'=>0,'username'=>"guest",'level'=>0,'verified'=>0];
-        }
-        if(!is_null($session['token']) && $session['token'] != ""){
-            $session['user']['verified'] = 1;
-        } else {
-            $session['user']['verified'] = 0;
-        }
-        return $session;
     }
 }
 /*

@@ -101,6 +101,10 @@ class Servers extends clsModel{
         $hub = Servers::GetHub();
         return ($hub['mac_address'] == LocalMacAddress());
     }
+    public static function IsMain(){
+        $hub = Servers::GetMain();
+        return ($hub['mac_address'] == LocalMacAddress()) && Servers::IsHub();
+    }
     public static function OnlineServers(){
         $servers = Servers::GetInstance();
         return $servers->Online();

@@ -3,7 +3,10 @@ function LocalExtensions($verbose = false){
     global $root_path;
     return ExtensionsFolder($root_path,"extensions/",$verbose);
 }
-
+function HasExtension($extension){
+    global $root_path;
+    return is_dir($root_path."extensions/".$extension);
+}
 
 
 function FindLocalExtensions(){

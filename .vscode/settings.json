@@ -3,6 +3,9 @@
         { "icon": "python", "extensions": ["python"], "format": "svg" },
         { "icon": "public", "extensions": ["user"], "format": "svg" },
         { "icon": "sso", "extensions": ["login","logout"], "format": "svg" },
+        { "icon": "model", "extensions": ["0model","0models"], "format": "svg" },
+        { "icon": "view", "extensions": ["1view","1views"], "format": "svg" },
+        { "icon": "controller", "extensions": ["2controller","2controllers"], "format": "svg" },
         { "icon": "server", "extensions": ["info","reboot","shutdown","servers"], "format": "svg" },
         { "icon": "log", "extensions": ["details"], "format": "svg" },
         { "icon": "notification", "extensions": ["tasks"], "format": "svg" },
@@ -10,6 +13,7 @@
         { "icon": "story", "extensions": ["sketchbook"], "format": "svg" }
     ],
     "cSpell.words": [
+        "remaper",
         "vals",
         "wemo",
         "wemos"

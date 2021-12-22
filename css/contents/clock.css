@@ -1,0 +1,227 @@
+.clock {
+    display: grid;
+    grid-template-columns: 5em auto;
+    gap: 0em 1em;
+    grid-template-areas: 
+        "sky day day"
+        "sky time time"
+        "sky date date"
+        "sky sunrise sunset";
+}
+.clock .sky {
+    position: relative;
+    grid-area: sky;
+    border-radius: 5em;
+    border: black thick solid;
+    overflow: hidden;
+    width: 5em;
+    height: 5em;
+    background-position: center center;
+    background-size: auto;
+    background-repeat: repeat;
+}
+.clock .sky::after {
+    content: '';
+    position: absolute;
+    top: 0em;
+    left: 0em;
+    right: 0em;
+    bottom: 0em;
+    background-position: center bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+.clock [var="day_of_week"] {
+    grid-area: day;
+}
+.clock [var="time"] {
+    grid-area: time;
+    font-size: 3em;
+    text-align: center;
+}
+.clock [var="date"] {
+    grid-area: date;
+    text-align: center;
+}
+.clock [var="sunrise"] {
+    grid-area: sunrise;
+    text-align: center;
+}
+.clock [var="sunset"] {
+    grid-area: sunset;
+    text-align: center;
+}
+.clock [var="sunrise"]::before,
+.clock [var="sunset"]::before{
+    content: '';
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.clock [var="sunrise"]::before{
+    background-image: url(/images/clock/sunrise.png);
+}
+.clock [var="sunset"]::before{
+    background-image: url(/images/clock/sunset.png);
+}
+.clock[show="date"] [var="sunrise"],
+.clock[show="date"] [var="sunset"],
+.clock[show="sunrise"] [var="date"],
+.clock[moon_visible="0"] .moon {
+    display: none;
+}
+
+.clock .sky .moon {
+    position: absolute;
+    top:1em;
+    left:1em;
+    width:2em;
+    height:2em;
+    z-index: 0;
+}
+.clock .sky .sun {
+    position: absolute;
+    top:1em;
+    left:1em;
+    width:1em;
+    height:1em;
+    z-index: 0;
+    background-color: #f7ff8d;
+    border-radius: 100%;
+}
+[time_of_day="night"] .sky .sun {
+    display: none;
+}
+[time_of_day="morning"] .sky .sun {
+    top:2.5em;
+    left:-0.5em;
+    width:2em;
+    height:2em;
+    background-color: #ffb78d;
+}
+[time_of_day="evening"] .sky .sun {
+    top:2.5em;
+    left:3.5em;
+    width:2em;
+    height:2em;
+    background-color: #ffd82a;
+}
+[time_of_day="day"] .sky .moon {
+    top:0.5em;
+    left:2em;
+    width:1em;
+    height:1em;
+    opacity: 0.25;
+}
+[time_of_day="morning"] .sky .moon {
+    top:1.25em;
+    left:3em;
+    width:1.5em;
+    height:1.5em;
+    opacity: 0.5;
+}
+[time_of_day="evening"] .sky .moon {
+    top:2em;
+    left:-0.25em;
+    width:2em;
+    height:2em;
+    opacity: 0.75;
+}
+.clock .sky .clouds {
+    position: absolute;
+    top: 0em;
+    left: 0em;
+    right: 0em;
+    bottom: 0em;
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 3;
+}
+[time_of_day="morning"] .sky{
+    border-color: palevioletred;
+    background-image: url(/images/clock/purple.png);
+}
+[time_of_day="day"] .sky{
+    border-color: cyan;
+    background-image: url(/images/clock/sky.png);
+}
+[time_of_day="evening"] .sky{
+    border-color: orangered;
+    background-image: url(/images/clock/purple.png);
+}
+[time_of_day="night"] .sky{
+    border-color: blue;
+    background-image: url(/images/clock/blue.png);
+}
+
+[time_of_day="morning"] .sky::after{
+    background-image: url(/images/clock/ground-morning.png);
+}
+[time_of_day="day"] .sky::after{
+    background-image: url(/images/clock/ground-day.png);
+}
+[time_of_day="evening"] .sky::after{
+    background-image: url(/images/clock/ground-evening.png);
+}
+[time_of_day="night"] .sky::after{
+    background-image: url(/images/clock/ground-night.png);
+}
+
+
+
+[time_of_day="morning"][clouds="1"] .sky .clouds {
+    background-image: url(/images/clock/clouds-morning-1.png);
+}
+[time_of_day="morning"][clouds="2"] .sky .clouds {
+    background-image: url(/images/clock/clouds-morning-1.png);
+}
+[time_of_day="morning"][clouds="3"] .sky .clouds {
+    background-image: url(/images/clock/clouds-morning-1.png);
+}
+[time_of_day="morning"][clouds="4"] .sky .clouds {
+    background-image: url(/images/clock/clouds-morning-1.png);
+}
+
+[time_of_day="day"][clouds="1"] .sky .clouds {
+    background-image: url(/images/clock/clouds-day-1.png);
+}
+[time_of_day="day"][clouds="2"] .sky .clouds {
+    background-image: url(/images/clock/clouds-day-1.png);
+}
+[time_of_day="day"][clouds="3"] .sky .clouds {
+    background-image: url(/images/clock/clouds-day-1.png);
+}
+[time_of_day="day"][clouds="4"] .sky .clouds {
+    background-image: url(/images/clock/clouds-day-1.png);
+}
+
+[time_of_day="evening"][clouds="1"] .sky .clouds {
+    background-image: url(/images/clock/clouds-evening-1.png);
+}
+[time_of_day="evening"][clouds="2"] .sky .clouds {
+    background-image: url(/images/clock/clouds-evening-1.png);
+}
+[time_of_day="evening"][clouds="3"] .sky .clouds {
+    background-image: url(/images/clock/clouds-evening-1.png);
+}
+[time_of_day="evening"][clouds="4"] .sky .clouds {
+    background-image: url(/images/clock/clouds-evening-1.png);
+}
+
+[time_of_day="night"][clouds="1"] .sky .clouds {
+    background-image: url(/images/clock/clouds-night-1.png);
+}
+[time_of_day="night"][clouds="2"] .sky .clouds {
+    background-image: url(/images/clock/clouds-night-1.png);
+}
+[time_of_day="night"][clouds="3"] .sky .clouds {
+    background-image: url(/images/clock/clouds-night-1.png);
+}
+[time_of_day="night"][clouds="4"] .sky .clouds {
+    background-image: url(/images/clock/clouds-night-1.png);
+}

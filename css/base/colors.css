@@ -1,0 +1,36 @@
+html {
+    --null: #98ed8a;
+    --highlight: #ff8c00;
+    --background: #2f4f4f;
+    --footer: #2b4242;
+    --text: #cad7e4;
+    --link: #d3d3d3;
+    --list_even: #13121619;
+    --list_header_text: lightyellow;
+    --list_header_back:#98ed8a66;
+    --list_value: #ff8c00;
+    --hash: lightseagreen;
+    --shadow:black;
+
+    --sun: #6ca9c9;
+    --mon: #6ac46a;
+    --tue: #d1c173;
+    --wed: #d879b1;
+    --thu: #947bd8;
+    --fri: #82e587;
+    --sat: #ed8787;
+
+    --month_1: #9933cc;
+    --month_2: #990000;
+    --month_3: #990099;
+    --month_4: #009900;
+    --month_5: #0099ff;
+    --month_6: #669900;
+    --month_7: #ff6600;
+    --month_8: #ff3300;
+    --month_9: #cc3399;
+    --month_10: #ff6600;
+    --month_11: #cc6633;
+    --month_12: #9999ff;
+
+}
