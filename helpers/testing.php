@@ -1,7 +1,5 @@
-<pre><?php
-echo "hello";
+<?php
 require_once("../includes/main.php");
-echo " world";
 //$servers = new Servers();
 //$servers->ValidateTable();
 //SyncRooms();
@@ -22,6 +20,7 @@ nMapCrawler::CheckHosts();
 //echo "\n\n".FolderFileCount("../plugins/NullWeather/");
 //echo PullRemoteSensors::Sync();
 //SyncServers();
+/*
 if($_GET['ip']){
     $data = GoogleIPStatus($_GET['ip']);
     print_r($data);
@@ -37,4 +36,6 @@ if($_GET['ip']){
     print_r($data);
 
 }
-?></pre>
+*/
+OutputJSON(UserSync::pull());
+?>

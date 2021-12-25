@@ -14,7 +14,17 @@ class UserView extends View {
         }
     }
     display(){
-
+        if(this.model){
+            this.model.getData(json=>{
+                $("#user").attr("user_id",json.session.user_id);
+                $("#user").attr("level",json.session.user.level);
+                $("#user").attr("verified",json.session.user.verified);
+                $("#user [var=username]").html(json.session.user.username);
+                if(json.session.user.level == 5){
+                    $("body").attr("dev","debug");
+                }
+            });
+        }
     }
     refresh(){
         this.display();

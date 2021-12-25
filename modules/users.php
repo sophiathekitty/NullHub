@@ -1,4 +1,7 @@
 <?php
+
+use PhpMyAdmin\Session;
+
 /**
  * handles user sessions
  */
@@ -49,6 +52,14 @@ class UserSession {
         if(!is_null($session['user']) && $session['user']['level'] >= $level) return true;
         return false;
     }
+    /**
+    * checks that the user level is equal to or above a threshold
+    */
+    public static function UserIsServer(){
+        $session = UserSession::GetUserSessionArray();
+        if(!is_null($session['user']) && $session['user']['level'] == 3) return true;
+        return false;
+    }
     /** 
      * constructor sets up models and sets up session stuff
      */
@@ -59,6 +70,10 @@ class UserSession {
             UserSession::$session = UserSession::$user_logins->CreateAnonLoginSession($this->UserIpAddress());
         }
         UserSession::$session = $this->LoginServer(UserSession::$session);
+        if(UserSession::$session['user_id'] == 0 && !Servers::IsMain()){
+            // attempt a remote login
+            UserSession::$session = $this->CheckMainForLogin(UserSession::$session);
+        }
         if(UserSession::$session['user_id'] != 0 && is_null(UserSession::$session['user'])){
             UserSession::$session['user'] = UserSession::$users->LoadById(UserSession::$session['user_id']);
             UserSession::$users->Ping(UserSession::$session['user_id']);
@@ -170,6 +185,16 @@ class UserSession {
     }
     public function LogoutUserSession(){
         UserSession::$session = UserSession::$user_logins->LogoutUserSession(UserSession::$session['id']);
+    }
+    public function CheckMainForLogin($session){
+        $hub = Servers::GetMain();
+        $url = "http://".$hub['url']."/api/user/login/?ip=".$this->UserIpAddress();
+        $info = file_get_contents($url);
+        $data = json_decode($info,true);
+        if($data['user_login']['user_id'] != 0){
+            $session = UserSession::$user_logins->LoginAnonUser($data['user_login']['user_id'],$session['id'],$this->CreateToken($this->UserIpAddress()));
+        }
+        return $session;
     }
 }
 /*

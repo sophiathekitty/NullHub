@@ -1,23 +1,28 @@
 #user input,
 #user [action="cancel"],
+#user [action="logout"],
 #user[login="true"] span[var="username"],
 #user[login="signup"] span[var="username"],
 #user[login="true"] [action="signup"],
 #user[login="signup"] [action="login"],
+#user[verified="1"] [action="signup"],
+#user[verified="1"] [action="login"],
 #user[user_id="0"] [action="logout"]{
     display: none;
 }
 #user[login="true"] input,
 #user[login="signup"] input,
+#user.logout [action="logout"],
 #user[login="true"] [action="cancel"],
 #user[login="signup"] [action="cancel"] {
     display: block;
 }
 #user {
+    position: absolute;
+    top:1em;
+    right:1em;
     display:flex;
-    margin: auto;
-    margin-right: 5em;
-    align-items: stretch;
+    align-items: center;
 }
 #user [var="username"] {
     margin-right: 1em;
@@ -25,7 +30,6 @@
 #user a {
     font-size: 0.75em;
     margin: 0.25em;
-    align-self: baseline;
 }
 #user[login="true"] [action="login"],
 #user[login="signup"] [action="signup"] {
@@ -41,4 +45,10 @@ input[var="password"]::before{
 }
 input::before{
     font-size: 0.65em;
+}
+@media( min-width:1600px){
+    #user {
+        top:2em;
+        right:2em;
+    }
 }

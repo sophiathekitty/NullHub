@@ -11,7 +11,7 @@ class UserModel extends Model {
      * @param {string} password 
      */
     createUser(username,password){
-
+        console.warn("user signup not implimented");
     }
     /**
      * logs in a user with username and password
@@ -19,12 +19,12 @@ class UserModel extends Model {
      * @param {string} password 
      */
     login(username,password){
-
+        console.warn("user login not implimented");
     }
     /**
      * pings the logout api to logout the currently logged in user
      */
-    logout(){
-
+    logout(callBack){
+        console.warn("user logout not implimented");
     }
 }

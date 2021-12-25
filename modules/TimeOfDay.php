@@ -175,6 +175,7 @@ class TimeOfDay {
         $h = (int)date('H');
         $m = (int)date('i');
         if($rise_hour > $set_hour){
+            if($h < $set_hour) return true;
             $set_hour += 24;
         }
         if($h > $rise_hour && $h < $set_hour) return true;

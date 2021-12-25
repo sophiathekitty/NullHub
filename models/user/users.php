@@ -1,6 +1,8 @@
 <?php
 
-
+/**
+ * users model
+ */
 class Users extends clsModel{
     public $table_name = "Users";
     public $fields = [
@@ -69,7 +71,27 @@ class Users extends clsModel{
             'Extra'=>"on update current_timestamp()"
         ]
     ];
-
+    /**
+     * @param array $user the data array for a user record
+     */
+    public static function SaveUser($user){
+        $instance = new Users();
+        $user = $instance->CleanData($user);
+        $exists = $instance->LoadById($user['id']);
+        if(is_null($exists)){
+            return $instance->Save($user);
+        } else {
+            return $instance->Save($user,['id'=>$user['id']]);
+        }
+    }
+    public static function AllUsers(){
+        $instance = new Users();
+        return $instance->LoadAll();
+    }
+    public static function Residence(){
+        $instance = new Users();
+        return $instance->LoadFieldAfter("level",3);
+    }
     public function Ping($user_id){
         $this->Save(['last_login'=>date("Y-m-d H:i:s")],['id'=>$user_id]);
     }

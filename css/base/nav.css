@@ -49,3 +49,15 @@ a:hover {
 [dev="production"] a.dev {
     display: none;
 }
+@media( max-width:800px){
+    header nav {
+        justify-content: space-between;
+    }
+    nav a {
+        margin: auto;
+    }
+    nav a.dev {
+        font-size: 0.65em;
+        align-self:center;
+    }
+}

@@ -23,11 +23,11 @@ b.null {
 }
 @media( min-width:600px){
     header .null::before{
-        width: 2em;
-        height: 2em;
+        width: 1.25em;
+        height: 1.25em;
         margin-top: -0.4em;
         margin-left: -0.4em;
         margin-right: 0.15em;
-        transform: translateY(0em);
+        transform: translateY(0.45em);
     }
 }

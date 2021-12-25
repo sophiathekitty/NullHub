@@ -133,6 +133,18 @@ class Rooms extends clsModel{
         $rooms = Rooms::GetInstance();
         return $rooms->LoadWhere(['name'=>$name]);
     }
+    /**
+     * @param string $floor the floor # you want to load... or ground (0) and basement (-1)
+     * @return array
+     */
+    public static function Floor($floor){
+        $f = 0;
+        if($floor == "second") $f = 1;
+        if($floor == "ground") $f = 0;
+        if($floor == "basement") $f = -1;
+        $rooms = Rooms::GetInstance();
+        return ['floor'=>$floor,'rooms'=>$rooms->LoadAllWhere(['floor'=>$f])];
+    }
 }
 if(defined('VALIDATE_TABLES')){
     clsModel::$models[] = new Rooms();

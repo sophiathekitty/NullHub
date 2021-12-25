@@ -1,8 +1,14 @@
+section.main article {
+    margin-top: 6em;
+}
+section.main article:first-of-type {
+    margin-top: 0em;
+}
 @media( min-width:600px){
     p {
         margin-top: 0px;
     }
-    p:first-of-type:first-letter{
+    article:first-of-type p:first-of-type:first-letter{
         font-weight: bold;
         font-size: 2em;
         float: left;
@@ -13,17 +19,13 @@
         font-family: 'OdinRounded', 'Days', 'ViceCitySans', Arial, Helvetica, sans-serif;
         text-transform: uppercase;
     }
-    section#about {
+    section#about article {
         font-size: 1.25em;
         columns: 250px;
         column-gap: 2em;
     }
     section h1 {
         column-span: all;
+        font-size: 1.75em;
     }
-    main,
-    .contents{
-        margin-bottom: 20em;
-    }
-
 }

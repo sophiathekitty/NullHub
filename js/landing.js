@@ -7,6 +7,7 @@ weather_pallet.getColorLerp("temp",68,color=>{
     console.log("color",color);
 });
 var clock = new ClockController();
+var user = new UserController();
 //info.model.pull_delay = 60000;
 $(document).ready(function(){
     // load the server info
@@ -14,6 +15,7 @@ $(document).ready(function(){
     plugins.build();
     extensions.build();
     clock.ready();
+    user.ready();
     //window.refreshData = setInterval(RefreshData,10000);
     LoadReadMe();
 });
@@ -31,6 +33,7 @@ function RefreshData(){
 
 
 var already_loaded = false;
+var already_loaded_extensions = false;
 
 function LoadReadMe(){
     settings.getVar("type",data=>{
@@ -48,19 +51,33 @@ function LoadReadMe(){
         //md = "README.md";
         $.get(md).done(json=>{
             //$("#about").html(markdown.toHTML(json));
-            $("#about").html(marked(json));
+            $("#about").html("<article class=\"about\"></article>");
+            $("#about article.about").html(marked(json));
             plugins.model.getData(data=>{
                 console.log("load readme plugins",data);
                 if(!already_loaded){
                     data.plugins.forEach(plugin=>{
                         $.get(plugin.local+"ABOUT.md").done(json=>{
-                            $("#about").append(marked(json));
+                            $("#about article.about").append(marked(json));
                             $("#about a").attr("target","_blank");
                         });
                     });    
                 }
                 already_loaded = true;
             },true);
+            extensions.model.getData(data=>{
+                console.log("load readme extensions",data);
+                if(!already_loaded_extensions){
+                    data.extensions.forEach(extension=>{
+                        $.get(extension.path+"ABOUT.md").done(json=>{
+                            $("#about").append("<article>"+marked(json)+"</article>");
+                            $("#about a").attr("target","_blank");
+                        });
+                    });    
+                }
+                already_loaded_extensions = true;
+            },true);
+            $("#about a").attr("target","_blank");
         }).fail(e=>{
             console.log(e);
         });        
