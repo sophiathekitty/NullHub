@@ -1,5 +1,6 @@
 footer {
     font-size: 0.75em;
+    padding: 0.5em;
 }
 @media( min-width:600px){
     footer {
@@ -9,7 +10,7 @@ footer {
         bottom: 0px;
         left: 0px;
         right: 0px;
-        padding: 2em;
+        padding: 1em;
         z-index: 100;
         background-color: var(--footer);
         font-size: 1em;

@@ -23,6 +23,8 @@ class UserView extends View {
                 if(json.session.user.level == 5){
                     $("body").attr("dev","debug");
                 }
+                UserModel.verified = json.session.user.verified;
+                UserModel.level= json.session.user.level;
             });
         }
     }

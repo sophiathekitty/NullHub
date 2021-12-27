@@ -6,16 +6,26 @@ class Controller {
      * create a new controller
      * @param {View} view the view being controlled by this controller
      */
-    constructor(view){
+    constructor(view,debug = false){
+        if(debug){
+            console.log("Controller::Constructor");
+        }
         this.view = view;
         this.view.controller = this;
+        this.debug = debug;
         //console.log("Controller::Constructor",this.view.controller);
+        //$(document).ready(function(){ this.ready(); });
+        this.listenForEvent("ready",document,()=>{
+            this.ready();
+        })
     }
     /**
      * Override ready() function to setup listeners for controller
      */
     ready(){
-        throw "Override ready function to setup listeners";
+        if(this.debug){
+            throw "Override ready function to setup listeners";
+        }
     }
     /**
      * adds an OnClick listener to elements

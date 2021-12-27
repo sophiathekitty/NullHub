@@ -20,18 +20,20 @@ class Model {
      * @param {string} save_url url to push data to
      * @param {number} cache_time how long to wait before pulling the api
      * @param {string} prefix used before name for local storage key
+     * @param {bool} debug set to true to turn on console output
      */
-    constructor(name,get_url,save_url,cache_time = 300000,prefix = "model_"){
+    constructor(name,get_url,save_url,cache_time = 300000,prefix = "model_", debug = false){
+        if(debug) console.log("Model::Constructor",name,get_url,save_url,cache_time,prefix, debug)
         this.prefix = prefix;
         this.name = name;
         this.get_url = get_url;
         this.save_url = save_url;
         this.pull_delay = cache_time;
-        this.debug = true;
+        this.debug = debug;
         
         this.pulled = new Date(Model.storage.getItem(this.prefix+this.name+"_pulled"));
         if(this.debug){
-            //console.log("model created",this.prefix+this.name);
+            console.log("Model::"+this.name+":model created",this.prefix+this.name);
         }
         if(!(Model.storage.getItem(this.prefix+this.name) === null)){
             Model.constructor_requests_started++;
@@ -41,7 +43,7 @@ class Model {
                     //console.log("in theory all the constructor pulls have finished");
                 }
                 if(this.debug){
-                    //console.log("constructor pull data: ",data);
+                    console.log("Model::"+this.name+":constructor pull data: ",data);
                 }
             });    
         }
@@ -97,7 +99,7 @@ class Model {
             }
         }).fail(e=>{
             if(this.debug){
-                console.error(e);
+                console.error("Model::"+this.name+":error",e);
             }
             Model.pull_requests_completed++;
             Model.server_errors++;
@@ -109,7 +111,7 @@ class Model {
      * @param {Object} data 
      */
     setData(data){
-        Model.storage.setItem(this.name+"_changed",data);
+        Model.storage.setItem(this.prefix+this.name+"_changed",JSON.stringify(data));
     }
     /**
      * [untested?] pushes the data in local storage with the postfix _changed for this model to the save api
@@ -120,12 +122,11 @@ class Model {
     pushData(callBack,errorCallback,failCallback){
         var myData = JSON.parse(Model.storage.getItem(this.prefix+this.name+"_changed"));
         if(this.debug){
-            //console.log("module push");
-            //console.log(myData);
+            console.log("Model::pushData",this.prefix+this.name+"_changed",myData);
         }
         if(myData && Model.server_online){
             Model.push_requests_started++;
-            console.error("model push ajax is likely broken... because fuck anything ever working! >:C");
+            //console.error("model push ajax is likely broken... because fuck anything ever working! >:C");
             $.ajax({
                 type: "GET",
                 url: this.save_url,
@@ -133,11 +134,14 @@ class Model {
                 data: myData,
                 success: data=>{
                     if(this.debug){
-                        //console.log(this.name+": push success");
+                        console.log("Model::"+this.name+": push success",data);
                     }
                     if(this.errors < 0) this.errors = 0;
                     if(callBack) callBack(data);
-                    Model.storage.getItem(this.name+"_changed",data);
+                    //Model.storage.getItem(this.name+"_changed",data); // what? getItem(key,data???) /// should maybe be clearing _changed and updating the main one with the data?
+                    Model.storage.setItem(this.prefix+this.name,JSON.stringify(data)); // ok. lets actually update the local data with the correct name
+                    var json = JSON.parse(Model.storage.getItem(this.prefix+this.name));
+                    Model.storage.removeItem(this.prefix+this.name+"_changed"); // and clear out the local changes that have now been saved
                     Model.server_errors--;
                     Model.push_requests_completed++;
                     if(Model.server_errors < 0) Model.server_errors = 0;
@@ -146,8 +150,7 @@ class Model {
                     Model.push_requests_completed++;
                     Model.server_errors++;
                     if(this.debug) {
-                        //console.log(this.name+": push error");
-                        //console.log(e);    
+                        console.error("Model::"+this.name+": push error",e);
                     }
                     if(errorCallback) errorCallback(e);
                 },
@@ -155,8 +158,7 @@ class Model {
                     Model.push_requests_completed++;
                     Model.server_errors++;
                     if(this.debug){
-                        //console.log(this.name+": push fail");
-                        //console.log(res);
+                        console.error("Model::"+this.name+": push fail",res);
                     }
                     if(failCallback) failCallback(res);
                 }
@@ -177,9 +179,11 @@ class Collection extends Model {
      * @param {string} save_url the api url for saving data
      * @param {string} id_name the name of id field in the model data. ie: "id" or "hour" or "name"
      * @param {string} prefix the prefix used for the local storage key
+     * @param {bool} debug set to true to turn on console output for this collection
      */
-    constructor(collection_name,item_name,get_url,save_url,id_name = "id",prefix = "collection_"){
-        super(collection_name, get_url, save_url,1000*60*5,prefix);
+    constructor(collection_name,item_name,get_url,save_url,id_name = "id",prefix = "collection_", debug = false){
+        if(debug) console.log("Collection::Constructor",collection_name,item_name,get_url,save_url,id_name,prefix, debug);
+        super(collection_name, get_url, save_url,1000*60*5,prefix,debug);
         this.item_name = item_name;
         this.id_name = id_name;
     }
@@ -200,7 +204,9 @@ class Collection extends Model {
      * @param {json|Object} item the json object to be added to the data list
      */
     setItem(item){
+        if(this.debug) console.log("Collection::setItem:",item);
         this.getData(data=>{
+            if(this.debug) console.log("Collection::setItem:data:",data);
             var isNew = true;
             for(var i = 0; i < data[this.name].length; i++){
                 if(data[this.name][i][this.id_name] == item[this.id_name]){
@@ -213,7 +219,70 @@ class Collection extends Model {
                 item.isNew = true;
                 data[this.name].push(item);
             }
-            Model.storage.setItem(this.name+"_changed",data);
+            if(this.debug) console.log("Collection::setItem:changed:",data);
+            this.setData(data);
+            //Model.storage.setItem(this.prefix+this.name+"_changed",data);
         })
+    }
+    /**
+     * [untested?] pushes the data in local storage with the postfix _changed for this model to the save api
+     * @param {function(JSON)} callBack called if push request was successful
+     * @param {function(*)} errorCallback called if there is an error
+     * @param {function(*)} failCallback called if the request failed
+     */
+    pushData(callBack,errorCallback,failCallback){
+        var oldData = JSON.parse(Model.storage.getItem(this.prefix+this.name));
+        var allData = JSON.parse(Model.storage.getItem(this.prefix+this.name+"_changed"));
+        for(var i = 0; i < allData[this.name].length; i++){
+            if(!(_.isEqual(oldData[this.name][i],allData[this.name][i]))){
+                this.pushItem(allData[this.name][i],callBack,errorCallback,failCallback);
+            }
+        }
+        Model.storage.setItem(this.prefix+this.name,JSON.stringify(allData)); // ok. lets actually update the local data with the correct name
+        Model.storage.removeItem(this.prefix+this.name+"_changed"); // and clear out the local changes that have now been saved
+    }
+    pushItem(myData,callBack,errorCallback,failCallback){
+        if(this.debug){
+            console.log("Collection::pushItem",this.prefix+this.name+"_changed:item",myData);
+        }
+        if(myData && Model.server_online){
+            Model.push_requests_started++;
+            //console.error("model push ajax is likely broken... because fuck anything ever working! >:C");
+            $.ajax({
+                type: "GET",
+                url: this.save_url,
+                dataType: "json",
+                data: myData,
+                success: data=>{
+                    if(this.debug){
+                        console.log("Model::"+this.name+": push success",data);
+                    }
+                    if(this.errors < 0) this.errors = 0;
+                    if(callBack) callBack(data);
+                    //Model.storage.getItem(this.name+"_changed",data); // what? getItem(key,data???) /// should maybe be clearing _changed and updating the main one with the data?
+                    //Model.storage.setItem(this.prefix+this.name,JSON.stringify(data)); // ok. lets actually update the local data with the correct name
+                    //var json = JSON.parse(Model.storage.getItem(this.prefix+this.name));
+                    Model.server_errors--;
+                    Model.push_requests_completed++;
+                    if(Model.server_errors < 0) Model.server_errors = 0;
+                },
+                error: e=>{
+                    Model.push_requests_completed++;
+                    Model.server_errors++;
+                    if(this.debug) {
+                        console.error("Collection::"+this.name+": push error",e);
+                    }
+                    if(errorCallback) errorCallback(e);
+                },
+                fail: res=>{
+                    Model.push_requests_completed++;
+                    Model.server_errors++;
+                    if(this.debug){
+                        console.error("Model::"+this.name+": push fail",res);
+                    }
+                    if(failCallback) failCallback(res);
+                }
+            });    
+        }
     }
 }

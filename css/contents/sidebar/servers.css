@@ -1,0 +1,44 @@
+#servers a{
+    display: flex;
+}
+#servers a::before{
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-right: 0.5em;
+    transform: translateY(0.25em);
+}
+#servers [type="hub"] a::before{
+    background-image: url(/images/null\ icon.png);
+}
+#servers [type="old_hub"] a::before{
+    background-image: url(/images/oblivion\ icon.png);
+}
+#servers [type="grow_manager"] a::before{
+    background-image: url(/images/greenhouse.png);
+}
+#servers [type="thermometer"] a::before{
+    background-image: url(/images/thermometer-scale.png);
+}
+#servers [type="display"] a::before,
+#servers [type="micro display"] a::before{
+    background-image: url(/images/display-day.png);
+}
+
+#servers [offline="1"] a::after{
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-left: auto;
+    transform: translateY(0.25em);
+    background-image: url(/images/offline.png);
+    align-content: flex-end;
+}

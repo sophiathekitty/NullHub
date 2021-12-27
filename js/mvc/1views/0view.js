@@ -11,12 +11,14 @@ class View {
      * @param {Template} item_template The template loader for the items of a Collection
      * @param {Number} refresh_rate // how long in milliseconds to wait before refreshing. (is multiplied by View.refresh_ratio)
      */
-    constructor(model,template = null, item_template = null, refresh_rate = 60000){
+    constructor(model,template = null, item_template = null, refresh_rate = 60000, debug = false){
         //console.log("ViewConstructor",model,template,item_template,refresh_rate);
         this.model = model;
         this.template = template;
         this.item_template = item_template;
         this.refresh_rate = refresh_rate
+        this.debug = debug;
+        
         //console.log("ViewConstructorVerify",this.model,this.template,this.item_template,this.refresh_rate);
 
         /*
@@ -51,10 +53,10 @@ class View {
                         //console.log("View::Display() model:",model," | data:",data);
                         if(model instanceof HourlyChart){
                             // redraw hourly chart?
-                            console.warn("display hourly charts not implemented yet!");
+                            if(this.debug) console.warn("display hourly charts not implemented yet!");
                         } else if(model instanceof Collection){
                             if($("#"+model.name+" ."+model.item_name).length != data[model.name].length){
-                                console.log("rebuilding?",$("#"+model.name+" ."+model.item_name).length,data[model.name].length);
+                                if(this.debug) console.log("rebuilding?",$("#"+model.name+" ."+model.item_name).length,data[model.name].length);
                                 this.build();
                             } else {
                                 // just cycle through all the items and populate...
@@ -76,9 +78,9 @@ class View {
             } else {
                 this.model.getData(data=>{
                     if(this.model instanceof Collection){
-                        console.log("display collection view",this.model.name,this.model);
+                        if(this.debug) console.log("display collection view",this.model.name,this.model);
                         if($("#"+this.model.name+" ."+this.model.item_name).length != data[this.model.name].length){
-                            console.log("rebuilding?",$("#"+this.model.name+" ."+this.model.item_name).length,data[this.model.name].length);
+                            if(this.debug) console.log("rebuilding?",$("#"+this.model.name+" ."+this.model.item_name).length,data[this.model.name].length);
                             this.build();
                         } else {
                             // just cycle through all the items and populate...
@@ -100,14 +102,14 @@ class View {
                 });    
             }
         } else {
-            console.error("View::Display >> view missing model?");
+            if(this.debug) console.error("View::Display >> view missing model?");
         }
     }
     /**
      * Builds the view
      */
     build(){
-        console.log("View::build----"+this.model.name);
+        if(this.debug) console.log("View::build----"+this.model.name);
         if(this.model instanceof Array){
             // build multiple models
             //console.log("build view multi model");
@@ -120,7 +122,7 @@ class View {
                     //console.log("build view multi model :: collection ::",data);
                     if(data != null){
                         if(model instanceof HourlyChart){
-                            console.log("build an hourly chart? probably just chart populate....",model.name,model.chart_name,model.item_name,data['ranges']);
+                            if(this.debug) console.log("build an hourly chart? probably just chart populate....",model.name,model.chart_name,model.item_name,data['ranges']);
                             if('ranges' in data){
                                 this.mappers = {};
                                 Object.keys(data.ranges).forEach(key=>{
@@ -129,7 +131,7 @@ class View {
                                     this.mappers[key] = new ReMapper(data.ranges[key].min,data.ranges[key].max);
                                     //var min_mapper = this.createRemap(data.ranges[key].max,data.ranges[key].min, 100,0);
                                 });
-                                console.log("hourly mappers",this.mappers);
+                                if(this.debug) console.log("hourly mappers",this.mappers);
                             }
                             data[model.item_name].forEach(hour=>{
                                 var selector = "#"+model.chart_name+" [hour="+hour[model.id_name]+"]";
@@ -187,16 +189,14 @@ class View {
                 if(data != null){
                     //console.log("build view:",data);
                     if(this.model instanceof HourlyChart){
-                        console.log("build hourly chart",this.model.name);
+                        if(this.debug) console.log("build hourly chart",this.model.name);
                     } else if(this.model instanceof Collection){
                         // build collection list view
                         //console.log("build collection view",this.model.name,this.model.item_name);
                         $("#"+this.model.name).html("");
                         this.item_template.getData(html=>{
                             //console.log("build collection view item template loaded....",this.model.name,data,html);
-                            console.log(this.model.name);
-                            console.log(data);
-                            console.log(data[this.model.name]);
+                            if(this.debug) console.log(this.model.name, data, data[this.model.name]);
                             data[this.model.name].forEach((itm,index)=>{
                                 $(html).appendTo("#"+this.model.name).attr('index',index);
                                 if('id' in itm) $("#"+this.model.name+" ."+this.model.item_name+"[index="+index+"]").attr(this.model.item_name+"_id",itm[this.model.id_name]);

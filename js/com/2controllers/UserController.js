@@ -1,10 +1,15 @@
 class UserController extends Controller {
+    static user = new UserController();
     constructor(){
         super(new UserView());
+        this.first_ready = true;
     }
     ready(){
-        this.view.build();
-        this.setupUserEvents();
+        if(this.first_ready){
+            this.view.build();
+            this.setupUserEvents();
+            this.first_ready = false;    
+        }
     }
     setupUserEvents(){
         this.click("#user a",e=>{
@@ -49,6 +54,13 @@ class UserController extends Controller {
             var password = $("#user input[var=password]").val();
             this.view.model.signup(username,password,json=>{
                 this.view.display();
+            });
+        }
+    }
+    static userLevel(callBack){
+        if(UserController.user.view.model){
+            UserController.user.view.model.getData(json=>{
+                callBack(json.session.user.level);
             });
         }
     }

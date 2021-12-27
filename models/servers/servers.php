@@ -52,6 +52,13 @@ class Servers extends clsModel{
             'Default'=>"current_timestamp()",
             'Extra'=>""
         ],[
+            'Field'=>"modified",
+            'Type'=>"datetime",
+            'Null'=>"YES",
+            'Key'=>"",
+            'Default'=>null,
+            'Extra'=>""
+        ],[
             'Field'=>"online",
             'Type'=>"tinyint(1)",
             'Null'=>"NO",
@@ -148,7 +155,7 @@ class Servers extends clsModel{
     }
 
     public function Online(){
-        return $this->LoadAllWhere(['online'=>1]);
+        return $this->LoadAllWhere(['online'=>1],["last_ping"=>"DESC"]);
     }
     public function Offline(){
         return $this->LoadAllWhere(['online'=>0]);

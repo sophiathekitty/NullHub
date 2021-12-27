@@ -2,6 +2,8 @@
  * load in the user and do create user, login user, and logout user functions
  */
 class UserModel extends Model {
+    static verified = 0;
+    static level = 0;
     constructor(){
         super("user","/api/user","/api/user");
     }

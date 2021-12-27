@@ -1,21 +1,23 @@
 var info = new View(new Model("info","/api/info/","/api/info/"));
 var plugins = new View(new Collection("plugins","plugin","/api/info/plugins/","/api/info/plugins/"),null,new Template("plugin","/templates/items/plugin.html"));
-var extensions = new View(new Collection("extensions","extension","/api/info/extensions/","/api/info/extensions/"),null,new Template("template","/templates/items/extension.html"));
+var extensions = new View(new Collection("extensions","extension","/api/info/extensions/","/api/info/extensions/"),null,new Template("extension","/templates/items/extension.html"));
+var servers = new ServerView();
 var settings = new Settings();
 var weather_pallet = ColorPallet.getPallet("weather");
 weather_pallet.getColorLerp("temp",68,color=>{
     console.log("color",color);
 });
 var clock = new ClockController();
-var user = new UserController();
+//var user = new UserController();
 //info.model.pull_delay = 60000;
 $(document).ready(function(){
     // load the server info
     info.display();
     plugins.build();
     extensions.build();
-    clock.ready();
-    user.ready();
+    servers.build();
+    //clock.ready();
+    //user.ready();
     //window.refreshData = setInterval(RefreshData,10000);
     LoadReadMe();
 });
@@ -27,6 +29,7 @@ function RefreshData(){
     info.display();
     plugins.display();
     extensions.display();
+    servers.display();
 }
 
 
@@ -41,12 +44,16 @@ function LoadReadMe(){
         var md = "/DEVICE.md";
         if(data == "hub"){
             md = "/HUB.md";
-            $("title").html("Null [Hub]");
-        } else if(data == "" || data == "device") {
-            $("title").html("Null [Device]");
-        } else {
-            $("title").html("Null ["+data.charAt(0).toUpperCase()+data.slice(1)+"]");
         }
+        settings.getVar("name",title=>{
+            if(data == "hub"){
+                $("title").html("Null [Hub] "+title);
+            } else if(data == "" || data == "device") {
+                $("title").html("Null [Device] "+title);
+            } else {
+                $("title").html("Null ["+data.charAt(0).toUpperCase()+data.slice(1)+"] "+title);
+            }    
+        });
         $("body").addClass(data);
         //md = "README.md";
         $.get(md).done(json=>{
