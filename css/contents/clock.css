@@ -116,10 +116,11 @@
 }
 [time_of_day="day"] .sky .moon {
     top:0.5em;
-    left:2em;
+    left:3em;
     width:1em;
     height:1em;
     opacity: 0.25;
+    mix-blend-mode: screen;
 }
 [time_of_day="morning"] .sky .moon {
     top:1.25em;
@@ -127,6 +128,7 @@
     width:1.5em;
     height:1.5em;
     opacity: 0.5;
+    mix-blend-mode: lighten;
 }
 [time_of_day="evening"] .sky .moon {
     top:2em;
@@ -134,6 +136,7 @@
     width:2em;
     height:2em;
     opacity: 0.75;
+    mix-blend-mode: lighten;
 }
 .clock .sky .clouds {
     position: absolute;

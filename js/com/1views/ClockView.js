@@ -47,8 +47,9 @@ class ClockView extends View {
                 $(".value[var=moon_phase]").html(phase);
                 $(".moon").attr("phase",json.moon_phase);
                 $(".moon").attr("stage",phase);
+                $(".sky").attr("moon_phase",phase);
                 $(".moon .disc").css("transform","rotateY("+(360-(360*json.moon_phase))+"deg)");
-                
+                $(".sky").attr("afternoon",this.solarNoon(json.sunrise,json.sunset));
                 $(".clock [var=day_of_week]").html(json.day_of_week);
                 var date = new Date();
                 $(".clock [var=date]").html(json.month+" "+date.getDate()+", "+date.getFullYear());
@@ -62,6 +63,15 @@ class ClockView extends View {
                 $(".clock [var=time]").html(h+":"+m);
             });
         }
+    }
+    solarNoon(sunrise,sunset){
+        var morning = sunrise.split(":");
+        var evening = sunset.split(":");
+        var h = Math.round((Number(morning[0]) + Number(evening[0]))/2);
+        //console.log("SolarNoon",sunrise,morning,"|",sunset,evening,"||",h);
+        var now = new Date();
+        return (now.getHours() > h);
+
     }
     refresh(){
         //console.log("ClockView::Refresh");

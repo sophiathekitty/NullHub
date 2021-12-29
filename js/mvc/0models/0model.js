@@ -110,8 +110,12 @@ class Model {
      * Saves the data object to local storage in a second record with the postfix _changed
      * @param {Object} data 
      */
-    setData(data){
-        Model.storage.setItem(this.prefix+this.name+"_changed",JSON.stringify(data));
+    setData(data,live = false){
+        if(live){
+            Model.storage.setItem(this.prefix+this.name,JSON.stringify(data));
+        } else {
+            Model.storage.setItem(this.prefix+this.name+"_changed",JSON.stringify(data));
+        }
     }
     /**
      * [untested?] pushes the data in local storage with the postfix _changed for this model to the save api
@@ -186,6 +190,8 @@ class Collection extends Model {
         super(collection_name, get_url, save_url,1000*60*5,prefix,debug);
         this.item_name = item_name;
         this.id_name = id_name;
+        this.push_items_started = 0;
+        this.push_items_completed = 0;
     }
     /**
      * gets an item from the data list
@@ -229,17 +235,44 @@ class Collection extends Model {
      * @param {function(JSON)} callBack called if push request was successful
      * @param {function(*)} errorCallback called if there is an error
      * @param {function(*)} failCallback called if the request failed
+     * @param {function(*)} doneCallback called if the request failed
      */
-    pushData(callBack,errorCallback,failCallback){
+    pushData(callBack,errorCallback,failCallback,doneCallback){
         var oldData = JSON.parse(Model.storage.getItem(this.prefix+this.name));
         var allData = JSON.parse(Model.storage.getItem(this.prefix+this.name+"_changed"));
         for(var i = 0; i < allData[this.name].length; i++){
-            if(!(_.isEqual(oldData[this.name][i],allData[this.name][i]))){
-                this.pushItem(allData[this.name][i],callBack,errorCallback,failCallback);
+            if(JSON.stringify(oldData[this.name][i]) != JSON.stringify(allData[this.name][i])){
+                this.push_items_started++;
+                this.pushItem(allData[this.name][i],json=>{
+                    this.push_items_completed++;
+                    var done = this.pushDone(allData);
+                    callBack(json);
+                    if(done) doneCallback(json);
+                },error=>{
+                    this.push_items_completed++;
+                    var done = this.pushDone(allData);
+                    errorCallback(error);
+                    if(done) doneCallback(json);
+                },error=>{
+                    this.push_items_completed++;
+                    var done = this.pushDone(allData);
+                    failCallback(error);
+                    if(done) doneCallback(json);
+                });
             }
         }
-        Model.storage.setItem(this.prefix+this.name,JSON.stringify(allData)); // ok. lets actually update the local data with the correct name
-        Model.storage.removeItem(this.prefix+this.name+"_changed"); // and clear out the local changes that have now been saved
+    }
+    pushDone(allData){
+        if(this.debug) console.log("Collection::"+this.name+":pushDone?");
+        if(this.push_items_started == this.push_items_completed){
+            var date = new Date();
+            if(this.debug) console.log("Collection::"+this.name+":pushDone! YES");
+            Model.storage.setItem(this.prefix+this.name,JSON.stringify(allData)); // ok. lets actually update the local data with the correct name
+            Model.storage.removeItem(this.prefix+this.name+"_changed"); // and clear out the local changes that have now been saved
+            this.pulled = new Date(date.getTime()-(this.pull_delay*0.75));
+            return true;
+        }
+        return false;
     }
     pushItem(myData,callBack,errorCallback,failCallback){
         if(this.debug){
@@ -255,7 +288,10 @@ class Collection extends Model {
                 data: myData,
                 success: data=>{
                     if(this.debug){
-                        console.log("Model::"+this.name+": push success",data);
+                        console.log("Collection::"+this.name+": push success",data);
+                    }
+                    if(data[this.item_name]){
+                        this.setItem(data[this.item_name]);
                     }
                     if(this.errors < 0) this.errors = 0;
                     if(callBack) callBack(data);
@@ -278,7 +314,7 @@ class Collection extends Model {
                     Model.push_requests_completed++;
                     Model.server_errors++;
                     if(this.debug){
-                        console.error("Model::"+this.name+": push fail",res);
+                        console.error("Collection::"+this.name+": push fail",res);
                     }
                     if(failCallback) failCallback(res);
                 }
