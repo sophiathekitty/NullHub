@@ -1,0 +1,49 @@
+#floors .room.card {
+    border: black thin solid;
+    padding: 0em;
+    flex-grow: 1;
+    flex-basis: 15em;
+    margin: 0.25em;
+    min-height: 8em;
+    --lights_on: #8b8b8b98;
+    --lights_off: #5c5c5c98;
+}
+section#floors .room.card h1 {
+    display: flex;
+    width: 100%;
+    margin: 0em;
+    padding: 0.25em;
+    font-size: 1.25em;
+    color: var(--list_header_text);
+    background-color: var(--list_header_back);
+    margin-bottom: 0.5em;
+    flex-grow: 0;
+    height: 1.25em;
+}
+section#floors .room.card div {
+    flex-grow: 1;
+    width: 100%;
+}
+section#floors .room.card h1 span {
+    margin: 0em;
+}
+section#floors .room.card h1 span:first-of-type {
+    margin-right: auto;
+}
+#floors .room.card[lights_on_in_room="1"][lights_on_in_neighbors="0"]{
+    background-color: var(--lights_on);
+    background: linear-gradient(70deg, var(--lights_on) 75%, #555555de 100%);
+}
+#floors .room.card[lights_on_in_room="0"][lights_on_in_neighbors="1"]{
+    background-color: var(--lights_off);
+    background: linear-gradient(70deg, var(--lights_off) 75%, var(--lights_on) 100%);
+}
+#floors .room.card[lights_on_in_room="1"][neighbors_lights_off_percent="0"],
+#floors .room.card[lights_on_in_room="1"][lights_on_in_neighbors="1"]{
+    background-color: var(--lights_on);
+    background: linear-gradient(140deg, var(--lights_on) 75%, var(--lights_on) 100%);
+}
+#floors .room.card[lights_on_in_room="0"][lights_on_in_neighbors="0"]{
+    background-color: var(--lights_off);
+    background: linear-gradient(140deg, var(--lights_off) 75%, var(--lights_off) 100%);
+}

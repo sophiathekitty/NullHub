@@ -126,4 +126,22 @@ class Controller {
     listenForEvent(event, selector, child_selector, callBack){
         $(selector).on(event,child_selector,callBack);
     }
+    /**
+     * sets up an interval for the refresh function
+     * @param {int} time the time in milliseconds to wait between calling refresh function
+     */
+    refreshInterval(time = 60000){
+        if(this.interval) clearInterval(this.interval);
+        if(this.timeout) clearTimeout(this.timeout);
+        this.interval = setInterval(this.refresh.bind(this),time);
+    }
+    /**
+     * sets up a timeout for the refresh function
+     * @param {int} time the time in milliseconds to wait before calling refresh function
+     */
+    refreshTimeout(time = 60000){
+        if(this.interval) clearInterval(this.interval);
+        if(this.timeout) clearTimeout(this.timeout);
+        this.timeout = setTimeout(this.refresh.bind(this),time);
+    }
 }

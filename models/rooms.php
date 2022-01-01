@@ -94,6 +94,41 @@ class Rooms extends clsModel{
             'Default'=>"0",
             'Extra'=>""
         ],[
+            'Field'=>"IsTimeToGetUp",
+            'Type'=>"tinyint(1)",
+            'Null'=>"YES",
+            'Key'=>"",
+            'Default'=>null,
+            'Extra'=>""
+        ],[
+            'Field'=>"IsTimeForBed",
+            'Type'=>"tinyint(1)",
+            'Null'=>"YES",
+            'Key'=>"",
+            'Default'=>null,
+            'Extra'=>""
+        ],[
+            'Field'=>"IsBedtimeHours",
+            'Type'=>"tinyint(1)",
+            'Null'=>"YES",
+            'Key'=>"",
+            'Default'=>null,
+            'Extra'=>""
+        ],[
+            'Field'=>"IsDayInside",
+            'Type'=>"tinyint(1)",
+            'Null'=>"YES",
+            'Key'=>"",
+            'Default'=>"0",
+            'Extra'=>""
+        ],[
+            'Field'=>"IsDayTime",
+            'Type'=>"tinyint(1)",
+            'Null'=>"YES",
+            'Key'=>"",
+            'Default'=>"0",
+            'Extra'=>""
+        ],[
             'Field'=>"modified",
             'Type'=>"datetime",
             'Null'=>"NO",

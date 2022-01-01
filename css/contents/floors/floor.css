@@ -1,0 +1,5 @@
+#floors div {
+    display: flex;
+    flex-flow: wrap;
+    padding: 0em;
+}

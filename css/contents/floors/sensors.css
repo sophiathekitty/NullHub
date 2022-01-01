@@ -1,0 +1,52 @@
+.room.card h1 span {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: inline-block;
+}
+.NullLights [var="IsDayTime"][val="1"],
+.NullLights [var="IsDayTime"][val="0"],
+.NullLights [var="IsDayInside"][val="1"],
+.NullLights [var="IsDayInside"][val="0"],
+.NullLights [var="IsTimeToGetUp"][val="1"],
+.NullLights [var="IsTimeToGetUp"][val="0"],
+.NullLights [var="IsBedtimeHours"][val="1"],
+.NullLights [var="IsBedtimeHours"][val="0"],
+.NullLights [var="IsTimeForBed"][val="1"],
+.NullLights [var="IsTimeForBed"][val="0"]{
+    width: 0.75em;
+    height: 1em;
+}
+
+.NullLights [var="IsTimeForBed"][val="0"]{
+    background-image: url(/images/sensors/IsTimeForBedFalse.png);
+}
+.NullLights [var="IsTimeForBed"][val="1"]{
+    background-image: url(/images/sensors/IsTimeForBedTrue.png);
+}
+.NullLights [var="IsBedtimeHours"][val="0"]{
+    background-image: url(/images/sensors/IsBedtimeHoursFalse.png);
+}
+.NullLights [var="IsBedtimeHours"][val="1"]{
+    background-image: url(/images/sensors/IsBedtimeHoursTrue.png);
+}
+.NullLights [var="IsTimeToGetUp"][val="0"]{
+    background-image: url(/images/sensors/IsTimeToGetUpFalse.png);
+}
+.NullLights [var="IsTimeToGetUp"][val="1"]{
+    background-image: url(/images/sensors/IsTimeToGetUpTrue.png);
+}
+
+.NullLights [var="IsDayInside"][val="0"]{
+    background-image: url(/images/sensors/IsDayInsideFalse.png);
+}
+.NullLights [var="IsDayInside"][val="1"]{
+    background-image: url(/images/sensors/IsDayInsideTrue.png);
+}
+.NullLights [var="IsDayTime"][val="0"]{
+    background-image: url(/images/sensors/IsDayTimeFalse.png);
+}
+.NullLights [var="IsDayTime"][val="1"]{
+    background-image: url(/images/sensors/IsDayTimeTrue.png);
+}
+
