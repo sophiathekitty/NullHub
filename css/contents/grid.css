@@ -65,4 +65,9 @@ div.contents {
         margin-left: auto;
         margin-right: auto;
     }
+    body.app.NullHub main {
+        margin-left: 5em;
+        margin-right: 5em;
+        max-width: none;
+    }
 }

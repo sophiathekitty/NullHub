@@ -1,0 +1,18 @@
+#rooms_list .bool.light::before{
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+}
+#rooms_list .bool.light[var="lights_on_in_neighbors"]::before{
+    width: 0.5em;
+}
+#rooms_list .bool.light[val="0"]::before{
+    background-image: url(/app/img/light-off.png);
+}
+#rooms_list .bool.light[val="1"]::before{
+    background-image: url(/app/img/light-on.png);
+}

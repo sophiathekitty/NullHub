@@ -2,4 +2,53 @@
     display: flex;
     flex-flow: wrap;
     padding: 0em;
+    margin: 0em;
+}
+#floors[level] > div,
+#floors > div:empty,
+#floors[level=""] > div:empty {
+    display: none;
+}
+#floors[level=""] > div,
+#floors > div {
+    display: flex;
+    position: relative;
+    padding-top: 1.5em;
+    margin-top: 0.25em;
+    flex-grow: 1;
+}
+#floors > div:first-of-type {
+    margin-top: 0em;
+}
+#floors[level="1"] > div[level="1"],
+#floors[level="0"] > div[level="0"],
+#floors[level="-1"] > div[level="-1"] {
+    display: flex;
+    padding-top: 0em;
+    margin-top: 0em;
+}
+#floors > div::before {
+    position: absolute;
+    top: 0em;
+    left: 0.25em;
+    right: 0.25em;
+    padding: 0.25em;
+}
+#floors > div[level="1"]::before,
+#floors[room_id="0"] > div[level="1"]::before {
+    content: "Second Floor";
+}
+#floors > div[level="0"]::before,
+#floors[room_id="0"] > div[level="0"]::before {
+    content: "First Floor";
+}
+#floors > div[level="-1"]::before,
+#floors[room_id="0"] > div[level="-1"]::before {
+    content: "Basement";
+}
+
+#floors[room_id] > div[level="1"]::before,
+#floors[room_id] > div[level="0"]::before,
+#floors[room_id] > div[level="-1"]::before {
+    content: none;
 }

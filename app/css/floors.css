@@ -1,0 +1,10 @@
+section#floors.main {
+    display: flex;
+    flex-direction: column;
+}
+section#floors.main > div {
+    flex-grow: 1;
+}
+section#floors.main .room.card {
+    flex-basis: 20em;
+}

@@ -1,0 +1,10 @@
+main section#weather.main,
+main .main {
+    display: none;
+}
+[view="rooms"] #floors {
+    display: flex;
+}
+[view="weather"] #weather {
+    display: flex;
+}

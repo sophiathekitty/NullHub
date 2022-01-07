@@ -5,8 +5,11 @@
     flex-basis: 15em;
     margin: 0.25em;
     min-height: 8em;
-    --lights_on: #8b8b8b98;
+    --lights_on: #908e8298;
+    --lights_sun: #82908d98;
     --lights_off: #5c5c5c98;
+    --room_lights: var(--lights_off);
+    --neighbor_lights: var(--lights_off);
 }
 section#floors .room.card h1 {
     display: flex;
@@ -27,12 +30,29 @@ section#floors .room.card div {
 section#floors .room.card h1 span {
     margin: 0em;
 }
-section#floors .room.card h1 span:first-of-type {
+section#floors .room.card h1 span[var="name"] {
     margin-right: auto;
+    padding-right: 1em;
 }
+#floors .room.card[IsDayInside="1"]{
+    --room_lights: var(--lights_sun);
+}
+#floors .room.card[lights_on_in_room="1"]{
+    --room_lights: var(--lights_on);
+}
+#floors .room.card[lights_on_in_neighbors="1"]{
+    --neighbor_lights: var(--lights_on);
+}
+
+/*
 #floors .room.card[lights_on_in_room="1"][lights_on_in_neighbors="0"]{
     background-color: var(--lights_on);
-    background: linear-gradient(70deg, var(--lights_on) 75%, #555555de 100%);
+    background: linear-gradient(70deg, var(--lights_on) 75%, var(--lights_off) 100%);
+}
+
+#floors .room.card[lights_on_in_room="1"][lights_on_in_neighbors="0"]{
+    background-color: var(--lights_on);
+    background: linear-gradient(70deg, var(--lights_on) 75%, var(--lights_off) 100%);
 }
 #floors .room.card[lights_on_in_room="0"][lights_on_in_neighbors="1"]{
     background-color: var(--lights_off);
@@ -46,4 +66,9 @@ section#floors .room.card h1 span:first-of-type {
 #floors .room.card[lights_on_in_room="0"][lights_on_in_neighbors="0"]{
     background-color: var(--lights_off);
     background: linear-gradient(140deg, var(--lights_off) 75%, var(--lights_off) 100%);
+}
+*/
+#floors .room.card{
+    background-color: var(--room_lights);
+    background: linear-gradient(140deg, var(--room_lights) 75%, var(--neighbor_lights) 100%);
 }

@@ -1,6 +1,6 @@
-var info = new View(new Model("info","/api/info/","/api/info/"));
-var plugins = new View(new Collection("plugins","plugin","/api/info/plugins/","/api/info/plugins/"),null,new Template("plugin","/templates/items/plugin.html"));
-var extensions = new View(new Collection("extensions","extension","/api/info/extensions/","/api/info/extensions/"),null,new Template("extension","/templates/items/extension.html"));
+var info = new InfoView();//View(new Model("info","/api/info/","/api/info/"));
+var plugins = new PluginsView();//View(new Collection("plugins","plugin","/api/info/plugins/","/api/info/plugins/"),null,new Template("plugin","/templates/items/plugin.html"));
+var extensions = new ExtensionsView();//View(new Collection("extensions","extension","/api/info/extensions/","/api/info/extensions/"),null,new Template("extension","/templates/items/extension.html"));
 var servers = new ServerView();
 var settings = new Settings();
 var weather_pallet = ColorPallet.getPallet("weather");

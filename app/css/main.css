@@ -1,122 +1,28 @@
-@import url(fonts.css);
-body {
-    background-color: darkslategray;
-    font-family: 'Rimouski', Arial, Helvetica, sans-serif;
-    max-width: 100vw;
-    overflow-x: hidden;
-}
-a[href="#login"],
-a[href="#signup"],
-div[user_id="0"] a[href="#logout"] {
-    display: none;
-}
-div[user_id="0"] a[href="#login"],
-div[user_id="0"] a[href="#signup"],
-a[href="#logout"] {
-    display: inline-block;
-}
-h1 {
-    font-family:  Arial, Helvetica, sans-serif;
+body.app {
+    display: grid;
+    grid-template-rows: 4em auto 5em;
+    grid-gap: 0.1em 0em;
+    grid-template-areas: 
+        "header"
+        "body"
+        "footer";
+    height: 100vh;
+    width: 100vw;
+    margin: 0em;
+    padding: 0em;
 }
 header {
-    height: 15em;
+    grid-area: header;
+    padding: 0.25em;
+    padding-left: 1em;
 }
-#sections {
-    max-width: 100vw;
-    display: grid;
-    /*grid-template-columns: 10vw 90vw;*/
-    grid-gap: 0em 5em;
-    grid-template-areas: 
-        "rooms"
-        "details";
+main {
+    grid-area: body;
+    height: auto;
+    margin-bottom: 1em;
+    margin-top: 1em;
 }
-#sections section#rooms{
-    grid-area: rooms;
-}
-#sections section{
-    grid-area: details;
-}
-@media( min-width:1800px){
-    #sections {
-        max-width: 100vw;
-        max-height: 75vh;
-        width: 100%;
-        display: grid;
-        grid-column-gap: 1vw;
-        grid-template-columns: 18vw 80vw;
-        grid-template-rows: 75vh;
-        grid-template-areas: 
-            "rooms details";
-    }
-    #sections section {
-        max-width: 100%;
-        width: 100%;
-    }
-    header {
-        height: 20vh;
-    }
-    footer {
-        position: fixed;
-        bottom: 0px;
-        left: 0px;
-        right: 0px;
-        height: 5vh;
-    }
-    footer nav {
-        display: none;
-    }
-}
-
-section#rooms .room {
-    background-color: #344141;
-    padding: 0.5em;
-    margin: 0.2em;
-}
-Section#rooms {
-    overflow-y: auto;
-}
-section#rooms .room h1 {
-    display: flex;
-    flex-direction: row;
-    margin: 0em;
-}
-section#rooms .room h1 [var="name"] {
-    flex-grow: 1;
-}
-section#rooms .room [var="lights_on_in_room"],
-section#rooms .room [var="lights_on_in_neighbors"] {
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    background-image: url(../img/light-off.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-    z-index: 1;
-    transform: translate(-0.1em,0.1em);
-}
-section#rooms .room [var="lights_on_in_room"][val="1"],
-section#rooms .room [var="lights_on_in_neighbors"][val="1"] {
-    background-image: url(../img/light-on.png);
-}
-section#rooms .room [var="lights_on_in_neighbors"][val="2"]{
-    background-image: url(../img/light-on.png),url(../img/light-on.png);
-    background-size: 0.5em;
-    background-position: top left, bottom right;
-}
-section#rooms .room [var="lights_on_in_neighbors"][val="3"]{
-    background-image: url(../img/light-on.png),url(../img/light-on.png),url(../img/light-on.png);
-    background-size: 0.5em;
-    background-position: top left, top right, bottom right;
-}
-section#rooms .room [var="lights_on_in_neighbors"] {
-    margin-left: -0.75em;
-    width: 0.75em;
-    height: 0.75em;
-    z-index: 0;
-    transform: translate(0.1em,-0.1em);
-    background-size: 0.5em;
-}
-div#sections.no_room_temps nav.toggle_temperature.focus {
-    display: none !important;
+footer {
+    grid-area: footer;
+    position: relative;
 }

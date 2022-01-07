@@ -1,7 +1,6 @@
 <div class="room card">
     <h1>
         <span var="name"></span>
-        <span class="sensors"></span>
         <span class="time_sensors">
             <span var="IsTimeForBed"></span>
             <span var="IsBedtimeHours"></span>
@@ -9,7 +8,33 @@
             <span var="IsDayInside"></span>
             <span var="IsDayTime"></span>
         </span>
+        <span class="sensors"></span>
     </h1>
     <div class="lights"></div>
+    <div class="details">
+        <h2>Daytime Hours</h2>
+        <ul>
+            <li>
+                <span class="key">Bedtime</span>
+                <span class="val" var="bedtime"></span>
+            </li>
+            <li>
+                <span class="key">Wake up</span>
+                <span class="val" var="awake_time"></span>
+            </li>
+            <li>
+                <span class="key">Sunlight Offset</span>
+                <span class="val" var="sunlight_offset"></span>
+            </li>    
+            <li>
+                <span class="key">Sunrise</span>
+                <span class="val" var="sunrise"></span>
+            </li>    
+            <li>
+                <span class="key">Sunset</span>
+                <span class="val" var="sunset"></span>
+            </li>    
+        </ul>
+    </div>
     <div class="charts"></div>
 </div>

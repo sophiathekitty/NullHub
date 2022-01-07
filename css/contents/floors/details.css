@@ -1,0 +1,77 @@
+#floors .room.card .details {
+    display: none;
+    flex-direction: column;
+}
+
+#floors[room_id="1"] .room.card[room_id="1"] .details,
+#floors[room_id="2"] .room.card[room_id="2"] .details,
+#floors[room_id="3"] .room.card[room_id="3"] .details,
+#floors[room_id="4"] .room.card[room_id="4"] .details,
+#floors[room_id="5"] .room.card[room_id="5"] .details,
+#floors[room_id="6"] .room.card[room_id="6"] .details,
+#floors[room_id="7"] .room.card[room_id="7"] .details,
+#floors[room_id="8"] .room.card[room_id="8"] .details,
+#floors[room_id="9"] .room.card[room_id="9"] .details,
+#floors[room_id="10"] .room.card[room_id="10"] .details,
+#floors[room_id="11"] .room.card[room_id="11"] .details,
+#floors[room_id="12"] .room.card[room_id="12"] .details,
+#floors[room_id="13"] .room.card[room_id="13"] .details,
+#floors[room_id="14"] .room.card[room_id="14"] .details,
+#floors[room_id="15"] .room.card[room_id="15"] .details,
+#floors[room_id="16"] .room.card[room_id="16"] .details,
+#floors[room_id="17"] .room.card[room_id="17"] .details,
+#floors[room_id="18"] .room.card[room_id="18"] .details,
+#floors[room_id="19"] .room.card[room_id="19"] .details,
+#floors[room_id="20"] .room.card[room_id="20"] .details,
+#floors[room_id="21"] .room.card[room_id="21"] .details,
+#floors[room_id="22"] .room.card[room_id="22"] .details,
+#floors[room_id="23"] .room.card[room_id="23"] .details,
+#floors[room_id="24"] .room.card[room_id="24"] .details,
+#floors[room_id="25"] .room.card[room_id="25"] .details,
+#floors[room_id="26"] .room.card[room_id="26"] .details,
+#floors[room_id="27"] .room.card[room_id="27"] .details,
+#floors[room_id="28"] .room.card[room_id="28"] .details,
+#floors[room_id="29"] .room.card[room_id="29"] .details,
+#floors[room_id="30"] .room.card[room_id="30"] .details {
+    display: flex;
+}
+
+
+#floors[room_id] .room.card {
+    display: none;
+}
+#floors[room_id="0"] .room.card {
+    display: flex;
+}
+#floors[room_id="1"] .room.card[room_id="1"],
+#floors[room_id="2"] .room.card[room_id="2"],
+#floors[room_id="3"] .room.card[room_id="3"],
+#floors[room_id="4"] .room.card[room_id="4"],
+#floors[room_id="5"] .room.card[room_id="5"],
+#floors[room_id="6"] .room.card[room_id="6"],
+#floors[room_id="7"] .room.card[room_id="7"],
+#floors[room_id="8"] .room.card[room_id="8"],
+#floors[room_id="9"] .room.card[room_id="9"],
+#floors[room_id="10"] .room.card[room_id="10"],
+#floors[room_id="11"] .room.card[room_id="11"],
+#floors[room_id="12"] .room.card[room_id="12"],
+#floors[room_id="13"] .room.card[room_id="13"],
+#floors[room_id="14"] .room.card[room_id="14"],
+#floors[room_id="15"] .room.card[room_id="15"],
+#floors[room_id="16"] .room.card[room_id="16"],
+#floors[room_id="17"] .room.card[room_id="17"],
+#floors[room_id="18"] .room.card[room_id="18"],
+#floors[room_id="19"] .room.card[room_id="19"],
+#floors[room_id="20"] .room.card[room_id="20"],
+#floors[room_id="21"] .room.card[room_id="21"],
+#floors[room_id="22"] .room.card[room_id="22"],
+#floors[room_id="23"] .room.card[room_id="23"],
+#floors[room_id="24"] .room.card[room_id="24"],
+#floors[room_id="25"] .room.card[room_id="25"],
+#floors[room_id="26"] .room.card[room_id="26"],
+#floors[room_id="27"] .room.card[room_id="27"],
+#floors[room_id="28"] .room.card[room_id="28"],
+#floors[room_id="29"] .room.card[room_id="29"],
+#floors[room_id="30"] .room.card[room_id="30"] {
+    display: flex;
+}

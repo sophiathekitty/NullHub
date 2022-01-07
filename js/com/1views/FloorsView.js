@@ -33,10 +33,16 @@ class FloorsView extends View {
                 json.rooms.forEach(room=>{
                     if(this.debug) console.log("FloorsView::Display-room",room);
                     $("#floors [room_id="+room.id+"]").attr("activity",room.activity);
+                    $("#floors [room_id="+room.id+"]").attr("IsDayInside",room.IsDayInside);
                     $("#floors [room_id="+room.id+"]").attr("lights_on_in_room",room.lights_on_in_room);
                     $("#floors [room_id="+room.id+"]").attr("lights_on_in_neighbors",room.lights_on_in_neighbors);
                     $("#floors [room_id="+room.id+"]").attr("neighbors_lights_off_percent",room.neighbors_lights_off_percent);
                     $("#floors [room_id="+room.id+"] [var=name]").html(room.name);
+                    $("#floors [room_id="+room.id+"] [var=bedtime]").html(room.bedtime);
+                    $("#floors [room_id="+room.id+"] [var=awake_time]").html(room.awake_time);
+                    $("#floors [room_id="+room.id+"] [var=sunlight_offset]").html(room.sunlight_offset);
+                    $("#floors [room_id="+room.id+"] [var=sunrise]").html(room.sunrise);
+                    $("#floors [room_id="+room.id+"] [var=sunset]").html(room.sunset);
                     // room time schedule sensors
                     if(room.bedtime){
                         if(room.IsTimeForBed){

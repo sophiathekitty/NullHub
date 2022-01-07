@@ -13,6 +13,7 @@ class ClockView extends View {
                 console.log("ClockView::Build",html);
                 $("#clock_stamp").html("");
                 $(html).appendTo("#clock_stamp");
+                $(html).appendTo(".app main");
                 $(".clock").attr("show","sunrise");
                 this.display();
                 if(this.interval) clearInterval(this.interval);
