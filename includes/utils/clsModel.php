@@ -285,6 +285,7 @@ class clsModel {
         if(is_null($row)){
             // record doesn't exist insert a new one
             $id = clsDB::$db_g->safe_insert($this->table_name,$data,$where);
+            $sql = clsDB::$db_g->last_sql;
         } else {
             // record already exists so update it
             $id = clsDB::$db_g->safe_update($this->table_name,$data,$where);

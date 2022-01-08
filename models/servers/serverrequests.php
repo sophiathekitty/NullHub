@@ -4,7 +4,7 @@ class ServerRequests extends clsModel{
     public $fields = [
         [
             'Field'=>"guid",
-            'Type'=>"varchar(34)",
+            'Type'=>"varchar(50)",
             'Null'=>"NO",
             'Key'=>"PRI",
             'Default'=>"",
@@ -17,7 +17,7 @@ class ServerRequests extends clsModel{
             'Default'=>"",
             'Extra'=>""
         ],[
-            'Field'=>"api",
+            'Field'=>"url",
             'Type'=>"varchar(200)",
             'Null'=>"NO",
             'Key'=>"",
@@ -49,18 +49,28 @@ class ServerRequests extends clsModel{
 
 
     private static $servers = null;
+    /**
+     * @return ServerRequests|clsModel
+     */
     private static function GetInstance(){
-        if(is_null(ServerRequests::$servers)) ServerRequests::$servers = new Servers();
+        if(is_null(ServerRequests::$servers)) ServerRequests::$servers = new ServerRequests();
         return ServerRequests::$servers;
     }
     /**
      * loads api data from the hub
      * @param string $api the api path "/api/info/"
+     * @return array associated array of json data
      */
     public static function LoadHubJSON($api){
         $hub = Servers::GetHub();
         return ServerRequests::LoadRemoteJSON($hub['mac_address'],$api);
     }
+    /**
+     * loads api data from a server by mac_address
+     * @param string $mac_address the mac_address of the remote server
+     * @param string $api the api path "/api/info/"
+     * @return array associated array of json data
+     */
     public static function LoadRemoteJSON($mac_address,$api){
         $server = Servers::ServerMacAddress($mac_address);
         $url = "http://".$server['url'].$api;
@@ -73,9 +83,18 @@ class ServerRequests extends clsModel{
         if(!is_null($content) && $content != "") $server['online'] = 1;
         $requests = ServerRequests::GetInstance();
         $requests->PruneField('created',DaysToSeconds(Settings::LoadSettingsVar('latency_log_days',1)));
-        $requests->Save(["guid"=>md5($mac_address.$server["last_ping"].$api),"mac_address"=>$mac_address,"api"=>$api,"latency"=>$latency,"online"=>$server['online']]);
+        $resp = $requests->Save([
+            "guid"=>md5($mac_address.$server['last_ping'].$api),
+            "mac_address"=>$mac_address,
+            'url'=>$api,
+            "latency"=>$latency,
+            "online"=>$server['online']
+        ]);
+        //print_r($resp);
+        //Settings::SaveSettingsVar("ServerRequestsSQL",$resp['error']);
+        //Settings::SaveSettingsVar("ServerRequestsError",$resp['error']);
         Servers::SaveServer($server);
-        if($online = 0) return null;
+        if($server['online'] = 0) return null;
         return json_decode($content,true);
     }
 }
