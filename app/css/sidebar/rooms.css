@@ -1,3 +1,40 @@
 [view="rooms"] section#rooms_list {
     display: none;
 }
+section#rooms_list ul {
+    height: 100%;
+    max-height: 46vh;
+    overflow-y: auto;
+}
+section#rooms_list ul a::before,
+section#rooms_list ul a::after{
+    content: none;
+}
+section#rooms_list ul nav {
+    display: flex;
+    flex-direction: row;
+}
+
+section#rooms_list li {
+    display: grid;
+    grid-template-columns: auto fit-content(10%) 1em 0.5em;
+    grid-gap: 0em 0em;
+    grid-template-areas: 
+        "name   sensors room   neighbors"
+        "lights lights  lights lights";
+}
+section#rooms_list li .key {
+    grid-area: name;
+}
+section#rooms_list li .lights {
+    grid-area: lights;
+}
+section#rooms_list li .sensors {
+    grid-area: sensors;
+}
+section#rooms_list li [var="lights_on_in_room"] {
+    grid-area: room;
+}
+section#rooms_list li [var="lights_on_in_neighbors"] {
+    grid-area: neighbors;
+}

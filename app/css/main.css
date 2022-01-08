@@ -1,12 +1,12 @@
 body.app {
     display: grid;
-    grid-template-rows: 4em auto 5em;
+    grid-template-rows: 4em auto;
     grid-gap: 0.1em 0em;
     grid-template-areas: 
         "header"
-        "body"
-        "footer";
+        "body";
     height: 100vh;
+    max-height: 100vh;
     width: 100vw;
     margin: 0em;
     padding: 0em;
@@ -19,10 +19,14 @@ header {
 main {
     grid-area: body;
     height: auto;
-    margin-bottom: 1em;
+    margin-bottom: 6em;
     margin-top: 1em;
 }
 footer {
-    grid-area: footer;
-    position: relative;
+    position: fixed;
+    bottom: 0em;
+    left: 0em;
+    right: 0em;
+    height: 3em;
+    background-color: var(--footer);
 }
