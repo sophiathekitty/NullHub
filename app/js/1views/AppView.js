@@ -11,6 +11,9 @@ class AppView extends View {
                     $("body").attr("type",type);
                 });
             });
+            Settings.loadVar("room_id",room_id=>{
+                $("#floors").attr("room_id",room_id);
+            });
             $("header h1").html(name);
         });
     }
