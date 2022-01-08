@@ -84,6 +84,9 @@ class Servers extends clsModel{
 
 
     private static $servers = null;
+    /**
+     * @return Servers|clsModel
+     */
     private static function GetInstance(){
         if(is_null(Servers::$servers)) Servers::$servers = new Servers();
         return Servers::$servers;
@@ -148,6 +151,13 @@ class Servers extends clsModel{
                     $data['online'] = 1;
                     $data['offline'] = 0;
                 }
+            }
+            //echo "\n\nsave existing server\n";
+            //print_r($server);
+            //print_r($data);
+            if($server['mac_address'] != $data['mac_address']){
+                if($server['name'] != $data['name'] && $server['server'] != $data['server']) return $servers->Save($data);
+                return $servers->Save($data,['url'=>$data['url']]);
             }
             return $servers->Save($data,['mac_address'=>$data['mac_address']]);
         }

@@ -1,4 +1,4 @@
-<?php
+<pre><?php
 require_once("../includes/main.php");
 //$servers = new Servers();
 //$servers->ValidateTable();
@@ -37,5 +37,6 @@ if($_GET['ip']){
 
 }
 */
-OutputJSON(UserSync::pull());
-?>
+//OutputJSON(UserSync::pull());
+SyncServers();
+?></pre>
