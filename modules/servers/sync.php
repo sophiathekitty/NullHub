@@ -1,4 +1,7 @@
 <?php
+/**
+ * sync servers from hub
+ */
 function SyncServers(){
     if(Servers::IsHub()) return null;
     $servers = ServerRequests::LoadHubJSON("/api/info/servers");

@@ -28,6 +28,9 @@ class RoomNeighbors extends clsModel{
 
 
     private static $rooms = null;
+    /**
+     * @return RoomNeighbors|clsModel
+     */
     private static function GetInstance(){
         if(is_null(RoomNeighbors::$rooms)) RoomNeighbors::$rooms = new RoomNeighbors();
         return RoomNeighbors::$rooms;

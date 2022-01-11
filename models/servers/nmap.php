@@ -1,4 +1,7 @@
 <?php
+/**
+ * keeps track of all the know ip addresses
+ */
 class nMap extends clsModel{
     public $table_name = "nMap";
     public $fields = [
@@ -35,11 +38,17 @@ class nMap extends clsModel{
 
 
     private static $servers = null;
+    /**
+     * @return nMap|clsModel
+     */
     private static function GetInstance(){
         if(is_null(nMap::$servers)) nMap::$servers = new nMap();
         return nMap::$servers;
     }
-
+    /**
+     * loads the next ip address to check
+     * @return array data array for an nMap record
+     */
     public static function LoadNext(){
         $nmap = nMap::GetInstance();
         $host = $nmap->LoadWhere(['type'=>'new'],['created'=>'ASC']);
@@ -52,7 +61,11 @@ class nMap extends clsModel{
         if(count($rows) > 0) return $rows[0];
         return null;
     }
-    
+    /**
+     * save an nMap host
+     * @param array data array for an nMap host
+     * @return array a save report ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'sql'=>$sql,'row'=>$row]
+     */
     public static function SaveHost($host){
         $nmap = nMap::GetInstance();
         $h = $nmap->LoadWhere(['ip'=>$host['ip']]);
@@ -63,22 +76,39 @@ class nMap extends clsModel{
         }
         return $nmap->Save($host);
     }
+    /**
+     * load a host by ip address
+     * @param string $ip the ip address of the host to load
+     * @return array nmap host with $ip
+     */
     public static function LoadByIp($ip){
         $nmap = nMap::GetInstance();
         return $nmap->LoadWhere(['ip'=>$ip]);
     }
+    /**
+     * forget the unknown hosts
+     */
     public static function ForgetUnknown(){
         $nmap = nMap::GetInstance();
         $nmap->DeleteFieldValue('type','unknown');
     }
+    /**
+     * forget the pi hosts
+     */
     public static function ForgetPi(){
         $nmap = nMap::GetInstance();
         $nmap->DeleteFieldValue('type','pi');
     }
+    /**
+     * forget the wemos
+     */
     public static function ForgetWeMo(){
         $nmap = nMap::GetInstance();
         $nmap->DeleteFieldValue('type','wemo');
     }
+    /**
+     * forget all of the hosts
+     */
     public static function ForgetAll(){
         $nmap = nMap::GetInstance();
         $nmap->Truncate();

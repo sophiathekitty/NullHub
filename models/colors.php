@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * colors model for storing colors that can be synced between devices so they all use the same colors
+ */
 class Colors extends clsModel {
     public $table_name = "Colors";
     public $fields = [
@@ -28,6 +30,9 @@ class Colors extends clsModel {
     ];
 
     private static $colors;
+    /**
+     * @return Colors|clsModel 
+     */
     private static function GetInstance(){
         if(is_null(Colors::$colors)) Colors::$colors = new Colors();
         return Colors::$colors;

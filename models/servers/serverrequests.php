@@ -1,4 +1,7 @@
 <?php
+/**
+ * handle server requests and log the latency of requests
+ */
 class ServerRequests extends clsModel{
     public $table_name = "ServerRequests";
     public $fields = [
@@ -63,6 +66,17 @@ class ServerRequests extends clsModel{
      */
     public static function LoadHubJSON($api){
         $hub = Servers::GetHub();
+        if(is_null($hub)) return null;
+        return ServerRequests::LoadRemoteJSON($hub['mac_address'],$api);
+    }
+    /**
+     * loads api data from the main hub
+     * @param string $api the api path "/api/info/"
+     * @return array associated array of json data
+     */
+    public static function LoadMainJSON($api){
+        $hub = Servers::GetMain();
+        if(is_null($hub)) return null;
         return ServerRequests::LoadRemoteJSON($hub['mac_address'],$api);
     }
     /**

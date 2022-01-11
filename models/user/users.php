@@ -72,7 +72,9 @@ class Users extends clsModel{
         ]
     ];
     /**
+     * save the user
      * @param array $user the data array for a user record
+     * @return array save report
      */
     public static function SaveUser($user){
         $instance = new Users();
@@ -84,30 +86,73 @@ class Users extends clsModel{
             return $instance->Save($user,['id'=>$user['id']]);
         }
     }
+    /**
+     * get all the users
+     * @return array array of all the users
+     */
     public static function AllUsers(){
         $instance = new Users();
         return $instance->LoadAll();
     }
+    /**
+     * get all the users with a level over 3.
+     * @return array array of users that live here
+     */
     public static function Residence(){
         $instance = new Users();
         return $instance->LoadFieldAfter("level",3);
     }
+    /**
+     * ping user... ie they're currently online
+     * @param int $user_id the user's id
+     */
     public function Ping($user_id){
         $this->Save(['last_login'=>date("Y-m-d H:i:s")],['id'=>$user_id]);
     }
+    /**
+     * create a new user
+     * @param string $username the username (must not exist)
+     * @param string $password the password
+     * @param int $level the user level (default = 1)
+     * @return array|null the user or null if username already exists
+     */
     public function Create($username,$password,$level = 1){
+        if(!is_null($this->GetUser($username))) return null;
         $this->Save(['username'=>$username,'password'=>$password,'level'=>$level]);
         return $this->GetUser($username);
     }
+    /**
+     * get a user with username
+     * @param string $username the username
+     * @return array the user data array
+     */
     public function GetUser($username){
         return $this->LoadWhere(['username'=>$username]);
     }
+    /**
+     * get user with username and password
+     * @param string $username the username
+     * @param string $password the password
+     * @return array|null the user data array or null if username and password don't match a user
+     */
     public function GetUserWithPassword($username,$password){
         return $this->LoadWhere(['username'=>$username,'password'=>$password]);
     }
+    /**
+     * create a server user
+     * @param string $username the server name
+     * @param string $mac_address the server's mac address
+     * @return array|null the user or null if username already exists
+     */
     public function CreateServerUser($username,$mac_address){
         return $this->Create($username,$mac_address,3);
     }
+    /**
+     * get a server user
+     * @param string $username the server name
+     * @param string $mac_address the server's mac address
+     * @return array|null the user or null if doesn't exists
+     */
     public function GetServerUser($username,$mac_address){
         return $this->GetUserWithPassword($username,$mac_address);
     }

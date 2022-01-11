@@ -1,6 +1,14 @@
 <?php
+/**
+ * generates room stamps? should maybe double check that the IsBlah functions actually make sense...
+ */
 class RoomStamp {
-    
+    /**
+     * make a stamp for a room
+     * @todo need to make sure that the IsBlah data this generates makes sense
+     * @param array the room data array
+     * @return array the room data array with generated data
+     */
     public function Stamp($room){
         $room['IsTimeToGetUp'] = $this->IsTimeToGetUp($room);
         $room['IsTimeForBed'] = $this->IsTimeForBed($room);
@@ -9,6 +17,9 @@ class RoomStamp {
         $room['IsDaytime'] = $this->IsDaytime($room);
         return $room;
     }
+    /**
+     * is time to get up in room?
+     */
     private function IsTimeToGetUp($room){
         return (
             time() > strtotime($room['awake_time'])-HoursToSeconds(Settings::LoadSettingsVar('awake_time_before_hours',2)) &&

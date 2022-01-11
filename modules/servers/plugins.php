@@ -1,13 +1,27 @@
 <?php
+/**
+ * check to see if the plugin folder exists
+ */
 function HasPlugin($plugin){
     global $root_path;
     return is_dir($root_path."plugins/".$plugin);
 }
+/**
+ * gets the apis for a plugin
+ * @param string $plugin the plugin name ie: "NullWeather"
+ * @return array array of plugin apis
+ */
 function PluginAPIs($plugin){
     global $root_path;
     $apis = [];
     return APIChildFolder($root_path,"plugins/".$plugin."api/",substr($plugin,0,(strlen($plugin)-1)),$apis);
 }
+/**
+ * gets the apis for local plugins
+ * @param array $apis array of apis
+ * @return array array of apis including plugin apis
+ */
+
 function LocalPluginApis($apis){
     global $root_path;
     $plugins = FindPluginsLocal($root_path."plugins/");
@@ -16,6 +30,11 @@ function LocalPluginApis($apis){
     }
     return $apis;
 }
+/**
+ * gets local plugin info
+ * @param bool $verbose return verbose plugin info
+ * @return array array of plugin info
+ */
 function LocalPluginInfo($verbose = false){
     global $root_path;
     $plugins_local = FindPluginsLocal($root_path."plugins/");

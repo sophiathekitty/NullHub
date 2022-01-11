@@ -1,4 +1,9 @@
 <?php
+/**
+ * is bedtime in room? is the room in sleep times?
+ * @param int $room_id the room id 
+ * @return bool returns true if room has bedtime and awake_time and is between the betime and awake_time
+ */
 function IsBedtimeRoom($room_id){
     $room = Rooms::RoomId($room_id);
     
@@ -15,6 +20,11 @@ function IsBedtimeRoom($room_id){
     }
     return false;
 }
+/**
+ * is bedtime for user? should the user be asleep now?
+ * @param int $user_id the user id
+ * @return bool returns true if user has bedtime and awake_time and is between the betime and awake_time
+ */
 function IsBedtimeUser($user_id){
     $users = new Users();
     $user = $users->LoadById($user_id);
@@ -31,6 +41,11 @@ function IsBedtimeUser($user_id){
     }
     return false;
 }
+/**
+ * is it time for bed in the room? is the room shutting down?
+ * @param int $room_id the room id
+ * @return bool return true if room has bedtime and within the 5 hours before the bedtime
+ */
 function IsTimeForBedRoom($room_id){
     $room = Rooms::RoomId($room_id);
     if(!is_null($room['bedtime'])){
@@ -56,6 +71,11 @@ function IsTimeForBedRoom($room_id){
         return false;
     }
 }
+/**
+ * is time to get up in room? is it morning time in the room?
+ * @param int $room_id the room id
+ * @return bool return true if has awake_time and is 2 hours before or after awake_time
+ */
 function IsTimeForToGetUpRoom($room_id){
     $room = Rooms::RoomId($room_id);
     if(!is_null($room['awake_time'])){

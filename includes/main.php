@@ -43,7 +43,10 @@ foreach($plugins as $plugin){
 }
 
 //echo "0.7\n";
-
+/**
+ * go through this folder and all it's child folders and add any .php file
+ * @param string $path the path of the current folder to crawl
+ */
 function IncludeFolder($path){
     //echo "IncludeFolder: $path \n";
     $shared_models_dir = opendir($path);

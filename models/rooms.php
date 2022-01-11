@@ -1,4 +1,7 @@
 <?php
+/**
+ * rooms
+ */
 class Rooms extends clsModel{
     public $table_name = "Rooms";
     public $fields = [
@@ -140,37 +143,60 @@ class Rooms extends clsModel{
 
 
     private static $rooms = null;
+    /**
+     * @return Rooms|clsModel
+     */
     private static function GetInstance(){
         if(is_null(Rooms::$rooms)) Rooms::$rooms = new Rooms();
         return Rooms::$rooms;
     }
+    /**
+     * save a room
+     * @param array $data the room data array
+     * @return array a save report ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'sql'=>$sql,'row'=>$row]
+     */
     public static function SaveRoom($data){
         $rooms = Rooms::GetInstance();
         $data = $rooms->CleanData($data);
         $room = $rooms->LoadById($data['id']);
         print_r($data);
         if(is_null($room)){
-            $rooms->Save($data);
+            return $rooms->Save($data);
         } else {
             $room['modified'] = date("Y-m-d H:i:s");
-            $rooms->Save($data,['id'=>$data['id']]);
+            return $rooms->Save($data,['id'=>$data['id']]);
         }
     }
+    /**
+     * load all the rooms
+     * @return array array of all the rooms
+     */
     public static function AllRooms(){
         $rooms = Rooms::GetInstance();
         return $rooms->LoadAll();
     }
+    /**
+     * load a room by id
+     * @param int $id the room id
+     * @return array the data array for a room 
+     */
     public static function RoomId($id){
         $rooms = Rooms::GetInstance();
         return $rooms->LoadById($id);
     }
+    /**
+     * load a room by name
+     * @param string $name the room name
+     * @return array the data array for a room
+     */
     public static function RoomName($name){
         $rooms = Rooms::GetInstance();
         return $rooms->LoadWhere(['name'=>$name]);
     }
     /**
+     * load the rooms for a set floor
      * @param string $floor the floor # you want to load... or ground (0) and basement (-1)
-     * @return array
+     * @return array array of rooms for a set floor
      */
     public static function Floor($floor){
         $f = 0;

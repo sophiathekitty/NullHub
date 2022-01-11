@@ -1,5 +1,12 @@
 <?php
+/**
+ * handles the nMap crawling
+ */
 class nMapCrawler {
+    /**
+     * do crawl network?
+     * @return bool return true if settings var do_crawl_network is yes, or if auto and this is the hub
+     */
     private static function DoCrawlNetwork(){
         echo "do crawl? ".Settings::LoadSettingsVar('do_crawl_network','auto')."\n";
         switch(Settings::LoadSettingsVar('do_crawl_network','auto')){
@@ -11,12 +18,16 @@ class nMapCrawler {
                 return false;
         }
         echo "auto!\n";
-        if(Servers::IsHub()){
-            echo "no really this is the hub!\n";
+        if(Servers::IsMain()){
+            echo "this is the main hub!\n";
             return true;
         }
         return Servers::IsHub();
     }
+    /**
+     * find network hosts
+     * @return array list of local hosts
+     */
     public static function FindHosts(){
         echo "nMapCrawler::FindHosts()\n";
         if(!nMapCrawler::DoCrawlNetwork()) return null;
@@ -42,6 +53,10 @@ class nMapCrawler {
         }
         return $hosts;
     }
+    /**
+     * check the next host
+     * @return array the save report for the nmap host
+     */
     public static function CheckHosts(){
         if(!nMapCrawler::DoCrawlNetwork()) return nMapCrawler::CheckHub();
         echo "Check nMap Hosts\n";
@@ -53,6 +68,11 @@ class nMapCrawler {
         }
         return nMap::SaveHost($host);
     }
+    /**
+     * check a pi host... null host
+     * @param array $host the host data array
+     * @return array the host data array
+     */
     private static function CheckPi($host){
         $pi = GetRemoteServerInfo($host['ip']);
         if($pi){
@@ -60,6 +80,11 @@ class nMapCrawler {
         }
         return $host;
     }
+    /**
+     * check an unknown host. is it a pi or a wemo?
+     * @param array $host the host data array
+     * @return array the host data array
+     */
     private static function CheckNew($host){
         $host['type'] = "unknown";
         $host = nMapCrawler::CheckPi($host);
@@ -69,11 +94,19 @@ class nMapCrawler {
         }
         return $host;
     }
+    /**
+     * check the hub 
+     * @return array 
+     */
     private static function CheckHub(){
         $hub = Servers::GetHub();
         return nMapCrawler::CheckPi(['type'=>'pi','ip'=>$hub['url']]);
     }
 }
+/**
+ * [depreciated] find network hosts use nMapCrawler::FindHosts()
+ * @return array list of local hosts
+ */
 function nMapHosts(){
     //global $my_ip;
     $ip = LocalIp();

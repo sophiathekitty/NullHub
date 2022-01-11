@@ -1,4 +1,9 @@
 <?php
+/**
+ * try to get the info for a remote server. see if it's a null server
+ * @param string $url the ip address of the remote server to check
+ * @return bool|null returns true if it finds remote server info. returns null if no server found.
+ */
 function GetRemoteServerInfo($url){
     
     $info = file_get_contents("http://".$url."/api/info/");
@@ -15,6 +20,10 @@ function GetRemoteServerInfo($url){
     //if(LocalMacAddress() != $data->info->mac_address) TellOtherDeviceAboutMe($url);
     return true;
 }
+/**
+ * tell the device at this ip address about this server
+ * @param string $url the ip address of the remote server
+ */
 function TellOtherDeviceAboutMe($url){
     $server = Servers::ServerMacAddress(LocalMacAddress());
     $path = "http://".$url."/api/info/servers?name=".rawurlencode(Settings::LoadSettingsVar('name'))."&type=".rawurlencode(LoadSettingVar('type'))."&mac_address=".rawurlencode(LocalMacAddress())."&url=".$server['url']."&main=".Settings::LoadSettingsVar('main')."&server=".Settings::LoadSettingsVar('server');
@@ -23,6 +32,9 @@ function TellOtherDeviceAboutMe($url){
     $data = json_decode($info);
     print_r($data);
 }
+/**
+ * if the main hub is currently offline try to get it's info to see if it's back online yet
+ */
 function CheckOfflineHub(){
     $main = Servers::GetMain();
     if($main && (int)$main['online'] == 0 && $main['mac_address'] != LocalMac()){

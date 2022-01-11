@@ -172,20 +172,33 @@ class UserSession {
         $salt = Settings::LoadSettingsVar("salt",$default);
         return md5($username.$salt.$password.$salt.$username);
     }
-
-    // create a new user token
+    /**
+     * create a new user token and save it as a cookie
+     * @param string $ip the user's ip
+     * @return string the user token
+     */
     public function CreateToken($ip){
         $token = md5($ip.time());
         setcookie('user_token',$token,time()+(86400 * 30),"/");
         return $token;
     }
-    // clear the user token cookie
+    /**
+     * clear the user token cookie
+     */
     public function ClearToken(){
         setcookie('user_token',"",time()-3600,"/");
     }
+    /**
+     * logout user
+     */
     public function LogoutUserSession(){
         UserSession::$session = UserSession::$user_logins->LogoutUserSession(UserSession::$session['id']);
     }
+    /**
+     * check the main hub for an existing login
+     * @param array a session data array
+     * @return array the session data array... maybe it's now logged in a use
+     */
     public function CheckMainForLogin($session){
         $hub = Servers::GetMain();
         $url = "http://".$hub['url']."/api/user/login/?ip=".$this->UserIpAddress();

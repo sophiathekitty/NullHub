@@ -1,5 +1,13 @@
 <?php
+/**
+ * a module for finding all the templates
+ * i might not really need this as i'm not building the app in the way i was when i created this
+ */
 class Templates {
+    /**
+     * finds the templates in the templates/ folder and no sub folders
+     * @return array an array of template
+     */
     public static function FindTemplates(){
         global $root_path;
         $templates = Templates::CrawlFolder($root_path."templates/",[]);
@@ -9,6 +17,10 @@ class Templates {
         }
         return $templates;
     }
+    /**
+     * find the header templates... templates/sections/ 
+     * @return array array of templates
+     */
     public static function SectionTemplates(){
         global $root_path;
         $templates = Templates::CrawlFolder($root_path."templates/sections/",[]);
@@ -18,10 +30,20 @@ class Templates {
         }
         return $templates;
     }
+    /**
+     * find the header templates... templates/headers/ 
+     * @return array array of templates
+     */
     public static function HeaderTemplates(){
         global $root_path;
         return Templates::CrawlFolder($root_path."templates/headers/",[]);
     }
+    /**
+     * crawls a folder for templates and adds them to the templates array
+     * @param string $path the current folder to crawl
+     * @param array array of templates
+     * @return array array of templates
+     */
     private static function CrawlFolder(string $path,array $templates){
         global $root_path;
         //echo "IncludeFolder: $path \n";

@@ -54,7 +54,9 @@ function ColorPalletStamp($p){
     }
     return $pallet;
 }
-
+/**
+ * sync colors from the hub
+ */
 function SyncColorPallets(){
     if(Servers::IsHub()) return;
     $pallets = ServerRequests::LoadHubJSON("/api/colors/?pallet=1");

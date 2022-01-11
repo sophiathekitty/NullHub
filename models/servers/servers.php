@@ -1,4 +1,7 @@
 <?php
+/**
+ * keeps track of the known null devices on the local network
+ */
 class Servers extends clsModel{
     public $table_name = "Servers";
     public $fields = [
@@ -91,6 +94,10 @@ class Servers extends clsModel{
         if(is_null(Servers::$servers)) Servers::$servers = new Servers();
         return Servers::$servers;
     }
+    /**
+     * load the main hub (or at least an online hub if the main is offline)
+     * @return array the data array of the server
+     */
     public static function GetHub(){
         $servers = Servers::GetInstance();
         $hub = $servers->LoadWhere(['main'=>1,'online'=>1],['server'=>'DESC']);
@@ -101,34 +108,63 @@ class Servers extends clsModel{
         if($hub) return $hub;
         return ['mac_address'=>LocalMacAddress(),'name'=>Settings::LoadSettingsVar('name','null device'),'url'=>LocalIp(),'type'=>Settings::LoadSettingsVar('type','device'),'server'=>Settings::LoadSettingsVar('server','pi0'),'main'=>Settings::LoadSettingsVar('main',1),'enabled'=>Settings::LoadSettingsVar('enabled',1),'online'=>1];
     }
+    /**
+     * load the main hub
+     * @return array the data array of the server
+     */
     public static function GetMain(){
         $servers = Servers::GetInstance();
         $hub = $servers->LoadWhere(['main'=>1],['server'=>'DESC']);
         if($hub) return $hub;
         return null;
     }
+    /**
+     * is this the hub?
+     * @return bool returns true if this is the hub
+     */
     public static function IsHub(){
         $hub = Servers::GetHub();
         return ($hub['mac_address'] == LocalMacAddress());
     }
+    /**
+     * is this the main hub?
+     * @return bool returns true if this is the main hub
+     */
     public static function IsMain(){
         $hub = Servers::GetMain();
         return ($hub['mac_address'] == LocalMacAddress()) && Servers::IsHub();
     }
+    /**
+     * loads the online servers
+     * @return array an array of server arrays
+     */
     public static function OnlineServers(){
         $servers = Servers::GetInstance();
         return $servers->Online();
     }
-
+    /**
+     * load server by ip address
+     * @param string $ip the ip address to look up
+     * @return array data array for server
+     */
     public static function ServerIP($ip){
         $servers = Servers::GetInstance();
         return $servers->LoadByUrl($ip);
     }
+    /**
+     * load server by mac address
+     * @param string $mac_address the mac address to look up
+     * @return array data array for server
+     */
     public static function ServerMacAddress($mac_address){
         $servers = Servers::GetInstance();
         return $servers->LoadByMacAddress($mac_address);
     }
-
+    /**
+     * save a server
+     * @param array $data the server's data array to save
+     * @return array a save report ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'sql'=>$sql,'row'=>$row]
+     */
     public static function SaveServer($data){
         $servers = Servers::GetInstance();
         $data = $servers->CleanData($data);
@@ -163,22 +199,44 @@ class Servers extends clsModel{
         }
         return $servers->Save($data);
     }
-
+    /**
+     * loads the online servers
+     * @return array an array of server arrays
+     */
     public function Online(){
         return $this->LoadAllWhere(['online'=>1],["last_ping"=>"DESC"]);
     }
+    /**
+     * loads the offline servers
+     * @return array an array of server arrays
+     */
     public function Offline(){
         return $this->LoadAllWhere(['online'=>0]);
     }
+    /**
+     * load server by ip address
+     * @param string $ip the ip address to look up
+     * @return array data array for server
+     */
     public function LoadByUrl($ip){
         if(strpos($ip,"::1") > -1 || $ip == "localhost"){
             return ['id'=>0,'name'=>'localhost','url'=>$ip,'mac_address'=>"localhost"];
         }
         return $this->LoadWhere(['url'=>$ip]);
     }
+    /**
+     * load server by mac address
+     * @param string $mac_address the mac address to look up
+     * @return array data array for server
+     */
     public function LoadByMacAddress($mac_address){
         return $this->LoadWhere(['mac_address'=>$mac_address]);
     }
+    /**
+     * ping a server by mac address
+     * @param string $mac_address the mac address to look up
+     * @return array data array for server
+     */
     public function ServerPinged($mac_address){
         return $this->Save(['last_ping'=> date("Y-m-d H:i:s")],['mac_address'=>$mac_address]);
     }
