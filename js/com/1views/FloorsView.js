@@ -18,8 +18,17 @@ class FloorsView extends View {
                             if(this.debug) console.log("FloorsView::Build-room",room.floor,room);
                             $(itm_html).appendTo("#floors [level="+room.floor+"]").attr("room_id",room.id);
                         });
-                    this.display();
-                    if(this.controller) this.controller.roomsBuilt();
+                        this.display();
+                        Settings.loadVar("room_id",room_id=>{
+                            if(room_id && Number(room_id) != 0){
+                                this.model.getItem(room_id,room=>{
+                                    $("#floors").attr("room_id",room.id);
+                                    $("#floors").attr("level",room.floor);
+                                });
+                            }
+                        });
+                        if(this.controller) this.controller.roomsBuilt();
+                        else console.error("FloorsView::Build--controller missing?");
                     });
                 });
             });
