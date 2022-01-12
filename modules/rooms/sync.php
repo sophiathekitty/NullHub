@@ -22,7 +22,7 @@ function SyncRoom(){
     //if(Settings::LoadSettingsVar('main',0)) return null;
     if(Servers::IsMain()) return null;
     $room_id = (int)Settings::LoadSettingsVar('room_id',0);
-    if($room_id == 0) return SyncRooms();
+    if($room_id == 0) return null;//SyncRooms();
     //$hub = Servers::GetHub();
     //if(is_null($hub)) return null;
     //$url = "http://".$hub['url']."/api/rooms/?room_id=".Settings::LoadSettingsVar('room_id');

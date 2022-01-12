@@ -273,9 +273,10 @@ class clsModel {
      * Save data to the table
      * @param array $data the keyed data array to save ['field_name'=>$field_value]
      * @param array|null $where (optional) keyed data array of where to save ['id'=>$id]
+     * @param bool $check_modified check if $data['modified'] is older than the existing $row['modified'] and don't save stale data
      * @return array a save report ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'sql'=>$sql,'row'=>$row]
      */
-    public function Save($data,$where = null){
+    public function Save($data,$where = null,$check_modified = false){
         // check for matching record
         $id = null;
         $row = null;
@@ -287,6 +288,12 @@ class clsModel {
             $id = clsDB::$db_g->safe_insert($this->table_name,$data,$where);
             $sql = clsDB::$db_g->last_sql;
         } else {
+            if($check_modified && isset($data['modified'])){
+                $row = $this->LoadWhereFieldAfter($where,"modified",$data['modified']);
+                if(!is_null($row)){
+                    return ['error'=>"data stale",'data'=>$data,'row'=>$row];
+                }
+            }
             // record already exists so update it
             $id = clsDB::$db_g->safe_update($this->table_name,$data,$where);
             $sql = clsDB::$db_g->last_sql;
@@ -432,6 +439,8 @@ class clsModel {
         echo clsDB::$db_g->get_err();
         return $rows;
     }
+
+
     // this needs to be overwritten by the individual models
     public $table_name = "Example";
     public $fields = [

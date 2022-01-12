@@ -2,13 +2,13 @@
 require_once("../includes/main.php");
 // find all the css files in the plugin's folder
 $js = [];
-
-$plugins = FindPlugins($root_path."plugins/");
-foreach($plugins as $plugin){
-    $js = CrawlPluginJS($js,$plugin."js/");
+$extensions = FindLocalExtensions();
+//$plugins = FindPlugins($root_path."plugins/");
+foreach($extensions as $extension){
+    $js = CrawlExtensionJS($js,$root_path."extensions/".$extension."/js/");
 }
 
-function CrawlPluginJS($js,$path){
+function CrawlExtensionJS($js,$path){
     //echo "IncludeFolder: $path \n";
     $shared_models_dir = opendir($path);
     // LOOP OVER ALL OF THE  FILES    
@@ -21,9 +21,8 @@ function CrawlPluginJS($js,$path){
             //echo "included\n";
             $js[] = $path.$file;
         } elseif(is_dir($path.$file) && $file != ".." && $file != "."){
-            $js = CrawlPluginJS($js,$path.$file."/");
+            $js = CrawlExtensionJS($js,$path.$file."/");
         }
-        
     }
     // CLOSE THE DIRECTORY
     closedir($shared_models_dir);

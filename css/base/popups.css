@@ -1,0 +1,29 @@
+.popups {
+    display: none;
+    position: fixed;
+    top:0em;
+    left: 0em;
+    right: 0em;
+    bottom: 0em;
+    background-color: #0000006c;
+    z-index: 1000;
+}
+.popups .popup {
+    position: absolute;
+    top:50vh;
+    left:50vw;
+    width: 20em;
+    transform: translate(-10em,-5em);
+    z-index: 1001;
+    background-color: #554b2b;
+    padding: 0.5em;
+    overflow: hidden;
+}
+.popups .popup h1 {
+    display: block;
+    font-size: 1.25em;
+    color: var(--list_header_text);
+    background-color: var(--list_header_back);
+    margin: 0em;
+    width: 100%;
+}
