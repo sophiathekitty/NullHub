@@ -7,14 +7,8 @@ assignees: sophiathekitty
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**Too Long Didn't Read**
+In a sentence or two what do you want the thing to do? Assume that this is all i'll read.
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
-
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Ok but can you explain what you mean**
+Ok if you can please explain what you mean by that? Like what's the context? And if you can organize it into lists or outlines; that would help me parse it.
