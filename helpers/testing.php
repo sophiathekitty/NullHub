@@ -38,5 +38,6 @@ if($_GET['ip']){
 }
 */
 //OutputJSON(UserSync::pull());
-SyncServers();
+//SyncServers();
+WeMoSync::PullLightsFromHub();
 ?></pre>

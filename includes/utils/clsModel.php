@@ -290,7 +290,7 @@ class clsModel {
         } else {
             if($check_modified && isset($data['modified'])){
                 $row = $this->LoadWhereFieldAfter($where,"modified",$data['modified']);
-                if(!is_null($row)){
+                if(!is_null($row) && count($row)){
                     return ['error'=>"data stale",'data'=>$data,'row'=>$row];
                 }
             }
