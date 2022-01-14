@@ -8,7 +8,7 @@ function GitHash($path){
     //echo "$path.git/ORIG_HEAD\n";
     if(is_file($path.".git/ORIG_HEAD")){
         $content=@file_get_contents($path.".git/ORIG_HEAD");
-        return $content;
+        return str_replace('\n', '', $content);
     } else {
         return "dev";
     }

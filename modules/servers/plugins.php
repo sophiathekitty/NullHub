@@ -56,7 +56,7 @@ function LocalPluginInfo($verbose = false){
             $plugin['folders']['python'] = FolderModifiedDate($root_path."plugins/".$plugin_path."python/");
             $plugin['folders']['templates'] = FolderModifiedDate($root_path."plugins/".$plugin_path."templates/");    
         }
-        $plugin['hash'] = FolderHash($root_path."plugins/".$plugin_path);//hash("crc32b",FolderModifiedDate($root_path."plugins/".$plugin_path."api/").FolderModifiedDate($root_path."plugins/".$plugin_path."models/").FolderModifiedDate($root_path."plugins/".$plugin_path."modules/"));
+        $plugin['hash'] = GitHash($root_path."plugins/".$plugin_path);//FolderHash($root_path."plugins/".$plugin_path);//hash("crc32b",FolderModifiedDate($root_path."plugins/".$plugin_path."api/").FolderModifiedDate($root_path."plugins/".$plugin_path."models/").FolderModifiedDate($root_path."plugins/".$plugin_path."modules/"));
         $plugins[] = $plugin;
     }
     return $plugins;

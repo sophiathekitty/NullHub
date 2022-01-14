@@ -56,7 +56,7 @@ function ExtensionsFolder($root,$path, $verbose = false){
             $extension['path'] = "http://".LocalIp().Settings::LoadSettingsVar('path',"/").$path.$file."/";
             $extension['app'] = "http://".LocalIp().Settings::LoadSettingsVar('path',"/").$path.$file."/app";
             $extension['api'] = "http://".LocalIp().Settings::LoadSettingsVar('path',"/").$path.$file."/api";
-            $extension['hash'] = FolderHash($root.$path.$file."/"); //hash("crc32b",FolderModifiedDate($root.$path.$file."/api/").FolderModifiedDate($root.$path.$file."/models/").FolderModifiedDate($root.$path.$file."/modules/"));
+            $extension['hash'] = GitHash($root.$path.$file."/");//FolderHash($root.$path.$file."/"); //hash("crc32b",FolderModifiedDate($root.$path.$file."/api/").FolderModifiedDate($root.$path.$file."/models/").FolderModifiedDate($root.$path.$file."/modules/"));
             $extension['modified'] = date("Y-m-d H:i:s",FolderModified($root.$path.$file."/"));
             if($verbose){
                 $extension['files'] = FolderFileCount($root.$path.$file."/");
