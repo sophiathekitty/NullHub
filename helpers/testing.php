@@ -39,5 +39,6 @@ if($_GET['ip']){
 */
 //OutputJSON(UserSync::pull());
 //SyncServers();
-WeMoSync::PullLightsFromHub();
+//WeMoSync::PullLightsFromHub();
+echo GitHash($root_path);
 ?></pre>
