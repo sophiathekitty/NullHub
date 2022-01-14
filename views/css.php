@@ -1,5 +1,11 @@
 <?php
-function OutputCSSFromFileList($css_files){
+/**
+ * takes a list of files and combines them into a single file to output as a css file
+ * @param array $css_files a list of css files
+ * @param bool $sort if set to true will sort the file list before combining
+ */
+function OutputCSSFromFileList($css_files, $sort = false){
+    if($sort) sort($css_files);
     header('Access-Control-Allow-Origin: *');
     header("Content-type: text/css; charset: UTF-8");
     foreach($css_files as $css_file){
@@ -8,7 +14,13 @@ function OutputCSSFromFileList($css_files){
         echo "\n\n\n";
     }
 }
-function OutputCSSFromFileListMin($css_files){
+/**
+ * takes a list of files and combines them into a single file to output as a minimized css file
+ * @param array $css_files a list of css files
+ * @param bool $sort if set to true will sort the file list before combining
+ */
+function OutputCSSFromFileListMin($css_files, $sort = false){
+    if($sort) sort($css_files);
     header('Access-Control-Allow-Origin: *');
     header("Content-type: text/css; charset: UTF-8");
     $buffer = "";

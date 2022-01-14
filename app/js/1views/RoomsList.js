@@ -1,8 +1,14 @@
+/**
+ * Room list view handler
+ */
 class RoomsList extends View {
     constructor(debug = true){
         if(debug) console.log("RoomsList::Constructor");
         super(new RoomsCollection(),new Template("rooms_list","/templates/sections/rooms.html"),new Template("rooms_item","/templates/items/room.html"));
     }
+    /**
+     * builds the room list
+     */
     build(){
         if(this.debug) console.log("RoomsList::Build");
         if(this.template){
@@ -25,6 +31,9 @@ class RoomsList extends View {
             });
         }
     }
+    /**
+     * populate the data for room list
+     */
     display(){
         if(this.debug) console.log("RoomsList::Display");
         if(this.model){

@@ -6,6 +6,9 @@ class ClockView extends View {
         console.log("ClockView::Constructor");
         super(new ClockModel(),new Template("clock","/templates/stamps/clock.html"));
     }
+    /**
+     * build the clock widget
+     */
     build(){
         console.log("ClockView::Build");
         if(this.template){
@@ -21,6 +24,9 @@ class ClockView extends View {
             });
         }
     }
+    /**
+     * update the time and other datas
+     */
     display(){
         //console.log("ClockView::Display");
         if(this.model){
@@ -65,6 +71,12 @@ class ClockView extends View {
             });
         }
     }
+    /**
+     * calculates if the current time is past solar noon
+     * @param {string} sunrise h:mm (h:mm:ss)
+     * @param {string} sunset h:mm (h:mm:ss)
+     * @returns {bool} returns true if it's after solar noon
+     */
     solarNoon(sunrise,sunset){
         var morning = sunrise.split(":");
         var evening = sunset.split(":");
@@ -74,6 +86,9 @@ class ClockView extends View {
         return (now.getHours() > h);
 
     }
+    /**
+     * acting as an alias for display()
+     */
     refresh(){
         //console.log("ClockView::Refresh");
         this.display();

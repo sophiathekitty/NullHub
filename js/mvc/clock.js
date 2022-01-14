@@ -5,6 +5,9 @@ $(document).ready(function(){
     setInterval(MoveTimeBar,1000);
     MoveTimeBar();
 });
+/**
+ * moves time bars for hourly charts
+ */
 function MoveTimeBar(){
     var date = new Date(Date.now());
     var secs = date.getSeconds();
@@ -39,6 +42,11 @@ function MoveTimeBar(){
     $("body").attr("date",months[date.getMonth()]+""+date.getDate());
     */
 }
+/**
+ * takes a Date object and returns a short time string
+ * @param {Date} date 
+ * @returns {string} h:mm
+ */
 function DateToTimeString(date){
     var hours = date.getHours();
     if(hours > 12){
@@ -53,6 +61,11 @@ function DateToTimeString(date){
     }
     return hours+":"+mins;
 }
+/**
+ * takes a Date object and returns a short time string without the ":"
+ * @param {Date} date 
+ * @returns {string} hmm
+ */
 function DateToTimeCode(date){
     var hours = date.getHours();
     if(hours > 12){
@@ -67,6 +80,11 @@ function DateToTimeCode(date){
     }
     return hours+""+mins;
 }
+/**
+ * takes a Date object and returns am or pm
+ * @param {Date} date 
+ * @returns {string} am
+ */
 function DateToAmString(date){
     var hours = date.getHours();
     var am = "am";
@@ -75,6 +93,12 @@ function DateToAmString(date){
     }
     return am;
 }
+/**
+ * takes a Date object and returns the percentage of the day
+ * @param {Date} date 
+ * @param {Number} offset the offset hours
+ * @returns {string} 50%
+ */
 function DateToDayPercent(date,offset = 0){
     var hours = date.getHours();
     var min = date.getMinutes()

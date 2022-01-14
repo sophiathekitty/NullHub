@@ -1,4 +1,8 @@
 <?php
+/**
+ * generates json output from a data array
+ * @param array $data the data array to display as json
+ */
 function OutputJson($data){
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');

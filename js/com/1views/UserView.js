@@ -5,6 +5,9 @@ class UserView extends View {
     constructor(){
         super(new UserModel(),new Template("user","/templates/stamps/user.html"));
     }
+    /**
+     * add the user view to the header
+     */
     build(){
         if(this.template){
             this.template.getData(html=>{
@@ -13,6 +16,9 @@ class UserView extends View {
             })
         }
     }
+    /**
+     * populate user data
+     */
     display(){
         if(this.model){
             this.model.getData(json=>{
@@ -28,6 +34,9 @@ class UserView extends View {
             });
         }
     }
+    /**
+     * acting as an alias for display()
+     */
     refresh(){
         this.display();
     }

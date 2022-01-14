@@ -231,7 +231,7 @@ class Collection extends Model {
         })
     }
     /**
-     * [untested?] pushes the data in local storage with the postfix _changed for this model to the save api
+     * pushes the data in local storage with the postfix _changed for this model to the save api
      * @param {function(JSON)} callBack called if push request was successful
      * @param {function(*)} errorCallback called if there is an error
      * @param {function(*)} failCallback called if the request failed
@@ -262,6 +262,11 @@ class Collection extends Model {
             }
         }
     }
+    /**
+     * checks to see if all the items have been pushed to the server
+     * @param {JSON} allData the changed data
+     * @returns {bool} returns true if it updated the local storage and false if there's still changes being pushed
+     */
     pushDone(allData){
         if(this.debug) console.log("Collection::"+this.name+":pushDone?");
         if(this.push_items_started == this.push_items_completed){
@@ -274,6 +279,13 @@ class Collection extends Model {
         }
         return false;
     }
+    /**
+     * push a collection item to the server
+     * @param {JSON} myData the item data
+     * @param {function(JSON)} callBack 
+     * @param {function(*)} errorCallback 
+     * @param {function(*)} failCallback 
+     */
     pushItem(myData,callBack,errorCallback,failCallback){
         if(this.debug){
             console.log("Collection::pushItem",this.prefix+this.name+"_changed:item",myData);

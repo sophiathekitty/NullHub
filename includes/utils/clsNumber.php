@@ -5,6 +5,9 @@ if(realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME']))
 	exit;
 if(!defined('NUMBERS_CLASS')){
 	define('NUMBERS_CLASS',true);
+	/**
+	 * the base class for a bunch of number formatting classes
+	 */
 	class clsNumber {
 		public $raw_value;
 		public $value;

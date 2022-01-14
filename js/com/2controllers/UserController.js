@@ -1,9 +1,15 @@
+/**
+ * handles the user events
+ */
 class UserController extends Controller {
     static user = new UserController();
     constructor(){
         super(new UserView());
         this.first_ready = true;
     }
+    /**
+     * builds the user view and sets up the event handlers
+     */
     ready(){
         if(this.first_ready){
             this.view.build();
@@ -11,6 +17,9 @@ class UserController extends Controller {
             this.first_ready = false;    
         }
     }
+    /**
+     * sets up the user event handlers
+     */
     setupUserEvents(){
         this.click("#user a",e=>{
             console.log($(e.currentTarget).attr("action"));
@@ -35,6 +44,9 @@ class UserController extends Controller {
             if($("#user").toggleClass("logout"));
         });
     }
+    /**
+     * login button clicked (if form is showing submit login, otherwise show form)
+     */
     login(){
         if($("#user").attr("login") == "false"){
             $("#user").attr("login","true");
@@ -46,6 +58,9 @@ class UserController extends Controller {
             });
         }
     }
+    /**
+     * signup button clicked (if form is showing submit signup, otherwise show form)
+     */
     signup(){
         if($("#user").attr("login") == "false"){
             $("#user").attr("login","true");
@@ -57,6 +72,10 @@ class UserController extends Controller {
             });
         }
     }
+    /**
+     * in case anything needs to check the user level in the UI
+     * @param {function(Number)} callBack returns the user level
+     */
     static userLevel(callBack){
         if(UserController.user.view.model){
             UserController.user.view.model.getData(json=>{

@@ -1,7 +1,13 @@
+/**
+ * main app view handler
+ */
 class AppView extends View {
     constructor(){
         super(null);
     }
+    /**
+     * build the app view
+     */
     build(){
         Settings.loadVar("name",name=>{
             Settings.loadVar("type",type=>{

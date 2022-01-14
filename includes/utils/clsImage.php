@@ -1,6 +1,8 @@
 <?php 
 // image class
-
+/**
+ * A really old image class that i think maybe still works. mainly it's good for 
+ */
 class clsImage {
 	// private vars
 	var $im;
@@ -23,6 +25,11 @@ class clsImage {
 					IMG_WBMP=>'WBMP'
 				);
 	}
+	/**
+	 * loads an image into memory
+	 * @param string $path the path to the image
+	 * @return bool returns true if successful 
+	 */
 	function load($path){
 		if(!is_file($path)){
 			$this->error = "Can't find $path, or it's not a file!";
@@ -61,6 +68,10 @@ class clsImage {
 		$this->loaded = true;
 		return true;
 	}
+	/**
+	 * saves the image
+	 * @param string $path where to save the image
+	 */
 	function save($path){
 		if($this->loaded){
 			switch($this->type){
@@ -84,6 +95,15 @@ class clsImage {
 			return true;
 		}
 	}
+	/**
+	 * resize an image. might also be able to grab a portion of image and make it the whole image?
+	 * @param int $w the final width
+	 * @param int $h the final height
+	 * @param int $x the x offset for source (for cropping)
+	 * @param int $y the x offset for source (for cropping)
+	 * @param int $sw the source width
+	 * @param int $sh the source height
+	 */
 	function resize($w,$h,$x,$y,$sw,$sh){
 		if($this->loaded){
 			$small = imagecreatetruecolor($w, $h);    // new image
@@ -92,6 +112,11 @@ class clsImage {
 			$this->im = $small;
 		}
 	}
+	/**
+	 * scales an image to fit with a max width and height
+	 * @param int $maxX the max width
+	 * @param int $maxY the max height
+	 */
 	function scale($maxX,$maxY){
 		if($this->loaded){
 			if($this->width > $this->height){
@@ -106,6 +131,11 @@ class clsImage {
 			$this->resize($w,$h,0,0,$this->width,$this->height);
 		}
 	}
+	/**
+	 * scales an image to fit with a max width and height and crops out any extra
+	 * @param int $w the final width
+	 * @param int $h the final height
+	 */
 	function cropScale($w,$h){
 		if($this->loaded){
 			$width = abs($this->width - $w);
@@ -140,6 +170,10 @@ class clsImage {
 			$this->resize($w,$h,$x,$y,$sw,$sh);
 		}
 	}
+	/**
+	 * in theory this should display the image in memory (php acts like an image file)
+	 * @todo i think the last time i tried this it wasn't working anymore
+	 */
 	function display(){
 		if($this->loaded){
 			switch($this->type){
@@ -166,6 +200,9 @@ class clsImage {
 			}
 		}
 	}
+	/**
+	 * apply a color to an image?
+	 */
 	function colorize($r,$g,$b,$a){
 		if($this->loaded){
 			$im = imagecreatetruecolor($this->width,$this->height);

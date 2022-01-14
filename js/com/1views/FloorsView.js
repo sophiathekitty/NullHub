@@ -1,8 +1,19 @@
+/**
+ * rooms organized by floor
+ */
 class FloorsView extends View {
+    /**
+     * constructor
+     * @param {bool} debug show console output
+     * @param {Number} refresh how long to wait before refreshing
+     */
     constructor(debug = false, refresh = 60000){
         if(debug) console.log("FloorsView::Constructor");
         super(RoomsCollection.instance,new Template("floors","/templates/sections/floors.html"),new Template("room_card","/templates/stamps/room.html"),refresh,debug);
     }
+    /**
+     * build the floors and add the rooms
+     */
     build(){
         if(this.debug) console.log("FloorsView::Build");
         if(this.template && this.model){
@@ -34,6 +45,9 @@ class FloorsView extends View {
             });
         }
     }
+    /**
+     * populate the room data
+     */
     display(){
         if(this.debug) console.log("FloorsView::Display");
         if(this.model){
@@ -94,6 +108,9 @@ class FloorsView extends View {
             });
         }
     }
+    /**
+     * update the rooms data (or build the floors if that hasn't happened for some reason)
+     */
     refresh(){
         if($("#floors").length){
             this.display();

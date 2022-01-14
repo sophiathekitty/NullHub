@@ -1,7 +1,13 @@
+/**
+ * server list view
+ */
 class ServerView extends View {
     constructor(){
         super(new Collection("servers","server","/api/info/servers/","/api/info/servers/","mac_address"),null,new Template("server","/templates/items/server.html"));
     }
+    /**
+     * build the server list
+     */
     build(){
         if(this.item_template && this.model){
             this.item_template.getData(html=>{
@@ -20,6 +26,9 @@ class ServerView extends View {
             });
         }
     }
+    /**
+     * acting as an alias for build() (ie: rebuild every time....)
+     */
     display(){
         this.build();
     }

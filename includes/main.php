@@ -65,6 +65,10 @@ function IncludeFolder($path){
     // CLOSE THE DIRECTORY
     closedir($shared_models_dir);
 }
+/**
+ * a debug copy of IncludeFolder?
+ * @param string $path the path to the folder that's being crawled
+ */
 function IncludeFolderDebug($path){
     //echo "IncludeFolder: $path \n";
     Settings::SaveSettingsVar("debug-IncludeFolder--path",$path);
@@ -86,6 +90,11 @@ function IncludeFolderDebug($path){
     // CLOSE THE DIRECTORY
     closedir($shared_models_dir);
 }
+/**
+ * finds plugins at a given path
+ * @param string $path the path to plugins...  $root_path."plugins/"
+ * @return array an array of plugin relative paths "../../plugins/NullPlugin/"
+ */
 function FindPlugins($path){
     //echo "FindPlugins: $path \n";
     $plugins = [];
@@ -100,6 +109,11 @@ function FindPlugins($path){
     closedir($shared_models_dir);
     return $plugins;
 }
+/**
+ * finds plugins at a given path
+ * @param string $path the path to plugins...  $root_path."plugins/"
+ * @return array an array of plugin paths "NullPlugin/"
+ */
 function FindPluginsLocal($path){
     //echo "FindPlugins: $path \n";
     $plugins = [];
@@ -114,6 +128,11 @@ function FindPluginsLocal($path){
     closedir($shared_models_dir);
     return $plugins;
 }
+/**
+ * finds the plugin names (sans the Null prefix)
+ * @param string $path the path to plugins...  $root_path."plugins/"
+ * @return array an array of plugins "Plugin"
+ */
 function FindPluginsName($path){
     //echo "FindPlugins: $path \n";
     $plugins = [];
@@ -129,12 +148,21 @@ function FindPluginsName($path){
     return $plugins;
 }
 //echo "0.8\n";
-
+/**
+ * loads json from url and returns a data array
+ * @param string $url the url to load
+ * @return array a data array of the json data
+ */
 function LoadJsonArray($url){
     $info = file_get_contents($url);
     return json_decode($info,true);
 }
-
+/**
+ * does a search to see if a string ends with another string
+ * @param string $haystack the string to be searched
+ * @param string $needle what needs to be at the end of the $haystack
+ * @return bool returns true if the $haystack ends with $needle
+ */
 function endsWith( $haystack, $needle ) {
     $length = strlen( $needle );
     if( !$length ) {
