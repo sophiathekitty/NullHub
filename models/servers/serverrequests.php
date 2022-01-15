@@ -64,6 +64,15 @@ class ServerRequests extends clsModel{
      * @param string $api the api path "/api/info/"
      * @return array associated array of json data
      */
+    public static function LoadServerRequests($mac_address){
+        $instance = ServerRequests::GetInstance();
+        return $instance->LoadAllWhere(['mac_address'=>$mac_address]);
+    }
+    /**
+     * loads api data from the hub
+     * @param string $api the api path "/api/info/"
+     * @return array associated array of json data
+     */
     public static function LoadHubJSON($api){
         $hub = Servers::GetHub();
         if(is_null($hub)) return null;
