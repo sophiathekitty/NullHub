@@ -1,6 +1,6 @@
 <?php
 /**
- * rooms
+ * rooms database table stuff
  */
 class Rooms extends clsModel{
     public $table_name = "Rooms";
