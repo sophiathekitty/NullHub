@@ -1,2 +1,0 @@
-backend:
-- any: ['models/*','api/*','modules/*','includes/*','services/*','helpers/*']
