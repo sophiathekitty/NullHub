@@ -23,7 +23,7 @@ class ExtensionsView extends View {
                 json.extensions.forEach(extension=>{
                     $("#extensions [extension_id="+extension.id+"] [var=name]").html(extension.name);
                     $("#extensions [extension_id="+extension.id+"] [link=git]").attr("href",extension.git);
-                    $("#extensions [extension_id="+extension.id+"] [link=local]").attr("href",extension.local);
+                    $("#extensions [extension_id="+extension.id+"] [link=path]").attr("href",extension.path);
                     $("#extensions [extension_id="+extension.id+"] [var=hash]").html(extension.hash.substr(0,7));
                 });
             });
