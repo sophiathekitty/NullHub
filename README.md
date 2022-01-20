@@ -202,12 +202,13 @@ sudo crontab -e
 
 ## Plugins
 
-* [NullWeather](https://github.com/sophiathekitty/NullWeather)
-* [NullSensors](https://github.com/sophiathekitty/NullSensors)
+* [NullWeather](https://github.com/sophiathekitty/NullWeather) - on main hub will pull live data. will sync from hub on other devices
+* [NullSensors](https://github.com/sophiathekitty/NullSensors) - handles local sensors and syncing sensor to and from hub
+* [NullLights](https://github.com/sophiathekitty/NullLights) - on main hub handles light automation. on devices sync from hub
 
 ## Extensions
 
-* [MealPlanner](https://github.com/sophiathekitty/MealPlanner)
+* [MealPlanner](https://github.com/sophiathekitty/MealPlanner) - weekly meal schedule with some randomization
 
 ## Tools
 
