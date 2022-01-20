@@ -1,4 +1,2 @@
 backend:
 - any: ['models/*','api/*','modules/*','includes/*','services/*','helpers/*']
-front end:
-- any: ['js/*','app/*','css/*','fonts/*','templates/*']
