@@ -22,7 +22,7 @@ $(document).ready(function(){
     LoadReadMe();
 });
 
-
+// refreshes data lol
 function RefreshData(){
     //console.log("refresh display");
     //info.model.pullData();
