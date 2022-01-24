@@ -41,17 +41,6 @@ class FloorsController extends Controller {
             if(this.debug) console.warn("FloorsController::RoomsBuilt-RoomLightsController not available",error);
         }
         try {
-            this.temperature = new TemperatureBug();
-            if(this.debug) console.log("FloorController::RoomsBuilt-TemperatureBug",this.temperature);
-            this.view.model.getData(json=>{
-                json.rooms.forEach(room=>{
-                    this.temperature.build(room.id);
-                });
-            });
-        } catch (error) {
-            if(this.debug) console.warn("FloorsController::RoomsBuilt-TemperatureBug not available",error);
-        }
-        try {
             this.displays = new DisplayStatusIcons();
             if(this.debug) console.log("FloorController::RoomsBuilt-DisplayStatusIcons",this.displays);
             this.view.model.getData(json=>{
@@ -61,6 +50,17 @@ class FloorsController extends Controller {
             });
         } catch (error) {
             if(this.debug) console.warn("FloorsController::RoomsBuilt-DisplayStatusIcons not available",error);
+        }
+        try {
+            this.temperature = new TemperatureBug();
+            if(this.debug) console.log("FloorController::RoomsBuilt-TemperatureBug",this.temperature);
+            this.view.model.getData(json=>{
+                json.rooms.forEach(room=>{
+                    this.temperature.build(room.id);
+                });
+            });
+        } catch (error) {
+            if(this.debug) console.warn("FloorsController::RoomsBuilt-TemperatureBug not available",error);
         }
     }
     /**
