@@ -12,6 +12,7 @@ class FloorsController extends Controller {
         super(new FloorsView(),debug);
         this.lights = null;
         this.temperature = null;
+        this.displays = null;
     }
     /**
      * build view and start refresh interval
@@ -50,6 +51,17 @@ class FloorsController extends Controller {
         } catch (error) {
             if(this.debug) console.warn("FloorsController::RoomsBuilt-TemperatureBug not available",error);
         }
+        try {
+            this.displays = new DisplayStatusIcons();
+            if(this.debug) console.log("FloorController::RoomsBuilt-DisplayStatusIcons",this.displays);
+            this.view.model.getData(json=>{
+                json.rooms.forEach(room=>{
+                    this.displays.build(room.id);
+                });
+            });
+        } catch (error) {
+            if(this.debug) console.warn("FloorsController::RoomsBuilt-DisplayStatusIcons not available",error);
+        }
     }
     /**
      * handles refreshing the floors views
@@ -60,6 +72,13 @@ class FloorsController extends Controller {
             this.view.model.getData(json=>{
                 json.rooms.forEach(room=>{
                     this.temperature.refresh(room.id);
+                });
+            });
+        }
+        if(this.displays){
+            this.view.model.getData(json=>{
+                json.rooms.forEach(room=>{
+                    this.displays.display(room.id);
                 });
             });
         }
