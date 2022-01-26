@@ -246,18 +246,18 @@ class Collection extends Model {
                 this.pushItem(allData[this.name][i],json=>{
                     this.push_items_completed++;
                     var done = this.pushDone(allData);
-                    callBack(json);
-                    if(done) doneCallback(json);
+                    if(callBack) callBack(json);
+                    if(done && doneCallback) doneCallback(json);
                 },error=>{
                     this.push_items_completed++;
                     var done = this.pushDone(allData);
-                    errorCallback(error);
-                    if(done) doneCallback(json);
+                    if(errorCallback) errorCallback(error);
+                    if(done && doneCallback) doneCallback(error);
                 },error=>{
                     this.push_items_completed++;
                     var done = this.pushDone(allData);
-                    failCallback(error);
-                    if(done) doneCallback(json);
+                    if(failCallback) failCallback(error);
+                    if(done && doneCallback) doneCallback(error);
                 });
             }
         }

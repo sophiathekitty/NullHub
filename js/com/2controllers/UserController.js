@@ -83,4 +83,15 @@ class UserController extends Controller {
             });
         }
     }
+    /**
+     * in case anything needs to check the user level in the UI
+     * @param {function(Number)} callBack returns the user level
+     */
+    static userId(callBack){
+        if(UserController.user.view.model){
+            UserController.user.view.model.getData(json=>{
+                callBack(json.session.user.id);
+            });
+        }
+    }
 }

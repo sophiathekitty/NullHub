@@ -90,10 +90,13 @@ if(!defined('MYSQL_CLASS')){
 			$sql = "";
 			foreach($where as $key => $value){
 				if(!$first) $sql .= " AND";
-				if(is_null($table))
-					$sql .= " `$key` = '$value'";
-				else
-					$sql .= " `$table`.`$key` = '$value'";
+				if(is_null($table)){
+					if(is_null($value)) $sql .= " `$key` IS NULL";
+					else $sql .= " `$key` = '$value'";
+				} else{ 
+					if(is_null($value)) $sql .= " `$table`.`$key` IS NULL";
+					else $sql .= " `$table`.`$key` = '$value'";
+				}
 				$first = false;
 			}
 			return $sql;
@@ -115,7 +118,8 @@ if(!defined('MYSQL_CLASS')){
 				$first = true;
 				foreach($where as $key => $value){
 					if(!$first) $sql .= " AND";
-					$sql .= " `$key` = '$value'";
+					if(is_null($value)) $sql .= " `$key` IS NULL";
+					else $sql .= " `$key` = '$value'";
 					$first = false;
 				}
 			}

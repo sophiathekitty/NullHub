@@ -20,6 +20,13 @@ class Tasks extends clsModel {
             'Default'=>"",
             'Extra'=>""
         ],[
+            'Field'=>"app",
+            'Type'=>"varchar(20)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"NullHub",
+            'Extra'=>""
+        ],[
             'Field'=>"assigned_to",
             'Type'=>"int(11)",
             'Null'=>"NO",
@@ -85,7 +92,17 @@ class Tasks extends clsModel {
      */
     public static function LoadActiveTasks(){
         $tasks = Tasks::GetInstance();
-        return $tasks->LoadWhere(['completed'=>null]);
+        $all = $tasks->LoadAll();  
+        return Tasks::FindActive($all);
+    }
+    private static function FindActive($all){
+        $active = [];
+        foreach($all as $t){
+            if(is_null($t['completed'])){
+                $active[] = $t;
+            }
+        }
+        return $active;        
     }
     /**
      * load task by id
@@ -94,7 +111,7 @@ class Tasks extends clsModel {
      */
     public static function LoadTaskId($task_id){
         $tasks = Tasks::GetInstance();
-        return $tasks->LoadById($task_id);
+        return $tasks->LoadWhere($task_id);
     }
     /**
      * load all the tasks for a room
@@ -106,12 +123,21 @@ class Tasks extends clsModel {
         return $tasks->LoadAllWhere(['room_id'=>$room_id]);
     }
     /**
+     * load all the tasks for a room
+     * @return array array of task data arrays
+     */
+    public static function LoadAllTasks(){
+        $tasks = Tasks::GetInstance();
+        return $tasks->LoadAllWhere(null,["due"=>"ASC"]);
+    }
+    /**
      * load today's active tasks
      * @return array array of tasks where completed is null and due is today? (looks like it's due => right now?)
      */
     public static function LoadActiveTasksToday(){
         $tasks = Tasks::GetInstance();
-        return $tasks->LoadAllWhere(['completed'=>null,'due'=>date("Y-m-d H:i:s")]);
+        $all = $tasks->LoadAllWhere(['due'=>date("Y-m-d H:i:s")]);
+        return Tasks::FindActive($all);
     }
     /**
      * load due active tasks
@@ -119,7 +145,8 @@ class Tasks extends clsModel {
      */
     public static function LoadDueTasks(){
         $tasks = Tasks::GetInstance();
-        return $tasks->LoadWhereFieldBefore(['completed'=>null],"due",date("Y-m-d H:i:s"));
+        $all = $tasks->LoadWhereFieldBefore(null,"due",date("Y-m-d H:i:s"));
+        return Tasks::FindActive($all);
     }
     /**
      * save task
@@ -128,7 +155,8 @@ class Tasks extends clsModel {
     public static function SaveTask($data){
         $tasks = Tasks::GetInstance();
         $tasks->PruneField('due',DaysToSeconds(5));
-        $data = $tasks->CleanDataSkipId($data);
+        $data['guid'] = md5($data['name'].$data['due']);
+        $data = $tasks->CleanData($data);
         //print_r($data);
         $task = $tasks->LoadWhere(['name'=>$data['name'],'due'=>$data['due']]);
         if(is_null($task)){            
