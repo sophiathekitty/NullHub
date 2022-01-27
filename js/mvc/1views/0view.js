@@ -346,6 +346,10 @@ class View {
         var min = date.getMinutes()
         return (((((hours+offset)*60) + min) / (24*60))*100)+"%";
     }
+    DateTimeToTimeString(time){
+        var dt = time.split(" ");
+        return this.Time24to12(dt[1])+this.Time24toAM(dt[1]);
+    }
     /**
      * convert 13:23 to 1:23pm
      * @param {string} time 

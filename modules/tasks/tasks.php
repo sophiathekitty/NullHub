@@ -8,8 +8,18 @@ class TaskManager {
      * @todo this will need to be extended to automate local tasks?
      */
     public static function AutomateTasks(){
+        if(!Servers::IsMain()) return RemoteTasks::PullRemoteTasks();
         echo "Automate Task Notification<br>";
         // this will need to be extended to automate local tasks
+        $extensions = LocalExtensions();
+        foreach($extensions as $extension){
+            //print_r($extension);
+            $content=@file_get_contents($extension['api']."/tasks");
+            $data = json_decode($content,true);
+            foreach($data['tasks'] as $task){
+                Tasks::SaveTask($task);
+            }
+        }
     }
     /**
      * complete a task

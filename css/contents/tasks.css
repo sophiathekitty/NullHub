@@ -1,0 +1,36 @@
+header .tasks {
+    display: flex;
+    flex-direction: row;
+    font-size: 0.75em;
+}
+header .tasks .task {
+    display: grid;
+    grid-template: "name due"
+        "nav nav";
+    background-color: #0e251864;
+    padding: 0.5em;
+    padding-left: 3em;
+    border-radius: 1em;
+    background-image: url(/images/null\ icon.png);
+    background-repeat: no-repeat;
+    background-size: 2em;
+    background-position: 0.5em center;
+    margin-left: 1em;
+}
+header .tasks .task [var=name]{
+    grid-area: name;
+}
+header .tasks .task [var=due]{
+    grid-area: due;
+    text-align: right;
+}
+header .tasks .task nav {
+    grid-area: nav;
+    display: flex;
+    flex-direction: row;
+    font-size: 1em;
+}
+header .tasks .task nav a {
+    font-size: 0.85em;
+    flex-grow: 1;
+}

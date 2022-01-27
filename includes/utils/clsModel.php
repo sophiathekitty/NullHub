@@ -27,8 +27,8 @@ class clsModel {
      */
     public function ValidateTable(){
         if(!clsDB::$db_g->has_table($this->table_name)){
-            clsDB::$db_g->install_table($this->table_name,$this->fields);
             echo "Installing table...\n";
+            echo clsDB::$db_g->install_table($this->table_name,$this->fields);
         }
         $table = clsDB::$db_g->describe_table($this->table_name);
         //print_r($table);
