@@ -20,11 +20,25 @@ class Tasks extends clsModel {
             'Default'=>"",
             'Extra'=>""
         ],[
+            'Field'=>"guid",
+            'Type'=>"varchar(34)",
+            'Null'=>"YES",
+            'Key'=>"",
+            'Default'=>null,
+            'Extra'=>""
+        ],[
             'Field'=>"app",
             'Type'=>"varchar(20)",
             'Null'=>"NO",
             'Key'=>"",
             'Default'=>"NullHub",
+            'Extra'=>""
+        ],[
+            'Field'=>"task",
+            'Type'=>"varchar(20)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"legacy",
             'Extra'=>""
         ],[
             'Field'=>"assigned_to",

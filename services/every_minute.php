@@ -3,7 +3,7 @@ require_once("../includes/main.php");
 Settings::SaveSettingsVar("Services::EveryMinuteStart",date("H:i:s"));
 //CheckOfflineHub(); // check if the main hub is offline or not
 // pull remote tasks once a minute if this isn't the hub
-RemoteTasks::PullRemoteTasks();
+TaskManager::AutomateTasks();
 SyncRoom();
 // find plugin services
 $plugins = FindPlugins($root_path."plugins/");

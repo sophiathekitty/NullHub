@@ -6,6 +6,7 @@ class TasksController extends Controller {
     }
     ready(){
         this.view.build();
+        this.refreshInterval();
         this.click(".tasks","a",e=>{
             e.preventDefault();
             var action = $(e.currentTarget).attr("action");
@@ -27,5 +28,9 @@ class TasksController extends Controller {
                 });
             });
         });
+    }
+    refresh(){
+        if(this.debug) console.log("TaskController::Refresh");
+        this.view.display();
     }
 }

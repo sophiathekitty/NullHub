@@ -14,7 +14,7 @@ class TasksView extends View {
                         $("header .tasks").html("");
                         tasks.forEach(task=>{
                             if(this.debug) console.log("TasksView::Display-task",task);
-                            $(html).appendTo("header .tasks").attr("task_id",task.id).attr("app",task.app);
+                            $(html).appendTo("header .tasks").attr("task_id",task.id).attr("app",task.app).attr("task",task.task);
                             $("header .tasks [task_id="+task.id+"] [var=name]").html(task.name);
                             $("header .tasks [task_id="+task.id+"] a").attr("task_id",task.id);
                             $("header .tasks [task_id="+task.id+"] a").attr("completed_by",user_id);

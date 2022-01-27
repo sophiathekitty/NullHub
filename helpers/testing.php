@@ -41,9 +41,11 @@ if($_GET['ip']){
 //SyncServers();
 //WeMoSync::PullLightsFromHub();
 //echo GitHash($root_path);
-$report = RemoteTasks::PullRemoteTasks();
+/*$report = RemoteTasks::PullRemoteTasks();
 print_r($report);
 $tasks = Tasks::LoadActiveTasks();
 print_r($tasks);
 echo clsDB::$db_g->last_sql;
+*/
+TaskManager::AutomateTasks();
 ?></pre>
