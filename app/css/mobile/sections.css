@@ -1,0 +1,32 @@
+@media( max-width:600px) {
+    main section#floors,
+    main section#info[collection="meal_plan"],
+    main div.weather_stamp {
+        display: none;
+    }
+
+    main[view="weather"] section#rooms_list{
+        display: none;
+    }
+    main[view="rooms"] section#floors,
+    main[view="rooms"] div#clock{
+        display: none !important;
+    }
+
+    main[view="rooms"] section#rooms_list,
+    main[view="rooms"] div.weather_stamp{
+        display: block;
+    }
+    main[view="rooms"] section#rooms_list ul[collection="rooms"]{
+        max-height: 60vh !important;
+        max-width: none !important;
+    }
+    
+    main[view="meal"] section.meal_details {
+        display: none !important;
+    }
+    main[view="meal"] section#info[collection="meal_plan"],
+    main[view="meal"] section#info[collection="meal_plan"] [day="today"]{
+        display: block;
+    }
+}
