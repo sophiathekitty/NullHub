@@ -18,7 +18,7 @@
         display: block;
     }
     main[view="rooms"] section#rooms_list ul[collection="rooms"]{
-        max-height: 60vh !important;
+        max-height: 55vh !important;
         max-width: none !important;
     }
     
