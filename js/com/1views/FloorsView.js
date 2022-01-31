@@ -38,7 +38,10 @@ class FloorsView extends View {
                                 });
                             }
                         });
-                        if(this.controller) this.controller.roomsBuilt();
+                        if(this.controller){
+                            this.controller.roomsBuilt();
+                            this.controller.clickRoomHeader();
+                        } 
                         else console.error("FloorsView::Build--controller missing?");
                     });
                 });

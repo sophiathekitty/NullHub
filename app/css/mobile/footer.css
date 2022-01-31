@@ -1,0 +1,6 @@
+@media( max-width:600px) {
+    footer {
+        display: flex;
+        justify-content: space-between;
+    }
+}

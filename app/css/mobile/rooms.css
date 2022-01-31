@@ -1,0 +1,8 @@
+@media( max-width:600px) {
+    main.show_details section#rooms_list {
+        display: none !important;
+    }
+    main.show_details section#floors[room_id][level]{
+        display: flex !important;
+    }
+}

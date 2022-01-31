@@ -47,6 +47,7 @@ div.contents {
     div.contents {
         display: grid;
         grid-template-columns: auto 20em;
+        grid-template-rows: repeat(10, fit-content);
         grid-gap: 0em 5em;
         grid-template-areas: 
             "main sidebar-stamp"

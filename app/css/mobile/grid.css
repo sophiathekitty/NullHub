@@ -1,0 +1,47 @@
+@media( max-width:600px) {
+    main {
+        display: grid;
+        grid-template-rows: 7em auto;
+        grid-gap: 0em 0em;
+        grid-template-areas: 
+            "sidebar-stamp"
+            "main";
+        margin-top: 3em;
+        margin-bottom: 3em;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100vw;
+        max-width: 100vw;
+        margin: 0em;
+        padding: 0em;
+    }
+    [view="rooms"]{
+        grid-template-rows: 12em auto;
+    }
+    .main {
+        grid-area: main;
+    }
+    .sidebar .stamp,
+    .sidebar.stamp{
+        grid-area: sidebar-stamp;
+    }
+    .sidebar .top,
+    .sidebar.top{
+        grid-area: main;
+    }
+    .sidebar .middle,
+    .sidebar.middle {
+        grid-area: main;
+    }
+    .sidebar .bottom
+    .sidebar.bottom {
+        grid-area: main;
+    }
+    .sidebar .extras, 
+    .sidebar.extras {
+        grid-area: main;
+    }
+    div.weather_stamp {
+        grid-area: sidebar-stamp !important;
+    }
+}

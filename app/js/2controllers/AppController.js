@@ -18,6 +18,9 @@ class AppController extends Controller {
             if(this.debug) console.log("AppController::nav.sections a::Click",$(e.currentTarget).attr("section"));
             e.preventDefault();
             $("main").attr("view",$(e.currentTarget).attr("section"));
+            $("#floors").removeAttr("room_id");
+            $("#floors").removeAttr("level");
+            $("main").removeClass("show_details");
         });
     }
 }

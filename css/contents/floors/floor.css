@@ -34,6 +34,12 @@
     right: 0.25em;
     padding: 0.25em;
 }
+#floors[room_id] > div[level="1"]::before,
+#floors[room_id] > div[level="0"]::before,
+#floors[room_id] > div[level="-1"]::before {
+    content: none;
+}
+
 #floors > div[level="1"]::before,
 #floors[room_id="0"] > div[level="1"]::before {
     content: "Second Floor";
@@ -47,8 +53,3 @@
     content: "Basement";
 }
 
-#floors[room_id] > div[level="1"]::before,
-#floors[room_id] > div[level="0"]::before,
-#floors[room_id] > div[level="-1"]::before {
-    content: none;
-}
