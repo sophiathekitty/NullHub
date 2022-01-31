@@ -1,0 +1,15 @@
+@media( max-width:600px) {
+    header div.tasks {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        bottom: 3em;
+        right:0em;
+    }
+    header div.tasks .task{
+        display: none;
+    }
+    header div.tasks:first-child{
+        display: grid !important;
+    }
+}

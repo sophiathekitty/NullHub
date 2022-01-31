@@ -29,4 +29,7 @@
     main[view="meal"] section#info[collection="meal_plan"] [day="today"]{
         display: block;
     }
+    main[view="floors"] section#floors {
+        display: flex !important;
+    }
 }

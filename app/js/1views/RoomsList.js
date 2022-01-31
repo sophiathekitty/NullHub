@@ -22,7 +22,7 @@ class RoomsList extends View {
                             if(this.debug) console.log("RoomsList::Build-data",json);
                             json.rooms.forEach((room,index)=>{
                                 if(this.debug) console.log("RoomsList::Build-room",room);
-                                $(itm_html).appendTo("#rooms_list ul[collection=rooms]").attr("index",index).attr("room_id",room.id);
+                                $(itm_html).appendTo("#rooms_list ul[collection=rooms]").attr("index",index).attr("room_id",room.id).attr("level",room.floor);
                             });
                             this.display();
                         });

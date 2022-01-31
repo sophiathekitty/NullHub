@@ -18,7 +18,7 @@ section#rooms_list ul {
 }
 
 .NullWeather.MealPlanner section#rooms_list ul {
-    max-height: 37vh;
+    max-height: 36vh;
 }
 
 section#rooms_list ul a::before,

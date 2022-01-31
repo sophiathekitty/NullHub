@@ -7,7 +7,7 @@
         "sky time time"
         "sky date date"
         "sky sunrise sunset";
-    max-height: 5em;
+    max-height: 6em;
     margin-bottom: 0.5em;
 }
 .clock .sky {
