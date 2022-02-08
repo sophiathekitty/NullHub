@@ -3,8 +3,8 @@
  */
 class UserController extends Controller {
     static user = new UserController();
-    constructor(){
-        super(new UserView());
+    constructor(debug = false){
+        super(new UserView(),debug);
         this.first_ready = true;
     }
     /**
@@ -22,7 +22,7 @@ class UserController extends Controller {
      */
     setupUserEvents(){
         this.click("#user a",e=>{
-            console.log($(e.currentTarget).attr("action"));
+            if(this.debug) console.log($(e.currentTarget).attr("action"));
             switch($(e.currentTarget).attr("action")){
                 case "logout":
                     this.view.model.logout(json=>{

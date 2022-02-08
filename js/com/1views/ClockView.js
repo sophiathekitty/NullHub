@@ -2,18 +2,18 @@
  * handles displaying the clock data
  */
 class ClockView extends View {
-    constructor(){
-        console.log("ClockView::Constructor");
-        super(new ClockModel(),new Template("clock","/templates/stamps/clock.html"));
+    constructor(debug = false){
+        if(debug) console.log("ClockView::Constructor");
+        super(new ClockModel(),new Template("clock","/templates/stamps/clock.html",null,60000, debug));
     }
     /**
      * build the clock widget
      */
     build(){
-        console.log("ClockView::Build");
+        if(this.debug) console.log("ClockView::Build");
         if(this.template){
             this.template.getData(html=>{
-                console.log("ClockView::Build",html);
+                if(this.debug) console.log("ClockView::Build",html);
                 $("#clock_stamp").html("");
                 $(html).appendTo("#clock_stamp");
                 $(html).appendTo(".app main");
@@ -28,10 +28,10 @@ class ClockView extends View {
      * update the time and other datas
      */
     display(){
-        //console.log("ClockView::Display");
+        if(this.debug) console.log("ClockView::Display");
         if(this.model){
             this.model.getData(json=>{
-                //console.log("ClockView::Display",json);
+                if(this.debug) console.log("ClockView::Display",json);
                 $(".clock").attr("time_of_day",json.time_of_day);
                 $(".clock").attr("day",json.day_of_week);
                 $(".clock").attr("month",json.month);
@@ -90,7 +90,7 @@ class ClockView extends View {
      * acting as an alias for display()
      */
     refresh(){
-        //console.log("ClockView::Refresh");
+        if(this.debug) console.log("ClockView::Refresh");
         this.display();
     }
 }

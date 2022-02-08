@@ -1,5 +1,5 @@
 class TasksCollection extends Collection {
-    static debug_tasks = true;
+    static debug_tasks = false;
     constructor(debug = TasksCollection.debug_tasks){
         if(debug) console.log("TasksCollection::Constructor");
         super("tasks","task","/api/tasks/","/api/tasks/save","id","collection_",debug);

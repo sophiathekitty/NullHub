@@ -3,7 +3,7 @@
  */
 class AppController extends Controller {
     static instance = new AppController();
-    constructor(debug = true){
+    constructor(debug = false){
         if(debug) console.log("AppController::Constructor");
         super(new AppView(),debug);
         this.clock = new ClockController();

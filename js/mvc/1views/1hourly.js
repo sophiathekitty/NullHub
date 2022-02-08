@@ -6,8 +6,8 @@ class HourlyView extends View {
      * @param {Template} item_template the html template for individual hours
      * @param {number} refresh_rate how frequently to refresh the view
      */
-    constructor(hourlyChart,template = null, item_template = null, refresh_rate = 60000){
-        super(hourlyChart,template,item_template,refresh_rate);
+    constructor(hourlyChart,template = null, item_template = null, refresh_rate = 60000, debug = false){
+        super(hourlyChart,template,item_template,refresh_rate,debug);
     }
     /**
      * build the hourly chart
@@ -20,15 +20,15 @@ class HourlyView extends View {
             });
         } else {
             if(this.item_template) {
-                console.log("HourlyView::build::item_template--"+this.model.chart_name);
+                if(this.debug) console.log("HourlyView::build::item_template--"+this.model.chart_name);
                 // i think we actually have the info in the model to do the view builds?
                 this.item_template.getData(html=>{
-                    console.log("HourlyView::build::loadTemplate--"+this.model.chart_name);
+                    if(this.debug) console.log("HourlyView::build::loadTemplate--"+this.model.chart_name);
                     this.model.getData(json=>{
-                        console.log("HourlyView::build::getData--"+this.model.chart_name);
+                        if(this.debug) console.log("HourlyView::build::getData--"+this.model.chart_name);
                         $("#"+this.model.chart_name).html("<div class=\"time_bar\"></div>");
                         MoveTimeBar();
-                        console.log("HourlyView::build::json",json);
+                        if(this.debug) console.log("HourlyView::build::json",json);
                         json[this.model.item_name].forEach(hour=>{
                             var h = Number(hour.hour);
                             var am = "am";

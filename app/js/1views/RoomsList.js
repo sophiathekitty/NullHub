@@ -2,7 +2,7 @@
  * Room list view handler
  */
 class RoomsList extends View {
-    constructor(debug = true){
+    constructor(debug = false){
         if(debug) console.log("RoomsList::Constructor");
         super(new RoomsCollection(),new Template("rooms_list","/templates/sections/rooms.html"),new Template("rooms_item","/templates/items/room.html"));
     }

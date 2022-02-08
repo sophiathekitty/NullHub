@@ -3,7 +3,7 @@
  */
 class RoomsListController extends Controller {
     static instance = new RoomsListController();
-    constructor(debug = true){
+    constructor(debug = false){
         if(debug) console.log("RoomsListController::Constructor");
         super(new RoomsList(),debug);
     }

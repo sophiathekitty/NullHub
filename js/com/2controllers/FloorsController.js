@@ -7,7 +7,7 @@ class FloorsController extends Controller {
      * constructor
      * @param {bool} debug show console output
      */
-    constructor(debug = true){
+    constructor(debug = false){
         if(debug) console.log("FloorsController::Constructor");
         super(new FloorsView(),debug);
         this.lights = null;
