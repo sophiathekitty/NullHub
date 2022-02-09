@@ -6,8 +6,8 @@ class HourlyChart extends Collection {
      * @param {string} chart_name 
      * @param {string} api 
      */
-    constructor(collection_name,item_name,chart_name,api){
-        super(collection_name,item_name,api,api,"hour")
+    constructor(collection_name,item_name,chart_name,api,debug = false){
+        super(collection_name,item_name,api,api,"hour","chart_",debug)
         this.chart_name = chart_name;
         this.prefix = "hourly_chart_";
     }
