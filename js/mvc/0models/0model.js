@@ -65,7 +65,13 @@ class Model {
             )
         ){
             //console.log(this.prefix+this.name,"pull live data");
-            this.pullData(callBack);
+            if(Model.storage.getItem(this.prefix+this.name+"_changed") === null){
+                //console.log(this.prefix+this.name,"get basic item",Model.storage.getItem(this.prefix+this.name));
+                this.pullData(callBack);
+            } else {
+                //console.log(this.prefix+this.name,"get changed item",Model.storage.getItem(this.prefix+this.name+"_changed"));
+                callBack(JSON.parse(Model.storage.getItem(this.prefix+this.name+"_changed")));
+            }
             returns++;
         }
         //console.log("get data... last pulled: ",this.pulled);
@@ -91,6 +97,8 @@ class Model {
             if(this.pull_delay > 0){
                 Model.storage.setItem(this.prefix+this.name, JSON.stringify(json));
                 Model.storage.setItem(this.prefix+this.name+"_pulled",this.pulled);    
+            } else if(Model.storage.getItem(this.prefix+this.name)) {
+                Model.storage.removeItem(this.prefix+this.name)
             }
             Model.server_errors--;
             if(Model.server_errors < 0) Model.server_errors = 0;
