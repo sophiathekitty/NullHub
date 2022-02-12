@@ -8,7 +8,7 @@ class Template extends Model{
      * @param {string} template the url of the template to load
      */
     constructor(name,template){
-        super(name,template,template,1000*60*5);
+        super(name,template,template,0);
         this.prefix = "template_";
     }
 }

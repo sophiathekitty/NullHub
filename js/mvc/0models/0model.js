@@ -88,8 +88,10 @@ class Model {
         Model.pull_requests_started++;
         $.get(this.get_url).done(json=>{
             this.pulled = new Date();
-            Model.storage.setItem(this.prefix+this.name, JSON.stringify(json));
-            Model.storage.setItem(this.prefix+this.name+"_pulled",this.pulled);
+            if(this.pull_delay > 0){
+                Model.storage.setItem(this.prefix+this.name, JSON.stringify(json));
+                Model.storage.setItem(this.prefix+this.name+"_pulled",this.pulled);    
+            }
             Model.server_errors--;
             if(Model.server_errors < 0) Model.server_errors = 0;
             if(callBack) callBack(json);
