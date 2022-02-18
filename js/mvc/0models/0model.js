@@ -154,7 +154,7 @@ class Model {
                     if(callBack) callBack(data);
                     //Model.storage.getItem(this.name+"_changed",data); // what? getItem(key,data???) /// should maybe be clearing _changed and updating the main one with the data?
                     Model.storage.setItem(this.prefix+this.name,JSON.stringify(data)); // ok. lets actually update the local data with the correct name
-                    var json = JSON.parse(Model.storage.getItem(this.prefix+this.name));
+                    //var json = JSON.parse(Model.storage.getItem(this.prefix+this.name)); // what? why for? maybe go?
                     Model.storage.removeItem(this.prefix+this.name+"_changed"); // and clear out the local changes that have now been saved
                     Model.server_errors--;
                     Model.push_requests_completed++;
