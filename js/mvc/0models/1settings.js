@@ -11,7 +11,7 @@ class Settings extends Collection {
      */
     constructor(collection_name = "settings",item_name = "setting",get_url = "/api/settings/"){
         super(collection_name,item_name,get_url,get_url,"name","settings_");
-        this.pull_delay = 10000;
+        this.pull_delay = 0;
     }
     /**
      * static function for loading a var from the server

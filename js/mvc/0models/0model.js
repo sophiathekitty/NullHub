@@ -22,7 +22,7 @@ class Model {
      * @param {string} prefix used before name for local storage key
      * @param {bool} debug set to true to turn on console output
      */
-    constructor(name,get_url,save_url,cache_time = 300000,prefix = "model_", debug = false){
+    constructor(name,get_url,save_url,cache_time = 0,prefix = "model_", debug = false){
         if(debug) console.log("Model::Constructor",name,get_url,save_url,cache_time,prefix, debug)
         this.prefix = prefix;
         this.name = name;
@@ -248,29 +248,31 @@ class Collection extends Model {
      * @param {function(*)} doneCallback called if the request failed
      */
     pushData(callBack,errorCallback,failCallback,doneCallback){
-        var oldData = JSON.parse(Model.storage.getItem(this.prefix+this.name));
-        var allData = JSON.parse(Model.storage.getItem(this.prefix+this.name+"_changed"));
-        for(var i = 0; i < allData[this.name].length; i++){
-            if(JSON.stringify(oldData[this.name][i]) != JSON.stringify(allData[this.name][i])){
-                this.push_items_started++;
-                this.pushItem(allData[this.name][i],json=>{
-                    this.push_items_completed++;
-                    var done = this.pushDone(allData);
-                    if(callBack) callBack(json);
-                    if(done && doneCallback) doneCallback(json);
-                },error=>{
-                    this.push_items_completed++;
-                    var done = this.pushDone(allData);
-                    if(errorCallback) errorCallback(error);
-                    if(done && doneCallback) doneCallback(error);
-                },error=>{
-                    this.push_items_completed++;
-                    var done = this.pushDone(allData);
-                    if(failCallback) failCallback(error);
-                    if(done && doneCallback) doneCallback(error);
-                });
-            }
-        }
+        //var oldData = JSON.parse(Model.storage.getItem(this.prefix+this.name));
+        this.getData(oldData=>{
+            var allData = JSON.parse(Model.storage.getItem(this.prefix+this.name+"_changed"));
+            for(var i = 0; i < allData[this.name].length; i++){
+                if(JSON.stringify(oldData[this.name][i]) != JSON.stringify(allData[this.name][i])){
+                    this.push_items_started++;
+                    this.pushItem(allData[this.name][i],json=>{
+                        this.push_items_completed++;
+                        var done = this.pushDone(allData);
+                        if(callBack) callBack(json);
+                        if(done && doneCallback) doneCallback(json);
+                    },error=>{
+                        this.push_items_completed++;
+                        var done = this.pushDone(allData);
+                        if(errorCallback) errorCallback(error);
+                        if(done && doneCallback) doneCallback(error);
+                    },error=>{
+                        this.push_items_completed++;
+                        var done = this.pushDone(allData);
+                        if(failCallback) failCallback(error);
+                        if(done && doneCallback) doneCallback(error);
+                    });
+                }
+            }    
+        });
     }
     /**
      * checks to see if all the items have been pushed to the server
@@ -282,7 +284,7 @@ class Collection extends Model {
         if(this.push_items_started == this.push_items_completed){
             var date = new Date();
             if(this.debug) console.log("Collection::"+this.name+":pushDone! YES");
-            Model.storage.setItem(this.prefix+this.name,JSON.stringify(allData)); // ok. lets actually update the local data with the correct name
+            //Model.storage.setItem(this.prefix+this.name,JSON.stringify(allData)); // ok. lets actually update the local data with the correct name
             Model.storage.removeItem(this.prefix+this.name+"_changed"); // and clear out the local changes that have now been saved
             this.pulled = new Date(date.getTime()-(this.pull_delay*0.75));
             return true;
