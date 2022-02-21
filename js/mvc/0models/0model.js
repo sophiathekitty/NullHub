@@ -197,7 +197,7 @@ class Collection extends Model {
      */
     constructor(collection_name,item_name,get_url,save_url,id_name = "id",prefix = "collection_", debug = false){
         if(debug) console.log("Collection::Constructor",collection_name,item_name,get_url,save_url,id_name,prefix, debug);
-        super(collection_name, get_url, save_url,1000*60*5,prefix,debug);
+        super(collection_name, get_url, save_url,0,prefix,debug);
         this.item_name = item_name;
         this.id_name = id_name;
         this.push_items_started = 0;
