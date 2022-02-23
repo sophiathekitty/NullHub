@@ -219,26 +219,39 @@ class Collection extends Model {
      * saves or adds an item to the _changed version of the data list
      * @param {json|Object} item the json object to be added to the data list
      */
-    setItem(item){
+    setItem(item,doneCallback = null){
         if(this.debug) console.log("Collection::setItem:",item);
-        this.getData(data=>{
-            if(this.debug) console.log("Collection::setItem:data:",data);
-            var isNew = true;
-            for(var i = 0; i < data[this.name].length; i++){
-                if(data[this.name][i][this.id_name] == item[this.id_name]){
-                    data[this.name][i] = item;
-                    data[this.name][i].edited = true;
-                    isNew = false;
+        if(this.pull_delay == 0){
+            this.pushItem(item,json=>{
+                this.push_items_completed++;
+                if(doneCallback) doneCallback(json);
+            },error=>{
+                this.push_items_completed++;
+                if(doneCallback) doneCallback(error);
+            },error=>{
+                this.push_items_completed++;
+                if(doneCallback) doneCallback(error);
+            });
+        } else {
+            this.getData(data=>{
+                if(this.debug) console.log("Collection::setItem:data:",data);
+                var isNew = true;
+                for(var i = 0; i < data[this.name].length; i++){
+                    if(data[this.name][i][this.id_name] == item[this.id_name]){
+                        data[this.name][i] = item;
+                        data[this.name][i].edited = true;
+                        isNew = false;
+                    }
                 }
-            }
-            if(isNew){
-                item.isNew = true;
-                data[this.name].push(item);
-            }
-            if(this.debug) console.log("Collection::setItem:changed:",data);
-            this.setData(data);
-            //Model.storage.setItem(this.prefix+this.name+"_changed",data);
-        })
+                if(isNew){
+                    item.isNew = true;
+                    data[this.name].push(item);
+                }
+                if(this.debug) console.log("Collection::setItem:changed:",data);
+                this.setData(data);
+                //Model.storage.setItem(this.prefix+this.name+"_changed",data);
+            });    
+        }
     }
     /**
      * pushes the data in local storage with the postfix _changed for this model to the save api
@@ -251,6 +264,12 @@ class Collection extends Model {
         //var oldData = JSON.parse(Model.storage.getItem(this.prefix+this.name));
         this.getData(oldData=>{
             var allData = JSON.parse(Model.storage.getItem(this.prefix+this.name+"_changed"));
+            if(allData === null) {
+                this.getData(json=>{
+                    if(doneCallback) doneCallback(json);
+                });
+                return;
+            }
             for(var i = 0; i < allData[this.name].length; i++){
                 if(JSON.stringify(oldData[this.name][i]) != JSON.stringify(allData[this.name][i])){
                     this.push_items_started++;

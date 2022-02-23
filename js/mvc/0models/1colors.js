@@ -21,7 +21,7 @@ class ColorPallet extends Collection {
      */
     constructor(pallet){
         super(pallet,pallet,"/api/colors/pallet/?pallet="+pallet,"/api/colors","id","pallet_");
-        this.pull_delay = 0;
+        this.pull_delay = 100000;
         ColorPallet.pallets[pallet] = this;
         //console.log("ColorPallet::Construct",ColorPallet.pallets[pallet]);
     }

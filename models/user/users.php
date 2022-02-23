@@ -130,6 +130,14 @@ class Users extends clsModel{
         return $this->LoadWhere(['username'=>$username]);
     }
     /**
+     * get a user with username
+     * @param string $username the username
+     * @return array the user data array
+     */
+    public function GetUserId($user_id){
+        return $this->LoadWhere(['id'=>$user_id]);
+    }
+    /**
      * get user with username and password
      * @param string $username the username
      * @param string $password the password
