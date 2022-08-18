@@ -73,6 +73,11 @@ class UserSession {
         if(UserSession::$session['user_id'] == 0 && !Servers::IsMain()){
             // attempt a remote login
             UserSession::$session = $this->CheckMainForLogin(UserSession::$session);
+            // make sure that the user exist locally?
+            //UserSession::$session['user_id']['debug'] = "hello?";
+        }
+        if(UserSession::$session['user_id'] != 0 && (is_null(UserSession::$session['user']) || UserSession::$session['user']['id'] == 0)){
+            UserSync::pull();
         }
         if(UserSession::$session['user_id'] != 0 && is_null(UserSession::$session['user'])){
             UserSession::$session['user'] = UserSession::$users->LoadById(UserSession::$session['user_id']);
@@ -206,6 +211,7 @@ class UserSession {
         $data = json_decode($info,true);
         if($data['user_login']['user_id'] != 0){
             $session = UserSession::$user_logins->LoginAnonUser($data['user_login']['user_id'],$session['id'],$this->CreateToken($this->UserIpAddress()));
+
         }
         return $session;
     }

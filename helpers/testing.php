@@ -47,5 +47,6 @@ $tasks = Tasks::LoadActiveTasks();
 print_r($tasks);
 echo clsDB::$db_g->last_sql;
 */
-TaskManager::AutomateTasks();
+//TaskManager::AutomateTasks();
+//print_r(ProfileImageStamp::FindDefaults());
 ?></pre>

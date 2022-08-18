@@ -23,13 +23,13 @@ this is what i've used to setup a few raspberry pi zeros... slightly modified to
 #### raspberry pi
 
 ```bash
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install apache2 -y && sudo a2enmod rewrite && sudo service apache2 restart && sudo apt-get install php -y && sudo apt-get install libapache2-mod-php -y && sudo apt-get install mariadb-server -y && sudo apt-get install php-mysql -y && sudo service apache2 restart && sudo apt-get install python -y && sudo apt-get install python-serial -y && sudo ln -s /var/www/html www && sudo chown -R pi:pi /var/www/html && sudo chmod 777 /var/www/html && sudo apt-get install git -y && sudo apt-get install python-urllib3 -y && sudo apt-get install nmap -y && sudo apt-get install python-serial -y
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install apache2 -y && sudo a2enmod rewrite && sudo service apache2 restart && sudo apt-get install php -y && sudo apt-get install libapache2-mod-php -y && sudo apt-get install mariadb-server -y && sudo apt-get install php-mysql -y && sudo service apache2 restart && sudo apt-get install python -y && sudo ln -s /var/www/html www && sudo chown -R pi:pi /var/www/html && sudo chmod 777 /var/www/html && sudo apt-get install git -y && sudo apt-get install python3-urllib3 -y && sudo apt-get install nmap -y
 ```
 
 #### ubuntu
 
 ```bash
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install apache2 -y && sudo a2enmod rewrite && sudo service apache2 restart && sudo apt-get install php -y && sudo apt-get install libapache2-mod-php -y && sudo apt-get install mariadb-server -y && sudo apt-get install php-mysql -y && sudo service apache2 restart && sudo apt-get install python -y && sudo apt-get install python-serial -y && sudo ln -s /var/www/html www && sudo chown -R pi:pi /var/www/html && sudo chmod 777 /var/www/html && sudo apt-get install git -y && sudo apt-get install python-urllib3 -y && sudo apt-get install nmap -y
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install apache2 -y && sudo a2enmod rewrite && sudo service apache2 restart && sudo apt-get install php -y && sudo apt-get install libapache2-mod-php -y && sudo apt-get install mariadb-server -y && sudo apt-get install php-mysql -y && sudo service apache2 restart && sudo apt-get install python -y && sudo ln -s /var/www/html www && sudo chown -R pi:pi /var/www/html && sudo chmod 777 /var/www/html && sudo apt-get install git -y && sudo apt-get install python-urllib3 -y && sudo apt-get install nmap -y
 ```
 
 ### Individual commands
@@ -81,10 +81,6 @@ sudo apt-get install python -y
 ```
 
 ```bash
-sudo apt-get install python-serial -y
-```
-
-```bash
 sudo apt-get install python-pip -y
 ```
 
@@ -105,7 +101,7 @@ sudo apt-get install git -y
 ```
 
 ```bash
-sudo apt-get install python-urllib3 -y
+sudo apt-get install python3-urllib3 -y
 ```
 
 ```bash
