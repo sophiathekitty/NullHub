@@ -28,9 +28,14 @@ if(!defined('MYSQL_CLASS')){
 			$this->db = @mysqli_connect('localhost', $username, $password) 
 				or die("Unable to connect to the DB server! ERROR: " . mysqli_errno($this->db) . " <b>" . mysqli_error($this->db) . "</b");
 			mysqli_select_db($this->db, $dbname)
-				or die("Unable to select DB! ERROR: " . mysqli_errno($this->db) . " <b>" . mysqli_error($this->db) . "</b");
+				or $this->_createDB($dbname); //die("Unable to select DB! ERROR: " . mysqli_errno($this->db) . " <b>" . mysqli_error($this->db) . "</b");
 			
 			clsDB::$db_g = $this;
+		}
+		function _createDB($dbname){
+			$this->_query("CREATE DATABASE ".$dbname);
+			mysqli_select_db($this->db, $dbname)
+				or die("Unable to select DB! ERROR: " . mysqli_errno($this->db) . " <b>" . mysqli_error($this->db) . "</b");
 		}
 		/**
 		 * actually does a mysqli query

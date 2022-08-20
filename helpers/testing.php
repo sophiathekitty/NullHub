@@ -49,4 +49,7 @@ echo clsDB::$db_g->last_sql;
 */
 //TaskManager::AutomateTasks();
 //print_r(ProfileImageStamp::FindDefaults());
+//$wemo = WeMoLights::MacAddress("D8EC5E079900");
+//$state = WeMo::SetBinaryState($wemo,1);
+//echo "State: $state";
 ?></pre>

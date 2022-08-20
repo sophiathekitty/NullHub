@@ -129,12 +129,40 @@ mysql_secure_installation
 
 ## Install from Git
 
+### Full Hub all in one command
+
 ```bash
-cd www
+cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullLights.git && git clone https://github.com/sophiathekitty/NullSensors.git && git clone https://github.com/sophiathekitty/NullDisplay.git && git clone https://github.com/sophiathekitty/NullProfiles.git && cd ../extensions && git clone https://github.com/sophiathekitty/MealPlanner.git
+```
+
+### Micro Display all in one command
+
+```bash
+cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullDisplay.git 
+```
+
+### eInk Display all in one command
+
+```bash
+cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullDisplay.git && cd ../extensions && git clone https://github.com/sophiathekitty/MealPlanner.git
+```
+
+### Thermostat all in one command
+
+```bash
+cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullSensors.git
+```
+
+### Individual commands for full install
+
+simply skip the git clone commands for the plugins you don't need.
+
+```bash
+cd /var/www/html
 ```
 
 ```bash
-git clone https://github.com/sophiathekitty/NullHub.git .
+git clone https://github.com/sophiathekitty/NullHub.git
 ```
 
 ```bash
@@ -159,6 +187,14 @@ git clone https://github.com/sophiathekitty/NullLights.git
 
 ```bash
 git clone https://github.com/sophiathekitty/NullSensors.git
+```
+
+```bash
+git clone https://github.com/sophiathekitty/NullDisplay.git
+```
+
+```bash
+git clone https://github.com/sophiathekitty/NullProfiles.git
 ```
 
 ```bash
@@ -201,6 +237,8 @@ sudo crontab -e
 * [NullWeather](https://github.com/sophiathekitty/NullWeather) - on main hub will pull live data. will sync from hub on other devices
 * [NullSensors](https://github.com/sophiathekitty/NullSensors) - handles local sensors and syncing sensor to and from hub
 * [NullLights](https://github.com/sophiathekitty/NullLights) - on main hub handles light automation. on devices sync from hub
+* [NullDisplay](https://github.com/sophiathekitty/NullDisplay) - will replace the [micro_display](https://github.com/sophiathekitty/micro_display) project and add in some kiosk display options...
+* [NullProfiles](https://github.com/sophiathekitty/NullProfiles) - adds profiles and custom icons for users. will let you customize your profile banner in the app and in the kiosk view.
 
 ## Extensions
 
