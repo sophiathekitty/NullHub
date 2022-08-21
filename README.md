@@ -221,8 +221,11 @@ sudo crontab -e
 1 * * * * sh /var/www/html/gitpull.sh
 2 * * * * sh /var/www/html/plugins/NullSensors/gitpull.sh
 3 * * * * sh /var/www/html/plugins/NullWeather/gitpull.sh
-4 * * * * sh /var/www/html/extensions/MealPlanner/gitpull.sh
-5 * * * * wget -O/dev/null -q http://localhost/helpers/validate_models.php
+4 * * * * sh /var/www/html/plugins/NullLights/gitpull.sh
+5 * * * * sh /var/www/html/plugins/NullDisplay/gitpull.sh
+6 * * * * sh /var/www/html/plugins/NullProfiles/gitpull.sh
+7 * * * * sh /var/www/html/extensions/MealPlanner/gitpull.sh
+8 * * * * wget -O/dev/null -q http://localhost/helpers/validate_models.php
 
 * * * * * wget -O/dev/null -q http://localhost/services/every_minute.php
 0 * * * * wget -O/dev/null -q http://localhost/services/every_hour.php
