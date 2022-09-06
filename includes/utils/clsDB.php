@@ -26,16 +26,32 @@ if(!defined('MYSQL_CLASS')){
 		function __construct($dbname, $username, $password){
 			$this->database = $dbname;
 			$this->db = @mysqli_connect('localhost', $username, $password) 
-				or die("Unable to connect to the DB server! ERROR: " . mysqli_errno($this->db) . " <b>" . mysqli_error($this->db) . "</b");
+				or $this->_SetupMode("Unable to connect to the DB server! ERROR: " . mysqli_errno($this->db) . " - " . mysqli_error($this->db));
 			mysqli_select_db($this->db, $dbname)
 				or $this->_createDB($dbname); //die("Unable to select DB! ERROR: " . mysqli_errno($this->db) . " <b>" . mysqli_error($this->db) . "</b");
 			
 			clsDB::$db_g = $this;
 		}
+		/**
+		 * try to create the database. if not in setup mode will also attempt to validate the models by loading http://localhost/helpers/validate_models.php
+		 * @param string $dbname the database to create
+		 */
 		function _createDB($dbname){
+			if(defined("SETUP_MODE")) return;
 			$this->_query("CREATE DATABASE ".$dbname);
 			mysqli_select_db($this->db, $dbname)
-				or die("Unable to select DB! ERROR: " . mysqli_errno($this->db) . " <b>" . mysqli_error($this->db) . "</b");
+				or $this->_SetupMode("Unable to select DB! ERROR: " . mysqli_errno($this->db) . " - " . mysqli_error($this->db));
+			if(defined("SETUP_MODE")) return;
+			$content=@file_get_contents("http://localhost/helpers/validate_models.php");
+		}
+		/**
+		 * enter setup mode for some reason
+		 * @param string $message the reason we entered setup mode
+		 */
+		function _SetupMode($message){
+			if(!defined("SETUP_MODE")){
+				define("SETUP_MODE",$message);
+			}
 		}
 		/**
 		 * actually does a mysqli query

@@ -50,6 +50,7 @@ class Settings extends clsModel {
      * @return array an array of all the settings $settings[0]['name'], $settings[0]['value']
      */
     public static function LoadAllSettings(){
+        if(defined("SETUP_MODE")) return [];
         $settings = Settings::GetInstance();
         return $settings->LoadAll();
     }
@@ -60,6 +61,7 @@ class Settings extends clsModel {
      */
     public static function LoadSettingsPallet($pallet){
         $settings = [];
+        if(defined("SETUP_MODE")) return $settings;
         $rows = clsDB::$db_g->select("SELECT * FROM `Settings` WHERE `name` LIKE '$pallet%'");
         foreach($rows as $row){
             $settings[$row['name']] = $row['value'];
@@ -73,6 +75,7 @@ class Settings extends clsModel {
      * @return string the value of the setting
      */
     public static function LoadSettingsVar($name,$default = null){
+        if(defined("SETUP_MODE")) return $default;
         $settings = Settings::GetInstance();
         return $settings->LoadVar($name,$default);
     }
@@ -83,6 +86,7 @@ class Settings extends clsModel {
      * @return array returns save report ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'sql'=>$sql,'row'=>$row]
      */
     public static function SaveSettingsVar($name,$value){
+        if(defined("SETUP_MODE")) return $value;
         $settings = Settings::GetInstance();
         return $settings->SaveVar($name,$value);
     }

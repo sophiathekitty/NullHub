@@ -31,7 +31,11 @@ class UserSession {
      * gets the clean session data for user api
      */
     public static function CleanSessionData(){
-        $session = UserSession::GetUserSessionArray();
+        if(defined("SETUP_MODE")) {
+            $session = [];
+        } else {
+            $session = UserSession::GetUserSessionArray();
+        }
         if(!is_null($session['user'])){
             $session['user']['password'] = "[redacted]";
         } else {

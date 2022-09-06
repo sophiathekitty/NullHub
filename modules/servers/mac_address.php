@@ -1,4 +1,9 @@
 <?php
+function Hostname(){
+    $hostname = shell_exec("hostname");
+    $hostname = str_replace("\n","",$hostname);
+    return $hostname;
+}
 /**
  * use LocalMac() for best results
  * @return string local mac address
@@ -49,6 +54,7 @@ function IsValidIP($ip){
  * @return string local mac address
  */
 function LocalMac(){
+    if(defined("SETUP_MODE")) return LocalMacCache();
     return Settings::LoadSettingsVar("mac_address",LocalMacCache());
 }
 /**

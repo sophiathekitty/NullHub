@@ -19,8 +19,19 @@ date_default_timezone_set("America/Denver");
 //echo "0.3\n";
 
 IncludeFolder($root_path."includes/utils/");
-require_once($root_path."settings.php");
-$db = new clsDB($db_info['database'], $db_info['username'], $db_info['password']);
+// check if this exists and if not we're in setup mode
+if(is_file($root_path."settings.php")){
+    require_once($root_path."settings.php");
+    if(isset($db_info)){
+        $db = new clsDB($db_info['database'], $db_info['username'], $db_info['password']);
+    } else if(isset($device_info)){
+        $db = new clsDB($device_info['database'], $device_info['username'], $device_info['password']);
+    } else {
+        define("SETUP_MODE","broken settings.php");
+    }
+} else {
+    define("SETUP_MODE","missing settings.php");
+}
 
 //echo "0.4 $root_path \n";
 
@@ -41,7 +52,30 @@ foreach($plugins as $plugin){
     IncludeFolder($plugin."modules/"); 
     //echo "0.6.2 $plugin\n";
 }
-
+if(defined("SETUP_MODE")){
+    // we're in setup mode... now what?
+    switch($_SERVER['REQUEST_URI']){
+        case "/api/":
+        case "/api/tasks/":
+        case "/api/info/servers/":
+        case "/api/settings/":
+        case "/api/user/":
+        case "/api/clock/":
+        case "/api/info/":
+        case "/api/info/plugins/":
+        case "/api/info/extensions/":
+        case "/css/base.css.php":
+        case "/css/plugins.css.php":
+        case "/js/com/":
+        case "/js/mvc/nullmvc.js.php":
+            break;
+        default:
+            $data = ['error'=>constant("SETUP_MODE")];
+            $data['server'] = $_SERVER;
+            OutputJson($data);
+            die();
+    }
+}
 //echo "0.7\n";
 /**
  * go through this folder and all it's child folders and add any .php file

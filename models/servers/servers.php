@@ -99,6 +99,7 @@ class Servers extends clsModel{
      * @return array the data array of the server
      */
     public static function GetHub(){
+        if(defined("SETUP_MODE")) return ['mac_address'=>LocalMacAddress(),'name'=>'null device','url'=>LocalIp(),'type'=>'device','server'=>'pi','main'=>0,'enabled'=>0,'online'=>0];
         $servers = Servers::GetInstance();
         $hub = $servers->LoadWhere(['main'=>1,'online'=>1],['server'=>'DESC']);
         if($hub) return $hub;
@@ -139,6 +140,7 @@ class Servers extends clsModel{
      * @return array an array of server arrays
      */
     public static function OnlineServers(){
+        if(defined("SETUP_MODE")) return [];
         $servers = Servers::GetInstance();
         return $servers->Online();
     }
