@@ -90,6 +90,17 @@ class Settings extends clsModel {
         $settings = Settings::GetInstance();
         return $settings->SaveVar($name,$value);
     }
+    /**
+     * sync a setting from the main hub
+     * @param string $name the name of the setting to sync from hub
+     * @return array returns save report ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'sql'=>$sql,'row'=>$row]
+     */
+    public static function SyncSettingsVar($name){
+        $setting = ServerRequests::LoadHubJSON("/api/settings/?name=$name");
+        if(!isset($setting['name'],$setting['value'])) return null;
+        $settings = Settings::GetInstance();
+        return $settings->SaveVar($setting['name'],$setting['value']);
+    }
     public $table_name = "Settings";
     public $fields = [
         [

@@ -52,4 +52,7 @@ echo clsDB::$db_g->last_sql;
 //$wemo = WeMoLights::MacAddress("D8EC5E079900");
 //$state = WeMo::SetBinaryState($wemo,1);
 //echo "State: $state";
+$hub = Servers::GetHub();
+print_r($hub);
+if(Servers::IsHub()) echo "\nIs Hub?\n";
 ?></pre>

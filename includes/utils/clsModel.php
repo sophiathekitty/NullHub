@@ -13,13 +13,13 @@ class clsModel {
      * validates the tables for all the registered models
      */
     public static function ValidateTables(){
-        echo "Validate Model Tables --- ".count(clsModel::$models)." \n";
+        Debug::Log("Validate Model Tables --- ".count(clsModel::$models));
         $i = 0;
         foreach(clsModel::$models as $model){
             $i++;
-            echo "$i Model - ".$model->table_name." - \n";
+            Debug::LogGroup($model->table_name,"$i Model - ".$model->table_name." - ");
             $model->ValidateTable();
-            echo " - validated - \n";
+            Debug::LogGroup($model->table_name," - validated - ");
         }
     }
     /**
@@ -27,8 +27,8 @@ class clsModel {
      */
     public function ValidateTable(){
         if(!clsDB::$db_g->has_table($this->table_name)){
-            echo "Installing table...\n";
-            echo clsDB::$db_g->install_table($this->table_name,$this->fields);
+            Debug::LogGroup($this->table_name,"Installing table...",
+                clsDB::$db_g->install_table($this->table_name,$this->fields));
         }
         $table = clsDB::$db_g->describe_table($this->table_name);
         //print_r($table);
@@ -400,7 +400,8 @@ class clsModel {
         if(!is_null($where)) $sql .= clsDB::$db_g->where_safe_string($where,$this->table_name);
         //echo $sql."\n\n";
         $rows = clsDB::$db_g->select($sql);
-        echo clsDB::$db_g->get_err();
+        $err = clsDB::$db_g->get_err();
+        if($err != "") Debug::Log("clsModel::".$this->table_name."::JoinWhere",$sql,$err);
         return $rows;
     }    
     /**
@@ -436,7 +437,8 @@ class clsModel {
         if(!is_null($where)) $sql .= clsDB::$db_g->where_safe_string($where,$this->table_name);
         //echo "\n\n".$sql."\n\n";
         $rows = clsDB::$db_g->select($sql);
-        echo clsDB::$db_g->get_err();
+        $err = clsDB::$db_g->get_err();
+        if($err != "") Debug::Log("clsModel::".$this->table_name."::JoinWhere",$sql,$err);
         return $rows;
     }
 

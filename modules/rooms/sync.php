@@ -12,6 +12,7 @@ function SyncRooms(){
     //$url = "http://".$hub['url']."/api/rooms/?simple=1";
     //$url = "http://".$hub['url']."/api/rooms/?room_id=".Settings::LoadSettingsVar('room_id');
     $data = ServerRequests::LoadMainJSON("/api/rooms/");
+    Debug::Log("SyncRoom",$data);
     return SyncRoomUrl($data);
 }
 /**
@@ -27,6 +28,7 @@ function SyncRoom(){
     //if(is_null($hub)) return null;
     //$url = "http://".$hub['url']."/api/rooms/?room_id=".Settings::LoadSettingsVar('room_id');
     $data = ServerRequests::LoadMainJSON("/api/rooms/?room_id=".$room_id);
+    Debug::Log("SyncRoom",$data);
     return SyncRoomUrl($data);
 }
 /**
@@ -43,12 +45,14 @@ function SyncRoomUrl($data){
         foreach($data['rooms'] as $room){
             // save room
             Rooms::SaveRoom($room);
-            echo clsDB::$db_g->get_err();
+            $err = clsDB::$db_g->get_err();
+            if($err != "") Debug::Log("SyncRoomUrl",$err);
         }    
     }
     if(isset($data['room'])){
-        Rooms::SaveRoom(($data['room']));
-        echo clsDB::$db_g->get_err();
+        $res = Rooms::SaveRoom(($data['room']));
+        $err = clsDB::$db_g->get_err();
+        if($err != "") Debug::Log("SyncRoomUrl",$res,$err);
     }
     return Rooms::AllRooms();
 }

@@ -38,11 +38,20 @@ if(!defined('MYSQL_CLASS')){
 		 */
 		function _createDB($dbname){
 			if(defined("SETUP_MODE")) return;
+			Debug::LogGroup("clsDB","CREATE DATABASE ".$dbname);
 			$this->_query("CREATE DATABASE ".$dbname);
 			mysqli_select_db($this->db, $dbname)
 				or $this->_SetupMode("Unable to select DB! ERROR: " . mysqli_errno($this->db) . " - " . mysqli_error($this->db));
 			if(defined("SETUP_MODE")) return;
-			$content=@file_get_contents("http://localhost/helpers/validate_models.php");
+			$content = ServerRequests::LoadLocalhostJSON("/helpers/validate_models.php");
+			Debug::LogGroup("clsDB","validate models",$content);
+			//$content=@file_get_contents("http://localhost/helpers/validate_models.php");
+		}
+		public function RemoveDB($dbname){
+			$this->_query("DROP DATABASE ".$dbname);
+		}
+		public function CloseDB(){
+			mysqli_close($this->db);
 		}
 		/**
 		 * enter setup mode for some reason
@@ -361,8 +370,9 @@ AND table_name = '$name';";
 		 */
 		function update_field($table_name,$field){
 			$sql = "ALTER TABLE `$table_name` CHANGE `".$field['Field']."` ".$this->field_sql($field).";";
-			echo "$sql\n";
 			$this->insert($sql);
+			$err = $this->get_err();
+			if($err != "") Debug::LogGroup($table_name,"clsDB::update_field--sql",$sql,$err);
 			return $this->get_err();
 		}
 		/**

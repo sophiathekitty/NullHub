@@ -13,6 +13,7 @@ function OutputJSFromFileList($js_files,$sort = true){
         include_once($js_file);
         echo "\n\n\n";
     }
+    clsDB::$db_g->CloseDB();
 }
 /**
  * takes a list of files and combines them into a single file to output as a minimized js file
@@ -33,6 +34,7 @@ function OutputJSFromFileListMin($js_files, $sort = true){
     $buffer = str_replace(': ', ':', $buffer);
     $buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
     echo $buffer;
+    clsDB::$db_g->CloseDB();
 }
 
 ?>

@@ -159,7 +159,7 @@ class Rooms extends clsModel{
         $rooms = Rooms::GetInstance();
         $data = $rooms->CleanData($data);
         $room = $rooms->LoadById($data['id']);
-        print_r($data);
+        Debug::Log("Rooms::SaveRoom",$data);
         if(is_null($room)){
             return $rooms->Save($data);
         } else {

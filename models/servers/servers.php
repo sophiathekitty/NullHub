@@ -99,15 +99,20 @@ class Servers extends clsModel{
      * @return array the data array of the server
      */
     public static function GetHub(){
-        if(defined("SETUP_MODE")) return ['mac_address'=>LocalMacAddress(),'name'=>'null device','url'=>LocalIp(),'type'=>'device','server'=>'pi','main'=>0,'enabled'=>0,'online'=>0];
+        if(defined("SETUP_MODE")) return ['mac_address'=>LocalMac(),'name'=>'null device','url'=>LocalIp(),'type'=>'device','server'=>'pi','main'=>0,'enabled'=>0,'online'=>0];
         $servers = Servers::GetInstance();
         $hub = $servers->LoadWhere(['main'=>1,'online'=>1],['server'=>'DESC']);
         if($hub) return $hub;
         $hub = $servers->LoadWhere(['type'=>'hub','online'=>1],['server'=>'DESC']);
         if($hub) return $hub;
-        $hub = $servers->ServerMacAddress(LocalMacAddress());
+        $hub = $servers->ServerMacAddress(LocalMac());
         if($hub) return $hub;
-        return ['mac_address'=>LocalMacAddress(),'name'=>Settings::LoadSettingsVar('name','null device'),'url'=>LocalIp(),'type'=>Settings::LoadSettingsVar('type','device'),'server'=>Settings::LoadSettingsVar('server','pi0'),'main'=>Settings::LoadSettingsVar('main',1),'enabled'=>Settings::LoadSettingsVar('enabled',1),'online'=>1];
+        global $device_info;
+        if(isset($device_info) && isset($device_info['url'])){
+            $url = str_replace(["http:","/"],"",$device_info['url']);
+            return ['mac_address'=>"device_info",'name'=>"setup",'url'=>$url,'type'=>"hub",'server'=>"setup",'main'=>0,'enabled'=>1,'online'=>1];
+        }
+        return ['mac_address'=>LocalMac(),'name'=>Settings::LoadSettingsVar('name','null device'),'url'=>LocalIp(),'type'=>Settings::LoadSettingsVar('type','device'),'server'=>Settings::LoadSettingsVar('server','pi0'),'main'=>Settings::LoadSettingsVar('main',1),'enabled'=>Settings::LoadSettingsVar('enabled',1),'online'=>1];
     }
     /**
      * load the main hub
@@ -116,7 +121,13 @@ class Servers extends clsModel{
     public static function GetMain(){
         $servers = Servers::GetInstance();
         $hub = $servers->LoadWhere(['main'=>1],['server'=>'DESC']);
+        Debug::Log("Servers::GetMain",$hub);
         if($hub) return $hub;
+        global $device_info;
+        if(isset($device_info) && isset($device_info['url'])){
+            $url = str_replace(["http:","/"],"",$device_info['url']);
+            return ['mac_address'=>"device_info",'name'=>"setup",'url'=>$url,'type'=>"hub",'server'=>"setup",'main'=>0,'enabled'=>1,'online'=>1];
+        }
         return null;
     }
     /**
@@ -125,7 +136,8 @@ class Servers extends clsModel{
      */
     public static function IsHub(){
         $hub = Servers::GetHub();
-        return ($hub['mac_address'] == LocalMacAddress());
+        if($hub['mac_address'] == "device_info") return false;
+        return ($hub['mac_address'] == LocalMac());
     }
     /**
      * is this the main hub?
@@ -133,7 +145,7 @@ class Servers extends clsModel{
      */
     public static function IsMain(){
         $hub = Servers::GetMain();
-        return ($hub['mac_address'] == LocalMacAddress()) && Servers::IsHub();
+        return ($hub['mac_address'] == LocalMac()) && Servers::IsHub();
     }
     /**
      * loads the online servers
@@ -159,6 +171,16 @@ class Servers extends clsModel{
      * @return array data array for server
      */
     public static function ServerMacAddress($mac_address){
+        if($mac_address == "local_host"){
+            return ['mac_address'=>"device_info",'name'=>"setup",'url'=>'localhost','type'=>"hub",'server'=>"setup",'main'=>1,'enabled'=>1,'online'=>1];
+        }
+        if($mac_address == "device_info"){
+            global $device_info;
+            if(isset($device_info) && isset($device_info['url'])){
+                $url = str_replace(["http:","/"],"",$device_info['url']);
+                return ['mac_address'=>"device_info",'name'=>"setup",'url'=>$url,'type'=>"hub",'server'=>"setup",'main'=>1,'enabled'=>1,'online'=>1];
+            }    
+        }
         $servers = Servers::GetInstance();
         return $servers->LoadByMacAddress($mac_address);
     }
@@ -168,11 +190,13 @@ class Servers extends clsModel{
      * @return array a save report ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'sql'=>$sql,'row'=>$row]
      */
     public static function SaveServer($data){
+        if($data['mac_address'] == 'device_info') return ['error'=>'device_info'];
         $servers = Servers::GetInstance();
         $data = $servers->CleanData($data);
         $server = $servers->LoadByMacAddress($data['mac_address']);
         if(is_null($server)) $server = $servers->LoadByUrl($data['url']);
         if($server){
+            Debug::Log("Server Exists already");
             if(isset($data['online'])){
                 if((int)$data['online'] == 0){
                     $data['offline'] = $server['offline'] + 1;
@@ -199,6 +223,7 @@ class Servers extends clsModel{
             }
             return $servers->Save($data,['mac_address'=>$data['mac_address']]);
         }
+        Debug::Log("Save new server",$data);
         return $servers->Save($data);
     }
     /**

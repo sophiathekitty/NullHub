@@ -5,13 +5,13 @@ var servers = new ServerView();
 var settings = new Settings();
 var weather_pallet = ColorPallet.getPallet("weather");
 weather_pallet.getColorLerp("temp",68,color=>{
-    console.log("color",color);
+    console.debug("color",color);
 });
 var clock = new ClockController();
 //var user = new UserController();
 //info.model.pull_delay = 60000;
 $(document).ready(function(){
-    console.log("landing--document ready");
+    console.debug("landing--document ready");
     // load the server info
     info.display();
     plugins.build();
@@ -41,7 +41,7 @@ var already_loaded_extensions = false;
 
 function LoadReadMe(){
     settings.getVar("type",data=>{
-        console.log("load readme type",data);
+        console.debug("load readme type",data);
         var md = "/DEVICE.md";
         if(data == "hub"){
             md = "/HUB.md";
@@ -66,7 +66,7 @@ function LoadReadMe(){
             $("#about").html("<article class=\"about\"></article>");
             $("#about article.about").html(marked(json));
             plugins.model.getData(data=>{
-                console.log("load readme plugins",data);
+                console.debug("load readme plugins",data);
                 if(!already_loaded){
                     data.plugins.forEach(plugin=>{
                         $.get(plugin.local+"ABOUT.md").done(json=>{
@@ -78,7 +78,7 @@ function LoadReadMe(){
                 already_loaded = true;
             },true);
             extensions.model.getData(data=>{
-                console.log("load readme extensions",data);
+                console.debug("load readme extensions",data);
                 if(!already_loaded_extensions){
                     data.extensions.forEach(extension=>{
                         $.get(extension.path+"ABOUT.md").done(json=>{
@@ -110,8 +110,23 @@ function LoadReadMe(){
  * save settings
  */
 class SetupModel extends Model {
-    constructor(){
+    constructor(debug = false){
+        if(debug) console.debug("SetupModel::Constructor");
         super("setup","/api/info/setup/","/api/info/setup/");
+        this.debug = debug;
+    }
+    /**
+     * 
+     * @param {string} form selector for the form
+     * @returns {json} json object from form
+     */
+    convertFormToJSON(form) {
+        const array = $(form).serializeArray(); // Encodes the set of form elements as an array of names and values.
+        const json = {};
+        $.each(array, function () {
+            json[this.name] = this.value || "";
+        });
+        return json;
     }
 }
 
@@ -125,17 +140,21 @@ class SetupView extends View {
      * @param {bool} debug show console output
      */
     constructor(debug = false){
-        super(new SetupModel(),new Template("setup","/templates/sections/setup.html",null,60000, debug));
+        if(debug) console.debug("SetupView::Constructor");
+        super(new SetupModel(debug),new Template("setup","/templates/sections/setup.html",null,60000, debug));
+        this.debug = debug;
     }
     /**
      * alias for display
      */
     build(){
+        if(this.debug) console.debug("SetupView::Build");
         // load the setup template
         if(this.template){
             this.template.getData(html=>{
                 $(html).appendTo("#about");
                 if(this.controller) this.controller.ready();
+                this.display();
             });
         }
     }
@@ -143,9 +162,14 @@ class SetupView extends View {
      * display the setup form
      */
     display(){
+        if(this.debug) console.debug("SetupView::Display");
         if(this.model){
             this.model.getData(json=>{
-                $("#setup_form #device_type").val(json.setup.device_type);
+                if(this.debug) console.log("SetupView::Display",json);
+                if('default' in json) $("#setup_form #device_type").val(json.defaults.device_type);
+                if('type' in json) $("#setup_form #device_type").val(json.type);
+                if('url' in json) $("#setup_form #hub_url").val(json.url);
+                if('name' in json) $("#setup_form #device_name").val(json.name);
             });
         }
     }
@@ -153,6 +177,7 @@ class SetupView extends View {
      * alias for display
      */
     refresh(){
+        if(this.debug) console.warn("SetupView::Refresh (does nothing. why call?)");
         // don't do anything for refresh....
     }
 }
@@ -166,7 +191,7 @@ class SetupController extends Controller {
      * @param {bool} debug show console output
      */
     constructor(debug = false){
-        if(debug) console.log("SetupController::Constructor");
+        if(debug) console.debug("SetupController::Constructor");
         super(new SetupView(debug),debug);
         this.first_ready = true;
         this.view.controller = this;
@@ -177,10 +202,32 @@ class SetupController extends Controller {
      */
     ready(){
         if(this.first_ready){
-            if(this.debug) console.log("SetupController::Ready");
-            this.listenForEvent("submit","form#setup_form")
-            this.click(".clock",e=>{
-                //this.slideshow();
+            if(this.debug) console.debug("SetupController::Ready");
+            this.listenForEvent("submit","form#setup_form",e=>{
+                e.preventDefault();
+                var json = this.view.model.convertFormToJSON($(e.target));
+                if(this.debug) console.info("SetupController::Submit",e,json);
+                $("form [type=submit]").hide();
+                this.view.model.setData(json);
+                this.view.model.pushData(json =>{
+                    if(this.debug) console.log("SetupController::Submit::Success",json);
+                    if(json.setup == "complete"){
+                        $("#setup_form").hide();
+                        $("#setup_status_message").html("Success: "+json.setup);
+                        if('install' in json) $("article#setup_status_message").html("Success: "+json.install);
+                    } else {
+                        $("#setup_status_message").html("Error: "+json.setup);    
+                    }                    
+                    if('die' in json) $("article#setup_status_message").html("Error: "+json.die);
+                },error=>{
+                    if(this.debug) console.error("SetupController::Submit::Error",error);
+                    $("#setup_status_message").html("Error: "+error.responseText);
+                    $("form [type=submit]").show();
+                },fail=>{
+                    if(this.debug) console.error("SetupController::Submit::Fail",fail);
+                    $("#setup_status_message").html("Fail: "+fail.responseText);
+                    $("form [type=submit]").show();
+                });
             });
             this.first_ready = false;
         }

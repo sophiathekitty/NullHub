@@ -12,6 +12,7 @@ class UserSync {
         $info = file_get_contents($url);
         $data = json_decode($info,true);*/
         $data = ServerRequests::LoadMainJSON("/api/user/list");
+        Debug::Log("UserSync::pull",$data);
         foreach($data['users'] as $user){
             Users::SaveUser($user);
         }
