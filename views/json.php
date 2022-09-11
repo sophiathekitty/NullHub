@@ -11,7 +11,7 @@ function OutputJson($data){
     echo json_encode($data, JSON_PRETTY_PRINT);
     if(json_last_error())
         echo json_last_error_msg();
-    clsDB::$db_g->CloseDB();
+    if(!is_null(clsDB::$db_g)) clsDB::$db_g->CloseDB();
 }
 /**
  * die but with json output instead of just text

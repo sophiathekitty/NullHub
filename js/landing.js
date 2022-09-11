@@ -166,7 +166,7 @@ class SetupView extends View {
         if(this.model){
             this.model.getData(json=>{
                 if(this.debug) console.log("SetupView::Display",json);
-                if('default' in json) $("#setup_form #device_type").val(json.defaults.device_type);
+                if('defaults' in json) $("#setup_form #device_type").val(json.defaults.device_type);
                 if('type' in json) $("#setup_form #device_type").val(json.type);
                 if('url' in json) $("#setup_form #hub_url").val(json.url);
                 if('name' in json) $("#setup_form #device_name").val(json.name);
@@ -208,17 +208,21 @@ class SetupController extends Controller {
                 var json = this.view.model.convertFormToJSON($(e.target));
                 if(this.debug) console.info("SetupController::Submit",e,json);
                 $("form [type=submit]").hide();
+                ("#setup_status_message").html("attempting to create settings file and install database.... and will try to sync important data from main hub... this might take a short while.");
                 this.view.model.setData(json);
                 this.view.model.pushData(json =>{
                     if(this.debug) console.log("SetupController::Submit::Success",json);
                     if(json.setup == "complete"){
                         $("#setup_form").hide();
                         $("#setup_status_message").html("Success: "+json.setup);
-                        if('install' in json) $("article#setup_status_message").html("Success: "+json.install);
+                        if('install' in json) $("#setup_status_message").html("Success: "+json.install);
                     } else {
-                        $("#setup_status_message").html("Error: "+json.setup);    
+                        $("form [type=submit]").show();
+                        $("#setup_status_message").html("Error: "+json.setup);
+                        if('install' in json) $("#setup_status_message").html(json.install);
                     }                    
-                    if('die' in json) $("article#setup_status_message").html("Error: "+json.die);
+                    if('die' in json) $("#setup_status_message").html("Error: "+json.die);
+                    if('die' in json) $("#setup_form").show();
                 },error=>{
                     if(this.debug) console.error("SetupController::Submit::Error",error);
                     $("#setup_status_message").html("Error: "+error.responseText);
