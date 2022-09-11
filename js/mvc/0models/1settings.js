@@ -30,6 +30,7 @@ class Settings extends Collection {
     getVar(var_name,callBack){
         this.getItem(var_name,data=>{
             if(data) callBack(data.value);
+            else console.log("GetVar fail?");
         });
     }
     /**

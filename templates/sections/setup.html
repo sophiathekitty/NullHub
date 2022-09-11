@@ -1,0 +1,30 @@
+<section id="setup_wizard">
+    <h1>Setup Wizard</h1>
+    <form id="setup_form" action="/api/info/setup/">
+        <fieldset id="database_login">
+            <legend>Database Login</legend>
+            <input type="text" id="db_username" name="username" placeholder="username" />
+            <input type="password" id="db_password" name="password" placeholder="password" />
+            <input type="text" id="db_database" name="database" value="null_device" placeholder="database name" />
+        </fieldset>
+        <fieldset id="main_hub">
+            <legend>Main Hub</legend>
+            <input type="url" id="hub_url" name="url" placeholder="hub url" />
+        </fieldset>
+        <fieldset id="device_info">
+            <legend>Device Info</legend>
+            <input type="text" id="device_name" name="name" value="new device" placeholder="device name" />
+            <input type="text" id="device_type" name="type" list="device_types"  placeholder="device type" />
+            <datalist id="device_types">
+                <option value="hub">hub</option>
+                <option value="thermometer">thermometer</option>
+                <option value="micro display">micro display</option>
+                <option value="eInk display">eInk display</option>
+                <option value="display">display</option>
+                <option value="kiosk">kiosk</option>
+            </datalist>
+        </fieldset>
+        <input type="submit">
+    </form>
+    <article id="setup_status_message"></article>
+</section>

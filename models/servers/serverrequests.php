@@ -106,19 +106,47 @@ class ServerRequests extends clsModel{
         if(!is_null($content) && $content != "") $server['online'] = 1;
         $requests = ServerRequests::GetInstance();
         $requests->PruneField('created',DaysToSeconds(Settings::LoadSettingsVar('latency_log_days',1)));
-        $resp = $requests->Save([
+        $requests->Save([
             "guid"=>md5($mac_address.$server['last_ping'].$api),
             "mac_address"=>$mac_address,
             'url'=>$api,
             "latency"=>$latency,
             "online"=>$server['online']
         ]);
-        //print_r($resp);
-        //Settings::SaveSettingsVar("ServerRequestsSQL",$resp['error']);
-        //Settings::SaveSettingsVar("ServerRequestsError",$resp['error']);
         Servers::SaveServer($server);
         if($server['online'] = 0) return null;
-        return json_decode($content,true);
+        $json = json_decode($content,true);
+        if(is_null($json)) return ['content'=>$content];
+        return $json;
+    }
+    /**
+     * loads api data from a server by mac_address
+     * @param string $host the ip address
+     * @param string $api the api path "/api/info/"
+     * @return array associated array of json data
+     */
+    public static function LoadHostJSON($host,$api){
+        $url = "http://".$host.$api;
+        if(defined("TEST_MODE") && $host == 'localhost'){
+            if(strpos($url,"?") > -1) $url .= "&TEST_MODE=".constant("TEST_MODE");
+            else $url .= "?TEST_MODE=".constant("TEST_MODE");
+        } 
+        if(defined("DEBUG") && $host == 'localhost'){
+            if(strpos($url,"?") > -1) $url .= "&DEBUG=".constant("DEBUG");
+            else $url .= "?DEBUG=".constant("DEBUG");
+        } 
+        $content=@file_get_contents($url);
+        $json = json_decode($content,true);
+        if(is_null($json)) return ['content'=>$content];
+        return $json;
+    }
+    /**
+     * loads api data from a server by mac_address
+     * @param string $api the api path "/api/info/"
+     * @return array associated array of json data
+     */
+    public static function LoadLocalhostJSON($api){
+        return ServerRequests::LoadHostJSON('localhost',$api);
     }
 }
 if(defined('VALIDATE_TABLES')){

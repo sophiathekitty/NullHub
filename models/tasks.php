@@ -141,6 +141,7 @@ class Tasks extends clsModel {
      * @return array array of task data arrays
      */
     public static function LoadAllTasks(){
+        if(defined("SETUP_MODE")) return [];
         $tasks = Tasks::GetInstance();
         return $tasks->LoadAllWhere(null,["due"=>"ASC"]);
     }

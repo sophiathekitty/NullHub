@@ -13,6 +13,7 @@ function OutputCSSFromFileList($css_files, $sort = false){
         include_once($css_file);
         echo "\n\n\n";
     }
+    if(!is_null(clsDB::$db_g)) clsDB::$db_g->CloseDB();
 }
 /**
  * takes a list of files and combines them into a single file to output as a minimized css file
@@ -31,5 +32,6 @@ function OutputCSSFromFileListMin($css_files, $sort = false){
     $buffer = str_replace(': ', ':', $buffer);
     $buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
     echo $buffer;
+    if(!is_null(clsDB::$db_g)) clsDB::$db_g->CloseDB();
 }  
 ?>
