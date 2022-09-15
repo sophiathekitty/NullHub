@@ -208,7 +208,7 @@ class SetupController extends Controller {
                 var json = this.view.model.convertFormToJSON($(e.target));
                 if(this.debug) console.info("SetupController::Submit",e,json);
                 $("form [type=submit]").hide();
-                ("#setup_status_message").html("attempting to create settings file and install database.... and will try to sync important data from main hub... this might take a short while.");
+                $("#setup_status_message").html("attempting to create settings file and install database.... and will try to sync important data from main hub... this might take a short while.");
                 this.view.model.setData(json);
                 this.view.model.pushData(json =>{
                     if(this.debug) console.log("SetupController::Submit::Success",json);

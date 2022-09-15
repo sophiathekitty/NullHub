@@ -196,7 +196,7 @@ class Servers extends clsModel{
         $server = $servers->LoadByMacAddress($data['mac_address']);
         if(is_null($server)) $server = $servers->LoadByUrl($data['url']);
         if($server){
-            Debug::Log("Server Exists already");
+            Debug::Log("Servers::SaveServer","Server Exists already",$data);
             if(isset($data['online'])){
                 if((int)$data['online'] == 0){
                     $data['offline'] = $server['offline'] + 1;
@@ -223,7 +223,7 @@ class Servers extends clsModel{
             }
             return $servers->Save($data,['mac_address'=>$data['mac_address']]);
         }
-        Debug::Log("Save new server",$data);
+        Debug::Log("Servers::SaveServer","Save new server",$data);
         return $servers->Save($data);
     }
     /**

@@ -1,7 +1,16 @@
 <?php
 class Debug {
     public static $debug = [];
+    public static $trace = [];
     /**
+     * log an item
+     * @param mixed $item the object or message you want to log
+     */
+    public static function Trace($function){
+        if(!(defined("DEBUG") || defined("TEST_MODE"))) return;
+        $trace[] = $function;
+    }
+        /**
      * log an item
      * @param mixed $item the object or message you want to log
      */

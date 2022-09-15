@@ -5,7 +5,10 @@
  */
 function OutputJson($data){
     if(defined("SETUP_MODE")) $data['setup'] = constant("SETUP_MODE");
-    if(defined("DEBUG")) $data['debug'] = Debug::$debug;
+    if(defined("DEBUG")) {
+        $data['debug'] = Debug::$debug;
+        $data['trace'] = Debug::$trace;
+    }
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
     echo json_encode($data, JSON_PRETTY_PRINT);

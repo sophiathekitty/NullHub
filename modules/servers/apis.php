@@ -17,6 +17,8 @@ function APIFolder($root,$path,$apis = []){
                 $apis[$file]['params'] = "http://".$_SERVER['HTTP_HOST'].Settings::LoadSettingsVar('path',"/").$path.$file."/params.json";
             }
             $apis[$file]['path'] = "http://".$_SERVER['HTTP_HOST'].Settings::LoadSettingsVar('path',"/").$path.$file."/";
+            $apis[$file]['debug'] = "http://".$_SERVER['HTTP_HOST'].Settings::LoadSettingsVar('path',"/").$path.$file."/?DEBUG=true";
+            $apis[$file]['local'] = "/".$path.$file."/";
             $apis = APIChildFolder($root,$path.$file."/",$file,$apis);
         }
     }
@@ -37,6 +39,8 @@ function APIChildFolder($root,$path,$api,$apis){
                 $apis[$api][$file]['params'] = "http://".$_SERVER['HTTP_HOST'].Settings::LoadSettingsVar('path',"/").$path.$file."/params.json";
             }
             $apis[$api][$file]['path'] = "http://".$_SERVER['HTTP_HOST'].Settings::LoadSettingsVar('path',"/").$path.$file."/";
+            $apis[$api][$file]['debug'] = "http://".$_SERVER['HTTP_HOST'].Settings::LoadSettingsVar('path',"/").$path.$file."/?DEBUG=true";
+            $apis[$api][$file]['local'] = "/".$path.$file."/";
             $apis = APIGrandChildFolder($root,$path.$file."/",$api,$file,$apis);
         }
     }
@@ -57,6 +61,8 @@ function APIGrandChildFolder($root,$path,$api,$parent,$apis){
                 $apis[$api][$parent][$file]['params'] = "http://".$_SERVER['HTTP_HOST'].Settings::LoadSettingsVar('path',"/").$path.$file."/params.json";
             }
             $apis[$api][$parent][$file]['path'] = "http://".$_SERVER['HTTP_HOST'].Settings::LoadSettingsVar('path',"/").$path.$file."/";
+            $apis[$api][$parent][$file]['debug'] = "http://".$_SERVER['HTTP_HOST'].Settings::LoadSettingsVar('path',"/").$path.$file."/?DEBUG=true";
+            $apis[$api][$parent][$file]['local'] = "/".$path.$file."/";
             $apis = APIGrandChildFolder($root,$path.$file."/",$api,$parent,$apis);
         }
     }
