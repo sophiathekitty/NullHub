@@ -91,6 +91,22 @@ class Settings extends clsModel {
         return $settings->SaveVar($name,$value);
     }
     /**
+     * loads a settings var. will try to sync if 
+     * @param string $name the name of the setting to load
+     * @param string|null $default (optional) the default value to be saved if setting doesn't exist yet
+     * @param int $cache_minutes lets you change how long to wait before syncing from the hub
+     * @return string the value of the setting
+     */
+    public static function LoadSyncedSettingsVar($name,$default = null, $cache_minutes = 60){
+        if(defined("SETUP_MODE")) return $default;
+        $settings = Settings::GetInstance();
+        if(SecondsToMinutes($settings->VarModifiedSeconds($name)) < $cache_minutes) return $settings->LoadVar($name,$default);
+        $setting = ServerRequests::LoadHubJSON("/api/settings/?name=$name");
+        if(!isset($setting['name'],$setting['value'])) return $settings->LoadVar($name,$default);
+        $settings->SaveVar($setting['name'],$setting['value']);
+        return $setting['value'];
+    }
+    /**
      * sync a setting from the main hub
      * @param string $name the name of the setting to sync from hub
      * @return array returns save report ['last_insert_id'=>$id,'error'=>clsDB::$db_g->get_err(),'sql'=>$sql,'row'=>$row]
@@ -126,6 +142,26 @@ class Settings extends clsModel {
             'Extra'=>"on update current_timestamp()"
         ]
     ];
+    /**
+     * get when the setting var was last modified
+     * @param string $name the name of the setting to load
+     * @return string the datetime of when the setting var was last modified
+     */
+    public function VarModified($name){
+        $var = $this->LoadWhere(['name'=>$name]);
+        if(!is_null($var)) return $var['modified'];
+        return null;
+    }
+    /**
+     * get when the setting var was last modified
+     * @param string $name the name of the setting to load
+     * @return string the datetime of when the setting var was last modified
+     */
+    public function VarModifiedSeconds($name){
+        $var = $this->LoadWhere(['name'=>$name]);
+        if(is_null($var)) return null;
+        return time() - strtotime($var['modified']);
+    }
     /**
      * loads a settings var
      * @param string $name the name of the setting to load

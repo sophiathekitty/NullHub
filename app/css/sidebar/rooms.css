@@ -4,6 +4,10 @@
 section#rooms_list {
     height: 100%;
     bottom: 0em;
+    grid-area: sidebar-c;
+}
+section[collection="meal_plan"]{
+    grid-area: sidebar-b;
 }
 section#rooms_list ul {
     height: 100%;
@@ -18,7 +22,7 @@ section#rooms_list ul {
 }
 
 .NullWeather.MealPlanner section#rooms_list ul {
-    max-height: 33vh;
+    max-height: 45vh;
 }
 
 section#rooms_list ul a::before,

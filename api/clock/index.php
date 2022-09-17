@@ -2,6 +2,22 @@
 require_once("../../includes/main.php");
 $data = [];
 $data['NullWeather'] = HasPlugin("NullWeather");
+if($data['NullWeather']){
+    try{
+        $data['weather'] = WeatherLogs::CurrentWeather();
+    } catch(Exception $e){
+        Debug::Log($e);
+    }
+}
+$data['NullSensors'] = HasPlugin("NullSensors");
+if($data['NullSensors']){
+    try{
+        $data['indoors'] = AverageIndoorTemperature();
+    } catch(Exception $e){
+        Debug::Log($e);
+    }
+}
+
 $data['clouds'] = Settings::LoadSettingsVar("clouds","0");
 $data['sunrise'] = Settings::LoadSettingsVar("sunrise_txt","6:00");
 $data['sunset'] = Settings::LoadSettingsVar("sunset_txt","18:00");

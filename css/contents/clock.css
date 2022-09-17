@@ -1,6 +1,6 @@
 .clock {
     display: grid;
-    grid-template-columns: 5em auto;
+    grid-template-columns: 5em auto auto;
     gap: 0em 1em;
     grid-template-areas: 
         "sky day day"
@@ -9,6 +9,7 @@
         "sky sunrise sunset";
     max-height: 6em;
     margin-bottom: 0.5em;
+    grid-area: sidebar-stamp;
 }
 .clock .sky {
     position: relative;
@@ -36,6 +37,7 @@
 }
 .clock [var="day_of_week"] {
     grid-area: day;
+    text-align: center;
 }
 .clock [var="time"] {
     grid-area: time;
@@ -48,7 +50,7 @@
 }
 .clock [var="sunrise"] {
     grid-area: sunrise;
-    text-align: center;
+    text-align: right;
 }
 .clock [var="sunset"] {
     grid-area: sunset;
@@ -73,10 +75,22 @@
 .clock[show="date"] [var="sunrise"],
 .clock[show="date"] [var="sunset"],
 .clock[show="sunrise"] [var="date"],
-.clock[moon_visible="0"] .moon {
+.clock[moon_visible="0"] .moon,
+.clock .NullWeather,
+.clock .NullSensors,
+.clock .slideshow {
     display: none;
 }
 
+.clock[show="sunrise"] [var="sunrise"],
+.clock[show="sunrise"] [var="sunset"],
+.clock[show="date"] [var="date"],
+.clock[show="feels_like"] [var="feels_like"],
+.clock[show="humidity"] [var="humidity"],
+.clock[show="wind_speed"] [var="wind_speed"],
+.clock[show="description"] [var="description"]{
+    display: inline-block;
+}
 .clock .sky .moon {
     position: absolute;
     top:1em;
@@ -286,4 +300,233 @@
 }
 [time_of_day="night"][clouds="4"] .sky .clouds {
     background-image: url(/images/clock/clouds-night-4.png);
+}
+
+
+
+
+
+
+
+
+.clock[NullSensors="true"] {
+    display: grid;
+    grid-template-columns: 5em auto auto;
+    gap: 0em 1em;
+    grid-template-areas: 
+        "sky day day"
+        "sky time time"
+        "sky date date"
+        "sky sunrise sunset"
+        "in_graph in_graph in_graph"
+        "inside inside_temp inside_hum";
+    max-height: 8em;
+    margin-bottom: 0.5em;
+}
+.clock[NullWeather="true"] {
+    display: grid;
+    grid-template-columns: 5em auto auto;
+    gap: 0em 1em;
+    grid-template-areas: 
+        "sky day time "
+        "sky temp temp"
+        "sky date date"
+        "sky sunrise sunset"
+        "out_graph out_graph out_graph"
+        "in_graph in_graph in_graph"
+        "inside inside_temp inside_hum";
+    max-height: 10em;
+    margin-bottom: 0.5em;
+}
+
+.clock[NullWeather="true"] .NullWeather.outdoors[var="temp"]{
+    position: relative;
+    display: block;
+    font-size: 4em;
+    text-align: center;
+    grid-area: temp;
+}
+.clock[NullWeather="true"] [var="time"]{
+    font-size: 1em;
+}
+.clock[NullWeather="true"] .sky {
+    width: 8em;
+    height: 8em;
+    margin-bottom: -2em;
+}
+.clock .temp_chart {
+    position: relative;
+}
+.clock[NullWeather="true"] .temp_chart.NullWeather,
+.clock[NullSensors="true"] .temp_chart.NullSensors,
+.clock[NullSensors="true"] .indoors.NullSensors{
+    display: block;
+}
+.clock[NullSensors="true"] .indoors[var="temp"]{
+    grid-area: inside_temp;
+}
+.clock[NullSensors="true"] .indoors[var="hum"]{
+    grid-area: inside_hum;
+}
+.clock .extra {
+    grid-area: date;
+    text-align: center;
+}
+.clock .extra::after {
+    font-size: 0.75em;
+}
+.clock [var="feels_like"]::before{
+    content: "feels like";
+    font-size: 0.75em;
+    margin-right: 0.5em;
+}
+.clock [var="wind_speed"]::before{
+    content: "";
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(/plugins/NullWeather/img/web/wind.png);
+    transform: rotate(attr("wind_deg"));
+}
+.clock [var="humidity"]::before{
+    content: "";
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(/plugins/NullWeather/img/web/raining.png);
+}
+.clock .indoors[var="temp"]::before{
+    content: "";
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(/plugins/NullSensors/img/temperature.png);
+}
+.clock [var="hum"]::before{
+    content: "";
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(/plugins/NullSensors/img/humidity.png);
+}
+
+.clock[NullWeather="true"] .temp_chart.simple.NullWeather,
+.clock[NullSensors="true"] .temp_chart.simple.NullSensors {
+    display: flex;
+    height: 1em;
+    background-color: rgba(0,0,0,0.15);
+}
+.clock[NullWeather="true"][NullSensors="true"] .temp_chart.simple.NullWeather,
+.clock[NullWeather="true"][NullSensors="true"] .temp_chart.simple.NullSensors {
+    height: 0.65em;
+}
+.temp_chart.NullSensors{
+    grid-area: in_graph;
+    z-index: 5;
+}
+.temp_chart.NullWeather{
+    grid-area: out_graph;
+    z-index: 5;
+}
+.clock .temp_chart.simple .hour {
+    border-left: #00000033 thin solid;
+    flex-grow: 1;
+}
+
+.clock .current_weather {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    z-index: 3;
+}
+
+
+
+[time_of_day="morning"] .current_weather[main="Rain"],
+[time_of_day="morning"] .current_weather[main="Drizzle"]{
+    background-image: url(/images/clock/rain-morning.png);
+}
+[time_of_day="day"] .current_weather[main="Rain"],
+[time_of_day="day"] .current_weather[main="Drizzle"]{
+    background-image: url(/images/clock/rain-day.png);
+}
+[time_of_day="evening"] .current_weather[main="Rain"],
+[time_of_day="evening"] .current_weather[main="Drizzle"]{
+    background-image: url(/images/clock/rain-evening.png);
+}
+[time_of_day="night"] .current_weather[main="Rain"],
+[time_of_day="night"] .current_weather[main="Drizzle"]{
+    background-image: url(/images/clock/rain-night.png);
+}
+
+
+
+[time_of_day="morning"] .current_weather[main="Thunderstorm"]{
+    background-image: url(/images/clock/thunder-morning.png);
+}
+[time_of_day="day"] .current_weather[main="Thunderstorm"]{
+    background-image: url(/images/clock/thunder-day.png);
+}
+[time_of_day="evening"] .current_weather[main="Thunderstorm"]{
+    background-image: url(/images/clock/thunder-evening.png);
+}
+[time_of_day="night"] .current_weather[main="Thunderstorm"]{
+    background-image: url(/images/clock/thunder-night.png);
+}
+
+
+[time_of_day="morning"] .current_weather[main="Snow"]{
+    background-image: url(/images/clock/snow-morning.png);
+}
+[time_of_day="day"] .current_weather[main="Snow"]{
+    background-image: url(/images/clock/snow-day.png);
+}
+[time_of_day="evening"] .current_weather[main="Snow"]{
+    background-image: url(/images/clock/snow-evening.png);
+}
+[time_of_day="night"] .current_weather[main="Snow"]{
+    background-image: url(/images/clock/snow-night.png);
+}
+
+
+
+[time_of_day="morning"] .current_weather[icon="50d"],
+[time_of_day="morning"] .current_weather[icon="50n"]{
+    background-image: url(/images/clock/haze-morning.png);
+}
+[time_of_day="day"] .current_weather[icon="50d"],
+[time_of_day="day"] .current_weather[icon="50n"]{
+    background-image: url(/images/clock/haze-day.png);
+}
+[time_of_day="evening"] .current_weather[icon="50d"],
+[time_of_day="evening"] .current_weather[icon="50n"]{
+    background-image: url(/images/clock/haze-evening.png);
+}
+[time_of_day="night"] .current_weather[icon="50d"],
+[time_of_day="night"] .current_weather[icon="50n"]{
+    background-image: url(/images/clock/haze-night.png);
+}
+
+[time_of_day="morning"] .current_weather[main="Clouds"],
+[time_of_day="day"] .current_weather[main="Clouds"],
+[time_of_day="evening"] .current_weather[main="Clouds"],
+[time_of_day="night"] .current_weather[main="Clouds"],
+[time_of_day="morning"] .current_weather[main="Clear"],
+[time_of_day="day"] .current_weather[main="Clear"],
+[time_of_day="evening"] .current_weather[main="Clear"],
+[time_of_day="night"] .current_weather[main="Clear"]{
+    background-image: none;
 }
