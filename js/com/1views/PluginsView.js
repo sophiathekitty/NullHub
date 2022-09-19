@@ -11,8 +11,9 @@ class PluginsView extends View {
                 this.model.getData(json=>{
                     json.plugins.forEach(plugin=>{
                         $(html).appendTo("#plugins").attr("plugin_id",plugin.id);
+                        this.displayPlugin(plugin);
                     });
-                    this.display();
+                    //this.display();
                 });
             });
         }
@@ -21,12 +22,15 @@ class PluginsView extends View {
         if(this.model){
             this.model.getData(json=>{
                 json.plugins.forEach(plugin=>{
-                    $("#plugins [plugin_id="+plugin.id+"] [var=name]").html(plugin.name);
-                    $("#plugins [plugin_id="+plugin.id+"] [link=git]").attr("href",plugin.git);
-                    $("#plugins [plugin_id="+plugin.id+"] [link=local]").attr("href",plugin.local);
-                    $("#plugins [plugin_id="+plugin.id+"] [var=hash]").html(plugin.hash.substr(0,7));
+                    this.displayPlugin(plugin);
                 });
             });
         }
+    }
+    displayPlugin(plugin){
+        $("#plugins [plugin_id="+plugin.id+"] [var=name]").html(plugin.name);
+        $("#plugins [plugin_id="+plugin.id+"] [link=git]").attr("href",plugin.git);
+        $("#plugins [plugin_id="+plugin.id+"] [link=local]").attr("href",plugin.local);
+        $("#plugins [plugin_id="+plugin.id+"] [var=hash]").html(plugin.hash.substr(0,7));
     }
 }

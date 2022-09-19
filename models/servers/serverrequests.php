@@ -60,6 +60,27 @@ class ServerRequests extends clsModel{
         return ServerRequests::$servers;
     }
     /**
+     * loads latency report a server
+     * @param string $mac_address the mac address of the server
+     * @return array latency report
+     */
+    public static function ServerLatency($mac_address){
+        $requests = ServerRequests::LoadServerRequests($mac_address);
+        if(count($requests) == 0 ) return null;
+        $report = [
+            'min'=>999999999999999999,
+            'max'=>0,
+            'average'=>0
+        ];
+        foreach($requests as $request){
+            if($request['latency'] < $report['min']) $report['min'] = $request['latency'];
+            if($request['latency'] > $report['max']) $report['max'] = $request['latency'];
+            $report['average'] += $report['latency'];
+        }
+        $report['average'] = $report['average']/count($requests);
+        return $report;
+    }
+    /**
      * loads all the requests for a server
      * @param string $mac_address the mac address of the server
      * @return array array of server request logs
@@ -105,7 +126,7 @@ class ServerRequests extends clsModel{
         $server['online'] = 0;
         if(!is_null($content) && $content != "") $server['online'] = 1;
         $requests = ServerRequests::GetInstance();
-        $requests->PruneField('created',DaysToSeconds(Settings::LoadSettingsVar('latency_log_days',1)));
+        $requests->PruneField('created',DaysToSeconds(Settings::LoadSettingsVar('latency_log_days',0.05)));
         $requests->Save([
             "guid"=>md5($mac_address.$server['last_ping'].$api),
             "mac_address"=>$mac_address,
