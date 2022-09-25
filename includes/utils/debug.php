@@ -2,13 +2,17 @@
 class Debug {
     public static $debug = [];
     public static $trace = [];
+    public static $last_trace = null;
     /**
      * log an item
      * @param mixed $item the object or message you want to log
      */
     public static function Trace($function){
-        if(!(defined("DEBUG") || defined("TEST_MODE"))) return;
-        $trace[] = $function;
+        if(!(defined("DEBUG") ||  defined("TEST_MODE"))) return;
+        if(is_null(Debug::$last_trace)) Debug::$last_trace = constant("START_TIME");
+        $trace = microtime(true);
+        Debug::$trace[] = ["function"=>$function,"microtime"=>$trace,"time since last trace"=>round($trace - Debug::$last_trace,5)];
+        Debug::$last_trace = $trace;
     }
         /**
      * log an item

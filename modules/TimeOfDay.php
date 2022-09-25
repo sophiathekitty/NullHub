@@ -128,7 +128,7 @@ class TimeOfDay {
      * @return bool will return true if morning hours
      */
     public static function IsMorning(){
-        $offset = Settings::LoadSettingsVar("twilight_hour_offset",2);
+        $offset = Settings::LoadSettingsVar("twilight_hour_offset",1);
         $h = (int)date('H');
         $m = (int)date('i');
         $sunrise_txt = Settings::LoadSettingsVar('sunrise_txt',"6:00");
@@ -142,7 +142,7 @@ class TimeOfDay {
      * @return bool will return true if evening hours
      */
     public static function IsEvening(){
-        $offset = Settings::LoadSettingsVar("twilight_hour_offset",2);
+        $offset = Settings::LoadSettingsVar("twilight_hour_offset",1);
         //echo "<li>room_id: $room_id</li>";
         $h = (int)date('H');
         $m = (int)date('i');

@@ -1,3 +1,6 @@
+/**
+ * use for hourly charts
+ */
 class HourlyChart extends Collection { 
     /**
      * 

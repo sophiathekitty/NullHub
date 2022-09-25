@@ -70,7 +70,13 @@ if(!defined('MYSQL_CLASS')){
 		function _query($sql){
 			//$sql = preg_replace("/;/","",$sql);
 			$this->last_sql = $sql;
+			if(defined("DEBUG") && constant("DEBUG")=="verbose") $time_before = microtime(true);
 			$result = @mysqli_query($this->db, $sql);
+			if(defined("DEBUG") && constant("DEBUG")=="verbose") {
+				$time_after = microtime(true);
+				Debug::LogGroup("database_calls",["sql"=>$sql,"time"=>$time_after-$time_before]);        
+	
+			}	
 			return $result;
 		}
 		/**

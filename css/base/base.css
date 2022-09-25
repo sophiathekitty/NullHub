@@ -23,3 +23,11 @@ h1 {
 a[href="#"]:hover{
     text-decoration: none !important;
 }
+.time_bar {
+    position: absolute;
+    top: 0em;
+    bottom: 0em;
+    left: 0em;
+    border-right: #ffffffee dotted 2px;
+    z-index: 1;
+}

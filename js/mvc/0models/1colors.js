@@ -21,7 +21,8 @@ class ColorPallet extends Collection {
      */
     constructor(pallet){
         super(pallet,pallet,"/api/colors/pallet/?pallet="+pallet,"/api/colors","id","pallet_");
-        this.pull_delay = 100000;
+        this.pull_delay = 1000 * 60 * 60 * 72;
+        this.debug = false;
         ColorPallet.pallets[pallet] = this;
         //console.log("ColorPallet::Construct",ColorPallet.pallets[pallet]);
     }
@@ -75,6 +76,7 @@ class ColorPallet extends Collection {
      * },"ee");
      */
     getColorLerp(color,index,callBack,alpha = ""){
+        if(this.debug) console.info("ColorPallet::getColorLerp",color,index);
         // lerp a color
         this.getData(data=>{
             if(data && data.pallet && data.pallet[color]){

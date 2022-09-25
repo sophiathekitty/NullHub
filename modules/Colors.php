@@ -81,4 +81,26 @@ function SyncColorPallets(){
         }
     }
 }
+
+function interpolateColor($corA, $corB, $lerp)
+{
+    $corA = hexdec($corA);
+    $corB = hexdec($corB);
+    $rgbA = array(
+        ($corA & 0xFF0000) >> 16,
+        ($corA & 0x00FF00) >> 8,
+        ($corA & 0x0000FF)
+    );
+    $rgbB = array(
+        ($corB & 0xFF0000) >> 16,
+        ($corB & 0x00FF00) >> 8,
+        ($corB & 0x0000FF)
+    );
+    $rgbC = array_map(
+        function($a,$b) use ($lerp) {return round($a+($b-$a)*$lerp);},
+        $rgbA, $rgbB
+    );
+    return sprintf("#%02X%02X%02X",$rgbC[0],$rgbC[1],$rgbC[2]);
+}
+
 ?>

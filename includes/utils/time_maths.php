@@ -1,5 +1,40 @@
 <?php
 /**
+ * converts 24hour time string into a nice 12 hour time string
+ * @param string $seconds h:mm:ss
+ * @return string h:mma 12:10am
+ */
+function Times24ToTime12Short($time){
+    if(is_null($time) || $time == "") return "";
+    list($hours,$minutes) = explode(":",$time);
+    $am = "am";
+    if((int)$hours > 12){
+        $hours -= 12;
+        $am = "pm";
+    }
+    if((int)$hours == 0) $hours = 12;
+    if(is_null($minutes) || $minutes == "") return "$hours$am";
+    return "$hours:$minutes$am";
+}
+/**
+ * converts 24hour time string into a nice 12 hour time string
+ * @param string $seconds h:mm:ss
+ * @return string h:mma 12:10am
+ */
+function Times24ToTime12Full($time){
+    list($hours,$minutes,$seconds) = explode(":",$time);
+    $am = "am";
+    $hours = (int)$hours;
+    if($hours > 12){
+        $hours -= 12;
+        $am = "pm";
+    }
+    if($hours == 0) $hours = 12;
+    if(is_null($seconds) || $seconds == "") return "$hours:$minutes$am";
+    if(is_null($minutes) || $minutes == "") return "$hours$am";
+    return "$hours:$minutes:$seconds$am";
+}
+/**
  * converts seconds into a time string
  * @param int|float $seconds length of time in seconds
  * @return string h:mm:ss

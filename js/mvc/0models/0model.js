@@ -27,6 +27,7 @@ class Model {
         this.prefix = prefix;
         this.name = name;
         this.get_url = get_url;
+        this.get_params = "";
         this.save_url = save_url;
         this.pull_delay = cache_time;
         this.debug = debug;
@@ -64,7 +65,7 @@ class Model {
                 date.getTime() > this.pulled.getTime() + this.pull_delay
             )
         ){
-            //console.log(this.prefix+this.name,"pull live data");
+            if(this.debug) console.log(this.prefix+this.name,"pull live data","this.pulled",this.pulled,"date.getTime()",date.getTime(),"this.pulled.GetTime()",this.pulled.getTime(),"this.pull_delay",this.pull_delay,"this.pull_delay,date.getTime() > this.pulled.getTime() + this.pull_delay",date.getTime() > this.pulled.getTime() + this.pull_delay);
             if(Model.storage.getItem(this.prefix+this.name+"_changed") === null){
                 //console.log(this.prefix+this.name,"get basic item",Model.storage.getItem(this.prefix+this.name));
                 this.pullData(callBack);
@@ -92,7 +93,7 @@ class Model {
      */
     pullData(callBack){
         Model.pull_requests_started++;
-        $.get(this.get_url).done(json=>{
+        $.get(this.get_url+this.get_params).done(json=>{
             this.pulled = new Date();
             if(this.pull_delay > 0){
                 Model.storage.setItem(this.prefix+this.name, JSON.stringify(json));
@@ -333,7 +334,7 @@ class Collection extends Model {
                     if(this.debug){
                         console.log("Collection::"+this.name+": push success",data);
                     }
-                    if(data[this.item_name]){
+                    if(this.pull_delay != 0 && data[this.item_name]){
                         this.setItem(data[this.item_name]);
                     }
                     if(this.errors < 0) this.errors = 0;
