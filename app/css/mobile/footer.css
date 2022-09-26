@@ -2,5 +2,13 @@
     footer {
         display: flex;
         justify-content: space-between;
+        height: auto;
+        z-index: 100;
+    }
+    footer nav.extensions a {
+        display: none;
+    }
+    footer nav.extensions a[href="/"] {
+        display: inline;
     }
 }

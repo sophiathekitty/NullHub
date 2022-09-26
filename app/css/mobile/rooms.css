@@ -1,8 +1,14 @@
 @media( max-width:600px) {
+    section#rooms_list {
+        grid-area: main !important;
+    }
     main.show_details section#rooms_list {
         display: none !important;
     }
     main.show_details section#floors[room_id][level]{
         display: flex !important;
+    }
+    main.show_details[view="rooms"]{
+        grid-template-rows: 0em auto;
     }
 }

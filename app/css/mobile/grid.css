@@ -1,7 +1,7 @@
 @media( max-width:600px) {
     main {
         display: grid;
-        grid-template-rows: 7em auto;
+        grid-template-rows: 0em auto;
         grid-gap: 0em 0em;
         grid-template-areas: 
             "sidebar-stamp"
@@ -16,7 +16,7 @@
         padding: 0em;
     }
     [view="rooms"]{
-        grid-template-rows: 12em auto;
+        grid-template-rows: 10em auto;
     }
     .main {
         grid-area: main;

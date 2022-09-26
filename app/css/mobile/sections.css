@@ -5,24 +5,29 @@
         display: none;
     }
 
-    main[view="weather"] section#rooms_list{
+    main[view="weather"] section#rooms_list,
+    main[view="weather"] div#clock{
         display: none;
     }
     main[view="rooms"] section#floors,
-    main[view="rooms"] div#clock{
+    main.show_details[view="rooms"] div#clock{
         display: none !important;
     }
 
-    main[view="rooms"] section#rooms_list,
-    main[view="rooms"] div.weather_stamp{
+    main[view="rooms"] section#rooms_list{
         display: block;
     }
+    main[view="rooms"] div#clock{
+        display: grid;
+    }
+
     main[view="rooms"] section#rooms_list ul[collection="rooms"]{
-        max-height: 55vh !important;
+        max-height: 60vh !important;
         max-width: none !important;
     }
     
-    main[view="meal"] section.meal_details {
+    main[view="meal"] section.meal_details,
+    main[view="meal"] div#clock {
         display: none !important;
     }
     main[view="meal"] section#info[collection="meal_plan"],
@@ -31,5 +36,9 @@
     }
     main[view="floors"] section#floors {
         display: flex !important;
+    }
+
+    main[view="weather"] section#weather div.weather_chart {
+        height: 25em;
     }
 }

@@ -18,7 +18,9 @@ function printRoom($room){ global $root_path;
                 if(HasPlugin("NullSensors")) echo file_get_contents("http://localhost/plugins/NullSensors/widgets/room_temperature_bug.php?room_id=".$room['id']);
                 ?></span>
             </h1>
-            <div class="lights"></div>
+            <div class="lights"><?php
+                if(HasPlugin("NullLights")) echo file_get_contents("http://localhost/plugins/NullLights/widgets/room_lights.php?room_id=".$room['id']);
+                ?></div>
             <div class="details">
                 <h2>Daytime Hours</h2>
                 <ul>
@@ -44,11 +46,10 @@ function printRoom($room){ global $root_path;
                     </li>    
                 </ul>
             </div>
-            <div class="charts">
-                <?php    
-                    if(HasPlugin("NullSensors")) echo file_get_contents("http://localhost/plugins/NullSensors/widgets/room_temperature_charts.php?room_id=".$room['id']);
-                ?>
-            </div>
+            <div class="charts"><?php    
+                if(HasPlugin("NullLights")) echo file_get_contents("http://localhost/plugins/NullLights/widgets/room_lights_charts.php?room_id=".$room['id']);
+                if(HasPlugin("NullSensors")) echo file_get_contents("http://localhost/plugins/NullSensors/widgets/room_temperature_charts.php?room_id=".$room['id']);
+            ?></div>
         </div>
     <?php
 }
