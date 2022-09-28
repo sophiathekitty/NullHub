@@ -33,7 +33,6 @@ class Elections {
     /**
      * do we need to run an election? lets make sure everybody agrees on who is the hub
      */
-    /*
     public static function DoesAgreeOnWhoIsHub(){
         // check
     }
@@ -150,7 +149,6 @@ class Elections {
      * apply the candidate's scores to their server's rank
      * the top rank is the number of candidates
      */
-    /*
     public static function RankCandidates(){
         Services::Log("NullHub::Election","RankCandidates");
         $candidates = HubCandidates::AllCandidates();
