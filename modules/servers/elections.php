@@ -40,7 +40,6 @@ class Elections {
     /**
      * return true if this device is the election manager
      */
-    /*
     public static function IsElectionManager(){
         return (Settings::LoadSettingsVar("election_manager") == LocalMac());
     }
@@ -167,7 +166,6 @@ class Elections {
      * apply the candidate's scores to their server's rank
      * the top rank is the number of candidates
      */
-    /*
     public static function CountVotes(){
         Services::Log("NullHub::Election","CountVotes");
         $servers = Servers::OnlineServers();
@@ -194,9 +192,8 @@ class Elections {
         }
     }
     /**
-     * 
+     * Complete Election?
      */
-    /*
     public static function CompleteElection(){
         if(Settings::LoadSettingsVar("election_stage") == "done") return;
         Services::Log("NullHub::Election","CompleteElection");
@@ -204,10 +201,12 @@ class Elections {
         Settings::SaveSettingsVar("election_manager","none");
         if(Elections::IsElectionManager()) Elections::AnnounceWinner();
     }
+    /**
+     * Announce Winner
+     */
     public static function AnnounceWinner(){
         Services::Log("NullHub::Election","AnnounceWinner");
         Elections::CountVotes();
     }
-    */
 }
 ?>
