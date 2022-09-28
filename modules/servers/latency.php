@@ -1,11 +1,13 @@
 <?php
 function ServerLatency($mac_address){
     $requests = ServerRequests::LoadServerRequests($mac_address);
+    Debug::LogGroup("ServerLatency",$mac_address,$requests);
     $total = 0;
     if(count($requests) == 0) return null;
     foreach($requests as $request){
         $total += $request['latency'];
     }
+    Debug::LogGroup("ServerLatency",$total);
     return $total/count($requests);
 }
 function RequestReport(){

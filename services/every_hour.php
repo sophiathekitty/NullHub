@@ -6,7 +6,10 @@ Services::Log("NullHub::EveryHour","SyncRooms");
 SyncRooms();
 Services::Log("NullHub::EveryHour","SyncServers");
 SyncServers();
+Services::Log("NullHub::EveryHour","nMapCrawler::FindHosts");
 nMapCrawler::FindHosts();
+Services::Log("NullHub::EveryHour","Elections::RunElection");
+Elections::RunElection();
 // find plugin services
 $plugins = FindPlugins($root_path."plugins/");
 define('main_already_included',true);

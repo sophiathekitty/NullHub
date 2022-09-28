@@ -136,6 +136,7 @@ class clsModel {
      * @return array database rows
      */
     public function LoadAll($order=null){
+        //Debug::LogGroup("LoadAllOrder",$order);
         return clsDB::$db_g->safe_select($this->table_name,null,$order);
     }
     /**

@@ -8,18 +8,18 @@ class nMapCrawler {
      * @return bool return true if settings var do_crawl_network is yes, or if auto and this is the hub
      */
     private static function DoCrawlNetwork(){
-        echo "do crawl? ".Settings::LoadSettingsVar('do_crawl_network','auto')."\n";
+        //Debug: "do crawl? ".Settings::LoadSettingsVar('do_crawl_network','auto')."\n";
         switch(Settings::LoadSettingsVar('do_crawl_network','auto')){
             case "yes":
-                echo "yes!\n";
+                //echo "yes!\n";
                 return true;
             case "no":
-                echo "no!\n";
+                //echo "no!\n";
                 return false;
         }
-        echo "auto!\n";
+        //echo "auto!\n";
         if(Servers::IsMain()){
-            echo "this is the main hub!\n";
+            //echo "this is the main hub!\n";
             return true;
         }
         return Servers::IsHub();
@@ -29,12 +29,12 @@ class nMapCrawler {
      * @return array list of local hosts
      */
     public static function FindHosts(){
-        echo "nMapCrawler::FindHosts()\n";
         if(!nMapCrawler::DoCrawlNetwork()) return null;
-        echo "Find nMap Hosts\n";
+        Services::Start("MapCrawler::FindHosts");
         $ip = LocalIp();
         list($ip_a, $ip_b, $ip_c) = explode(".",$ip);
         $ip_root = "$ip_a.$ip_b.$ip_c.";
+        Services::Log("MapCrawler::FindHosts","nmap -sP $ip_root*");
         $raw_output = shell_exec("nmap -sP $ip_root*");
         $lines = explode("\n",$raw_output);
         $hosts = array();
@@ -46,11 +46,13 @@ class nMapCrawler {
                     $host = substr($host,0,strpos($host,")"));
                 }
                 if($host != $ip_root."1"){
+                    Services::Log("MapCrawler::FindHosts",$host);
                     nMap::SaveHost(['ip'=>$host]);
                     array_push($hosts,nMap::LoadByIp($host));
                 }
             }
         }
+        Services::Complete("MapCrawler::FindHosts");
         return $hosts;
     }
     /**
@@ -59,13 +61,16 @@ class nMapCrawler {
      */
     public static function CheckHosts(){
         if(!nMapCrawler::DoCrawlNetwork()) return nMapCrawler::CheckHub();
-        echo "Check nMap Hosts\n";
+        Services::Start("MapCrawler::CheckHosts");
         $host = nMap::LoadNext();
+        Services::Log("MapCrawler::CheckHosts",$host['type']." ".$host['ip']);
         if($host['type'] == "pi"){
             $host = nMapCrawler::CheckPi($host);
         } else {
             $host = nMapCrawler::CheckNew($host);
         }
+        Services::Log("MapCrawler::CheckHosts","results: ".$host['type']);
+        Services::Complete("MapCrawler::CheckHosts");
         return nMap::SaveHost($host);
     }
     /**

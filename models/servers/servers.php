@@ -108,11 +108,11 @@ class Servers extends clsModel{
     public static function GetHub(){
         if(defined("SETUP_MODE")) return ['mac_address'=>LocalMac(),'name'=>'null device','url'=>LocalIp(),'type'=>'device','server'=>'pi','main'=>0,'enabled'=>0,'online'=>0];
         $servers = Servers::GetInstance();
-        $hub = $servers->LoadWhere(['main'=>1,'online'=>1],['server'=>'DESC']);
+        $hub = $servers->LoadWhere(['main'=>1,'online'=>1],['rank'=>'DESC']);
         if($hub) return $hub;
-        $hub = $servers->LoadWhere(['type'=>'hub','online'=>1],['server'=>'DESC']);
+        $hub = $servers->LoadWhere(['type'=>'hub','online'=>1],['rank'=>'DESC']);
         if($hub) return $hub;
-        $hub = $servers->LoadWhere(['type'=>'kiosk','online'=>1],['server'=>'DESC']);
+        $hub = $servers->LoadWhere(['type'=>'kiosk','online'=>1],['rank'=>'DESC']);
         if($hub) return $hub;
         $hub = $servers->ServerMacAddress(LocalMac());
         if($hub) return $hub;
@@ -129,7 +129,7 @@ class Servers extends clsModel{
      */
     public static function GetMain(){
         $servers = Servers::GetInstance();
-        $hub = $servers->LoadWhere(['main'=>1],['server'=>'DESC','online'=>'DESC']);
+        $hub = $servers->LoadWhere(['main'=>1],['rank'=>'DESC','online'=>'DESC']);
         Debug::Log("Servers::GetMain",$hub);
         if($hub) return $hub;
         global $device_info;

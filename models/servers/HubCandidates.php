@@ -76,13 +76,15 @@ class HubCandidates extends clsModel{
         return $instance->LoadAll(['score'=>'DESC']);
     }
     /**
-     * load all candidates
+     * load the top candidate
      * @return array the data array of the server
      */
     public static function TopCandidate(){
         $instance = HubCandidates::GetInstance();
         $candidates = $instance->LoadAll(['score'=>'DESC']);
-        if(count($candidates) > 0) return $candidates[0];
+        foreach($candidates as $candidate){
+            return $candidate;
+        }
         return null;
     }
     /**

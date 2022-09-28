@@ -6,7 +6,6 @@ $data = [
     'manager'=>Settings::LoadSettingsVar("election_manager"),
     'started'=>Settings::LoadSettingsVar("election_started")
 ];
-if($stage == "polling") $data['poll'] = HubCandidates::AllCandidates();
-if($stage == "done") $data['vote'] = HubCandidates::TopCandidate();
+$data['vote'] = HubCandidates::AllCandidates();
 OutputJson($data);
 ?>

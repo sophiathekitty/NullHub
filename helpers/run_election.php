@@ -1,0 +1,11 @@
+<?php
+require_once("../includes/main.php");
+define("DEBUG","verbose");
+Elections::RunElection();
+OutputJson([
+    'stage'=>Settings::LoadSettingsVar("election_stage"),
+    'manager'=>Settings::LoadSettingsVar("election_manager"),
+    'started'=>Settings::LoadSettingsVar("election_started"),
+    'vote'=>HubCandidates::AllCandidates()
+]);
+?>

@@ -145,6 +145,7 @@ if(!defined('MYSQL_CLASS')){
 		 */
 		function safe_select($table,$where = null, $order = null){
 			// sanitize input
+			//Debug::LogGroup("SafeInsert",$order);
 			$sql = "SELECT * FROM `$table`";
 			if(!is_null($where)){
 				$regex = array("/\"/","/\'/");
