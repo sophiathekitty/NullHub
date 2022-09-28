@@ -3,8 +3,8 @@ define("START_TIME",microtime(true));
 //if(!defined("INCLUDE_MAIN")){
     //define("INCLUDE_MAIN",true);
 
-    //echo "0.1\n";
-    //echo "main 01\n";
+    if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "0.1\n";
+    if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "main 01\n";
     if(!isset($root_path)){
         $root_path = "";
         $i = 0;
@@ -13,14 +13,14 @@ define("START_TIME",microtime(true));
         }
     }
 
-    //echo "0.2\n";
+    if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "0.2\n";
 
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     date_default_timezone_set("America/Denver");
     if(isset($_GET['TEST_MODE'])) define("TEST_MODE",$_GET['TEST_MODE']);
     if(isset($_GET['DEBUG'])) define("DEBUG",$_GET['DEBUG']);
-    //echo "0.3\n";
+    if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "0.3\n";
 
     IncludeFolder($root_path."includes/utils/");
 
@@ -45,21 +45,21 @@ define("START_TIME",microtime(true));
         define("SETUP_MODE","missing settings.php");
     }
 
-    //echo "0.4 $root_path \n";
+    if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "0.4 $root_path \n";
 
 
-    //echo "0.5\n";
+    if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "0.5\n";
 
     $plugins = FindPlugins($root_path."plugins/");
 
-    //echo "0.6\n";
+    if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "0.6\n";
 
     foreach($plugins as $plugin){
-        //echo "0.6.0 $plugin\n";
+        if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "0.6.0 $plugin\n";
         IncludeFolder($plugin."models/");
-        //echo "0.6.1 $plugin\n";
+        if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "0.6.1 $plugin\n";
         IncludeFolder($plugin."modules/"); 
-        //echo "0.6.2 $plugin\n";
+        if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "0.6.2 $plugin\n";
     }
     if(defined("SETUP_MODE")){
         // we're in setup mode... now what?
@@ -89,22 +89,22 @@ define("START_TIME",microtime(true));
                 die();
         }
     }
-    //echo "0.7\n";
+    if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "0.7\n";
     /**
      * go through this folder and all it's child folders and add any .php file
      * @param string $path the path of the current folder to crawl
      */
     function IncludeFolder($path){
-        //echo "IncludeFolder: $path \n";
+        if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "IncludeFolder: $path \n";
         $shared_models_dir = opendir($path);
         // LOOP OVER ALL OF THE  FILES    
         while ($file = readdir($shared_models_dir)) { 
-            //echo "<br><i>$file</i> ".is_dir($path.$file)."  ".is_dir($file."/")." <br>";
+            if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "<br><i>$file</i> ".is_dir($path.$file)."  ".is_dir($file."/")." <br>";
             // IF IT IS NOT A FOLDER, AND ONLY IF IT IS A .php WE ACCESS IT
             if(!is_dir($file) && strpos($file, '.php')>0 && is_file($path.$file)) { 
-                //echo "Require: $path$file\n";
+                if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "Require: $path$file\n";
                 require_once($path.$file);
-                //echo "included\n";
+                if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "included\n";
             } elseif(is_dir($path.$file) && $file != ".." && $file != "."){
                 IncludeFolder($path.$file."/");
             }
@@ -117,19 +117,19 @@ define("START_TIME",microtime(true));
      * @param string $path the path to the folder that's being crawled
      */
     function IncludeFolderDebug($path){
-        //echo "IncludeFolder: $path \n";
+        if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "IncludeFolder: $path \n";
         Settings::SaveSettingsVar("debug-IncludeFolder--path",$path);
         $shared_models_dir = opendir($path);
         // LOOP OVER ALL OF THE  FILES    
         while ($file = readdir($shared_models_dir)) { 
-            //echo "<br><i>$file</i> ".is_dir($path.$file)."  ".is_dir($file."/")." <br>";
+            if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "<br><i>$file</i> ".is_dir($path.$file)."  ".is_dir($file."/")." <br>";
             // IF IT IS NOT A FOLDER, AND ONLY IF IT IS A .php WE ACCESS IT
             if(!is_dir($file) && strpos($file, '.php')>0 && is_file($path.$file)) { 
                 Settings::SaveSettingsVar("debug-IncludeFolder--file",$path.$file);
-                //echo "Require: $path$file\n";
+                if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "Require: $path$file\n";
                 require_once($path.$file);
                 Settings::SaveSettingsVar("debug-IncludeFolder--included",$path.$file);
-                //echo "included\n";
+                if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "included\n";
             } elseif(is_dir($path.$file) && $file != ".." && $file != "."){
                 IncludeFolder($path.$file."/");
             }
@@ -143,7 +143,7 @@ define("START_TIME",microtime(true));
      * @return array an array of plugin relative paths "../../plugins/NullPlugin/"
      */
     function FindPlugins($path){
-        //echo "FindPlugins: $path \n";
+        if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "FindPlugins: $path \n";
         $plugins = [];
         $shared_models_dir = opendir($path);
         // LOOP OVER ALL OF THE  FILES    
@@ -162,7 +162,7 @@ define("START_TIME",microtime(true));
      * @return array an array of plugin paths "NullPlugin/"
      */
     function FindPluginsLocal($path){
-        //echo "FindPlugins: $path \n";
+        if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "FindPlugins: $path \n";
         $plugins = [];
         $shared_models_dir = opendir($path);
         // LOOP OVER ALL OF THE  FILES    
@@ -181,7 +181,7 @@ define("START_TIME",microtime(true));
      * @return array an array of plugins "Plugin"
      */
     function FindPluginsName($path){
-        //echo "FindPlugins: $path \n";
+        if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "FindPlugins: $path \n";
         $plugins = [];
         $shared_models_dir = opendir($path);
         // LOOP OVER ALL OF THE  FILES    
@@ -194,7 +194,7 @@ define("START_TIME",microtime(true));
         closedir($shared_models_dir);
         return $plugins;
     }
-    //echo "0.8\n";
+    if(defined("DEBUG") && constant("DEBUG") == "ECHO") echo "0.8\n";
     /**
      * loads json from url and returns a data array
      * @param string $url the url to load
