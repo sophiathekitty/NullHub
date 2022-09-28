@@ -103,6 +103,7 @@ class Elections {
      * but kiosk will do in a pinch) and by how many plugins and extensions they have. (ideally full 
      * coverage of all the plugins and extensions) and then take the latency into account.
      */
+    /*
     public static function RunPoll(){
         Services::Log("NullHub::Election","RunPoll");
         $candidates = HubCandidates::AllCandidates();
