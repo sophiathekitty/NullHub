@@ -48,6 +48,13 @@ class Servers extends clsModel{
             'Default'=>"0",
             'Extra'=>""
         ],[
+            'Field'=>"rank",
+            'Type'=>"int(11)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"0",
+            'Extra'=>""
+        ],[
             'Field'=>"last_ping",
             'Type'=>"datetime",
             'Null'=>"NO",
@@ -105,6 +112,8 @@ class Servers extends clsModel{
         if($hub) return $hub;
         $hub = $servers->LoadWhere(['type'=>'hub','online'=>1],['server'=>'DESC']);
         if($hub) return $hub;
+        $hub = $servers->LoadWhere(['type'=>'kiosk','online'=>1],['server'=>'DESC']);
+        if($hub) return $hub;
         $hub = $servers->ServerMacAddress(LocalMac());
         if($hub) return $hub;
         global $device_info;
@@ -115,12 +124,12 @@ class Servers extends clsModel{
         return ['mac_address'=>LocalMac(),'name'=>Settings::LoadSettingsVar('name','null device'),'url'=>LocalIp(),'type'=>Settings::LoadSettingsVar('type','device'),'server'=>Settings::LoadSettingsVar('server','pi0'),'main'=>Settings::LoadSettingsVar('main',1),'enabled'=>Settings::LoadSettingsVar('enabled',1),'online'=>1];
     }
     /**
-     * load the main hub
+     * load the main hub even if it's offline
      * @return array the data array of the server
      */
     public static function GetMain(){
         $servers = Servers::GetInstance();
-        $hub = $servers->LoadWhere(['main'=>1],['server'=>'DESC']);
+        $hub = $servers->LoadWhere(['main'=>1],['server'=>'DESC','online'=>'DESC']);
         Debug::Log("Servers::GetMain",$hub);
         if($hub) return $hub;
         global $device_info;

@@ -6,6 +6,10 @@ function HasPlugin($plugin){
     global $root_path;
     return is_dir($root_path."plugins/".$plugin);
 }
+function HasPluginBoolAsString($plugin){
+    if(HasPlugin($plugin)) return "true";
+    return "false";
+}
 /**
  * gets the apis for a plugin
  * @param string $plugin the plugin name ie: "NullWeather"

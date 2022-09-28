@@ -10,7 +10,8 @@
         { "icon": "log", "extensions": ["details"], "format": "svg" },
         { "icon": "notification", "extensions": ["tasks"], "format": "svg" },
         { "icon": "theme", "extensions": ["colors","pallet"], "format": "svg" },
-        { "icon": "story", "extensions": ["sketchbook"], "format": "svg" }
+        { "icon": "story", "extensions": ["sketchbook"], "format": "svg" },
+        { "icon": "graphql", "extensions": ["graphnql"], "format": "svg" }
     ],
     "cSpell.words": [
         "pitft",

@@ -135,8 +135,8 @@ class clsModel {
      * loads all of the rows in the table
      * @return array database rows
      */
-    public function LoadAll(){
-        return clsDB::$db_g->safe_select($this->table_name);
+    public function LoadAll($order=null){
+        return clsDB::$db_g->safe_select($this->table_name,null,$order);
     }
     /**
      * loads by the `id` field

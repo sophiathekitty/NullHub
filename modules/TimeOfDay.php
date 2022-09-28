@@ -3,6 +3,81 @@
  * static functions for figuring out what time of the day and related stuff
  */
 class TimeOfDay {
+    /** 
+     * season
+     * 
+     */
+    public static function Season(){
+        $today = new DateTime(date("F d"));
+        // get the season dates
+        $spring = new DateTime('March 20');
+        $summer = new DateTime('June 20');
+        $fall = new DateTime('September 22');
+        $winter = new DateTime('December 21');
+        switch(true) {
+            case $today >= $spring && $today < $summer:
+                $season =  "spring";
+                break;
+            case $today >= $summer && $today < $fall:
+                $season =  "summer";
+                break;
+            case $today >= $fall && $today < $winter:
+                $season =  "fall";
+                break;
+            default:
+                $season =  "winter";
+        }
+        return $season;
+    }
+    /** 
+     * season
+     * 
+     */
+    public static function Solstices(){
+        $today = new DateTime(date("F d"));
+        // get the season dates
+        $spring = new DateTime('March 20');
+        $summer = new DateTime('June 20');
+        $fall = new DateTime('September 22');
+        $winter = new DateTime('December 21');        
+        switch(true) {
+            case $today == $spring:
+                $solstices =  "spring equinox";
+                break;
+            case $today == $summer:
+                $solstices =  "summer solstice";
+                break;
+            case $today == $fall:
+                $solstices =  "fall equinox";
+                break;
+            case $today == $winter:
+                $solstices =  "winter solstice";
+                break;
+            default:
+                $solstices =  "";
+        }
+        return $solstices;
+    }
+    /**
+     * a string for the time of day
+     * @return string the time of day (morning, day, evening, night)
+     */
+    public static function TimeOfDayString(){
+        $time_of_day = "night";
+        if(TimeOfDay::IsDayTime()) $time_of_day = "day";
+        if(TimeOfDay::IsMorning()) $time_of_day = "morning";
+        if(TimeOfDay::IsEvening()) $time_of_day = "evening";
+        return $time_of_day;
+    }
+    /**
+     * a string for the time of day
+     * @return string the time of day (morning, day, evening, night)
+     */
+    public static function AfternoonBoolAsString(){
+        if((int)date("G") == 23) return "false";
+        if((int)date("G") >= 12) return "true";
+        return "false";
+    }
     /**
      * is the current time between sunrise and sunset (uses weather data if available, otherwise defaults to 6am and 6pm)
      * @return bool will return true if after sunrise and before sunset
@@ -168,8 +243,8 @@ class TimeOfDay {
      * @return bool returns true if there is moonrise data and the moon is out
      */
     public static function MoonOut(){
-        $moonrise = SEttings::LoadSettingsVar('moonrise_txt');
-        $moonset = SEttings::LoadSettingsVar('moonset_txt');
+        $moonrise = Settings::LoadSettingsVar('moonrise_txt');
+        $moonset = Settings::LoadSettingsVar('moonset_txt');
         list($rise_hour,$rise_min) = explode(":",$moonrise);
         list($set_hour,$set_min) = explode(":",$moonset);
         $h = (int)date('H');
@@ -181,7 +256,32 @@ class TimeOfDay {
         if($h > $rise_hour && $h < $set_hour) return true;
         if($h == $rise_hour && $m > $rise_min) return true;
         if($h == $set_hour && $m < $set_min) return true;    
-    return false;
+        return false;
+    }
+    /**
+     * is the moon out?
+     * @return bool returns true if there is moonrise data and the moon is out
+     */
+    public static function MoonOutBoolAsInt(){
+        if(TimeOfDay::MoonOut()) return 1;
+        return 0;
+    }
+    /**
+     * moon phase as string
+     * @return bool returns moon phase as string
+     */
+    public static function MoonPhaseString(){
+        $moon_phase = Settings::LoadSettingsVar("moon_phase","0");
+        $phase = "new moon";
+        if($moon_phase < 1) $phase = "waning crescent";
+        if($moon_phase < 0.75) $phase = "waning gibbous";
+        if($moon_phase < 0.50) $phase = "waxing gibbous";
+        if($moon_phase < 0.25) $phase = "waxing crescent";
+        if($moon_phase == 0.25) $phase = "first quarter";
+        if($moon_phase == 0.50) $phase = "full moon";
+        if($moon_phase == 0.75) $phase = "last quarter";
+        if($moon_phase == 0 || $moon_phase == 1) $phase = "new moon";
+        return $phase;
     }
 
 }

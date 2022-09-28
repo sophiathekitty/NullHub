@@ -1,10 +1,10 @@
 <?php
 if(isset($_GET['test'])) define("TEST_MODE",$_GET['test']);
-define("DEBUG",true);
 require_once("../includes/main.php");
 $tests = [];
 $tests['tests'] = CrawlTestFolder("",['all' => "http://".LocalIP()."/tests/?test=all"]);
 if(isset($_GET['test'])){
+    define("DEBUG","verbose");
     $test_name = str_replace('.php','',$_GET['test']);
     $tests['running'] = [];
     if(strpos($_GET['test'],'.php')){
