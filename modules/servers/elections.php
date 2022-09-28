@@ -7,6 +7,7 @@ class Elections {
     /**
      * run an election
      */
+    /*
     public static function RunElection(){
         Elections::$stage = Settings::LoadSettingsVar("election_stage","done");
         if(Elections::$stage == "done" && Elections::MainOK()) return; // return if election is done and main is ok
@@ -18,6 +19,7 @@ class Elections {
     /**
      * do we need to run an election?
      */
+    /*
     public static function MainOK(){
         //if(!Servers::IsHub()) return true;
         if(Servers::IsMain()) return true;
@@ -31,18 +33,21 @@ class Elections {
     /**
      * do we need to run an election? lets make sure everybody agrees on who is the hub
      */
+    /*
     public static function DoesAgreeOnWhoIsHub(){
         // check
     }
     /**
      * return true if this device is the election manager
      */
+    /*
     public static function IsElectionManager(){
         return (Settings::LoadSettingsVar("election_manager") == LocalMac());
     }
     /**
      * do we need to run an election?
      */
+    /*
     public static function CallElection(){
         Settings::SaveSettingsVar("election_stage","start");
         Settings::SaveSettingsVar("election_manager",LocalMac());
@@ -52,6 +57,7 @@ class Elections {
     /**
      * start an election
      */
+    /*
     public static function StartElection(){
         Services::Log("NullHub::Election","StartElection");
         HubCandidates::ClearCandidates();
@@ -62,6 +68,7 @@ class Elections {
      * announce to the other null devices that an election is on
      * TODO: Turn this back on... (commented out for until done testing other stuff)
      */
+    /*
     public static function AnnounceElection(){
         Services::Log("NullHub::Election","AnnounceElection");
         $servers = Servers::OnlineServers();
@@ -74,12 +81,14 @@ class Elections {
                 $res = ServerRequests::LoadRemoteJSON($server['mac_address'],"/api/election/start/?election_manager=".LocalMac());
                 Debug::Log($res);
                 */
+                /*
             }
         }
     }
     /**
      * finds the potential main hub candidates
      */
+    /*
     public static function FindCandidates(){
         Services::Log("NullHub::Election","FindCandidates");
         $servers = Servers::OnlineServers();
@@ -97,6 +106,7 @@ class Elections {
      * but kiosk will do in a pinch) and by how many plugins and extensions they have. (ideally full 
      * coverage of all the plugins and extensions) and then take the latency into account.
      */
+    /*
     public static function RunPoll(){
         Services::Log("NullHub::Election","RunPoll");
         $candidates = HubCandidates::AllCandidates();
@@ -141,6 +151,7 @@ class Elections {
      * apply the candidate's scores to their server's rank
      * the top rank is the number of candidates
      */
+    /*
     public static function RankCandidates(){
         Services::Log("NullHub::Election","RankCandidates");
         $candidates = HubCandidates::AllCandidates();
@@ -156,6 +167,7 @@ class Elections {
      * apply the candidate's scores to their server's rank
      * the top rank is the number of candidates
      */
+    /*
     public static function CountVotes(){
         Services::Log("NullHub::Election","CountVotes");
         $servers = Servers::OnlineServers();
@@ -184,6 +196,7 @@ class Elections {
     /**
      * 
      */
+    /*
     public static function CompleteElection(){
         if(Settings::LoadSettingsVar("election_stage") == "done") return;
         Services::Log("NullHub::Election","CompleteElection");
@@ -195,5 +208,6 @@ class Elections {
         Services::Log("NullHub::Election","AnnounceWinner");
         Elections::CountVotes();
     }
+    */
 }
 ?>
