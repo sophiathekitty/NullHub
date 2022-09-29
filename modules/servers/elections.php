@@ -7,16 +7,17 @@ class Elections {
     /**
      * run an election
      */
+    /*
     public static function RunElection(){
-        /*
         Elections::$stage = Settings::LoadSettingsVar("election_stage","done");
         if(Elections::$stage == "done" && Elections::MainOK()) return; // return if election is done and main is ok
         Services::Start("NullHub::Election");
         if(Elections::$stage == "start") Elections::StartElection();
         if(Elections::$stage == "polling") Elections::RunPoll();
         Services::Complete("NullHub::Election");
-        */
+        
     }
+    */
     /**
      * do we need to run an election?
      */
