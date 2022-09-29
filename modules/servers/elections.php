@@ -98,12 +98,12 @@ class Elections {
      * but kiosk will do in a pinch) and by how many plugins and extensions they have. (ideally full 
      * coverage of all the plugins and extensions) and then take the latency into account.
      */
-    /*
     public static function RunPoll(){
         Services::Log("NullHub::Election","RunPoll");
         $candidates = HubCandidates::AllCandidates();
         if(count($candidates) == 0) Elections::FindCandidates();
         foreach($candidates as $candidate){
+            /*
             Services::Log("NullHub::Election","RunPoll::".$candidate['mac_address']);
             $info = ServerRequests::LoadRemoteJSON($candidate['mac_address'],"/api/info");
             Debug::LogGroup("NullHub::Election","RunPoll--info",$info);
@@ -136,6 +136,7 @@ class Elections {
             Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
             $report = HubCandidates::SaveCandidates($candidate);
             Debug::LogGroup("NullHub::Election","HubCandidates::SaveCandidates",$report);
+            */
         }
         if(Servers::IsHub())  Elections::RankCandidates();
     }
