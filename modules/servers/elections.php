@@ -116,7 +116,7 @@ class Elections {
             Debug::LogGroup("NullHub::Election","RunPoll--extensions",$extension);
             if(is_array($plugins) && isset($plugins['plugins'])) $candidate['plugins'] = count($plugins['plugins']);
             if(is_array($extension) && isset($extension['extensions'])) $candidate['extensions'] = count($extension['extensions']);
-            
+            /*
             $candidate['latency'] = ServerLatency($candidate['mac_address']);
             Services::Log("NullHub::Election","RunPoll::latency:".$candidate['latency'] );
             $candidate['score'] = 0;
@@ -139,7 +139,7 @@ class Elections {
             Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
             $report = HubCandidates::SaveCandidates($candidate);
             Debug::LogGroup("NullHub::Election","HubCandidates::SaveCandidates",$report);
-            
+            */
         }
         //if(Servers::IsHub() || ELections::IsElectionManager())
         Elections::RankCandidates();
