@@ -103,7 +103,7 @@ class Elections {
         $candidates = HubCandidates::AllCandidates();
         if(count($candidates) == 0) Elections::FindCandidates();
         foreach($candidates as $candidate){
-            /*
+            
             Services::Log("NullHub::Election","RunPoll::".$candidate['mac_address']);
             $info = ServerRequests::LoadRemoteJSON($candidate['mac_address'],"/api/info");
             Debug::LogGroup("NullHub::Election","RunPoll--info",$info);
@@ -114,6 +114,7 @@ class Elections {
             Debug::LogGroup("NullHub::Election","RunPoll--extensions",$extension);
             if(is_array($plugins) && isset($plugins['plugins'])) $candidate['plugins'] = count($plugins['plugins']);
             if(is_array($extension) && isset($extension['extensions'])) $candidate['extensions'] = count($extension['extensions']);
+            /*
             $candidate['latency'] = ServerLatency($candidate['mac_address']);
             Services::Log("NullHub::Election","RunPoll::latency:".$candidate['latency'] );
             $candidate['score'] = 0;
