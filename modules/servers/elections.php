@@ -19,7 +19,6 @@ class Elections {
     /**
      * do we need to run an election?
      */
-    /*
     public static function MainOK(){
         //if(!Servers::IsHub()) return true;
         if(Servers::IsMain()) return true;
@@ -45,7 +44,6 @@ class Elections {
     /**
      * do we need to run an election?
      */
-    /*
     public static function CallElection(){
         Settings::SaveSettingsVar("election_stage","start");
         Settings::SaveSettingsVar("election_manager",LocalMac());
@@ -55,7 +53,6 @@ class Elections {
     /**
      * start an election
      */
-    /*
     public static function StartElection(){
         Services::Log("NullHub::Election","StartElection");
         HubCandidates::ClearCandidates();
@@ -66,7 +63,6 @@ class Elections {
      * announce to the other null devices that an election is on
      * TODO: Turn this back on... (commented out for until done testing other stuff)
      */
-    /*
     public static function AnnounceElection(){
         Services::Log("NullHub::Election","AnnounceElection");
         $servers = Servers::OnlineServers();
@@ -79,7 +75,6 @@ class Elections {
                 $res = ServerRequests::LoadRemoteJSON($server['mac_address'],"/api/election/start/?election_manager=".LocalMac());
                 Debug::Log($res);
                 */
-                /*
             }
         }
     }
