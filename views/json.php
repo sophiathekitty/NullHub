@@ -19,6 +19,7 @@ function OutputJson($data){
         if(constant("DEBUG") == "verbose" && isset($_SESSION) && count($_SESSION) > 0) $data['session'] = $_SESSION;
         if(constant("DEBUG") == "verbose") $data['user'] = UserSession::CleanSessionData();
     }
+    if(count($_POST) > 0) $data['post'] = $_POST;
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
     echo json_encode($data, JSON_PRETTY_PRINT);

@@ -142,11 +142,18 @@ if(!defined('MYSQL_CLASS')){
 		 * @param string $table the name of the table
 		 * @param array|null $where keyed array of where search ["key"=>"value","foo"=>"bar"] leave null to not include WHERE
 		 * @param array|null $order keyed array for order ["key"=>"ASC","foo"=>"DESC"] leave null to not include ORDER BY
+		 * @param array|string|null $order array for fields ["key","foo"] leave null for *
 		 */
-		function safe_select($table,$where = null, $order = null){
+		function safe_select($table,$where = null, $order = null, $fields = null){
 			// sanitize input
 			//Debug::LogGroup("SafeInsert",$order);
-			$sql = "SELECT * FROM `$table`";
+			$f = "*";
+			if(!is_null($fields)) {
+				if(is_array($fields)) $f = implode(", ",$fields);
+				else $f = $fields;
+				$f = str_replace(["'","\""],"",$f);
+			}
+			$sql = "SELECT $f FROM `$table`";
 			if(!is_null($where)){
 				$regex = array("/\"/","/\'/");
 				$replace = array("&quot;","&apos;");

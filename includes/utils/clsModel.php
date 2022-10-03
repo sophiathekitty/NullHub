@@ -152,10 +152,12 @@ class clsModel {
     /**
      * does a where search and can order the results
      * @param array $where ['key'=>'value']
+     * @param array|null $order keyed array for order ["key"=>"ASC","foo"=>"DESC"] leave null to not include ORDER BY
+     * @param array|null $fields the fields ['field1','field2'] if null uses *
      * @return array|null returns the data array for the table rows loaded or null if now rows found
      */
-    public function LoadWhere($where,$order = null){
-        $rows = clsDB::$db_g->safe_select($this->table_name,$where,$order);
+    public function LoadWhere($where,$order = null,$fields = null){
+        $rows = clsDB::$db_g->safe_select($this->table_name,$where,$order,$fields);
         if(count($rows) > 0) return $rows[0];
         return null;
     }
@@ -163,10 +165,11 @@ class clsModel {
      * does a where search and can order the results
      * @param array $where ['key'=>'value']
      * @param array|null $order keyed array for order ["key"=>"ASC","foo"=>"DESC"] leave null to not include ORDER BY
+     * @param array|null $fields the fields ['field1','field2'] if null uses *
      * @return array returns the array for the table rows loaded
      */
-    public function LoadAllWhere($where,$order = null){
-        return clsDB::$db_g->safe_select($this->table_name,$where,$order);
+    public function LoadAllWhere($where,$order = null,$fields = null){
+        return clsDB::$db_g->safe_select($this->table_name,$where,$order,$fields);
     }
     /**
      * loads the most recently created (uses created field in table)
@@ -340,6 +343,23 @@ class clsModel {
         return $clean;
     }
     /**
+     * strips out extra fields from data so it can be used to insert or update database
+     * @param array $data keyed array of data
+     * @return array keyed array of data stripped down to just the keys that are fields in the table
+     */
+    public function CleanFields($fields){
+        $clean = [];
+        foreach($fields as $field){
+            foreach($this->fields as $f){
+                if($f['Field'] == $field){
+                    $clean[] = $field;
+                    break;
+                }
+            }
+        }
+        return $clean;
+    }
+    /**
      * should this field be included
      * @param string $field the field name to see if it should be skipped
      * @param array|null $skips the list of fields to skip ['field1','field2']
@@ -442,7 +462,29 @@ class clsModel {
         if($err != "") Debug::Log("clsModel::".$this->table_name."::JoinWhere",$sql,$err);
         return $rows;
     }
-
+    /**
+     * get the number of rows in this table
+     */
+    public function RowsCount(){
+        $count = clsDB::$db_g->select("SELECT COUNT(*) FROM $this->table_name;");
+        if(count($count) == 0 || !isset($count[0]["COUNT(*)"])) return "N/A";
+        return (int)$count[0]["COUNT(*)"];
+    }
+    /**
+     * get the number of rows in this table
+     */
+    public function SpaceUsed(){
+        global $device_info;
+        $size = clsDB::$db_g->select("SELECT 
+        table_name AS `Table`, 
+        round(((data_length + index_length) / 1024), 2) `Size` 
+    FROM information_schema.TABLES 
+    WHERE table_schema = '".$device_info['database']."'
+        AND table_name = '".$this->table_name."';");
+        if(count($size) == 0 || !isset($size[0]['Size'])) return "N/A";
+        if($size[0]['Size'] > 1000) return round($size[0]['Size']/1024,2)." MB";
+        return $size[0]['Size']." KB";
+    }
 
     // this needs to be overwritten by the individual models
     public $table_name = "Example";

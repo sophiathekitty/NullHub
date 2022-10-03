@@ -81,7 +81,12 @@ function SyncColorPallets(){
         }
     }
 }
-
+/**
+ * lerp between two colors
+ * @param string $corA the first hex color 
+ * @param string $corB the second hex color
+ * @param float $lerp the percentage (0.45) between the first and second color
+ */
 function interpolateColor($corA, $corB, $lerp)
 {
     $corA = hexdec($corA);

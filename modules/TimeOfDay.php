@@ -4,8 +4,8 @@
  */
 class TimeOfDay {
     /** 
-     * season
-     * 
+     * calculate the current season
+     * @return string spring, summer, fall, or winter
      */
     public static function Season(){
         $today = new DateTime(date("F d"));
@@ -30,8 +30,8 @@ class TimeOfDay {
         return $season;
     }
     /** 
-     * season
-     * 
+     * calculate the solstices (if it is a solstice or equinox)
+     * @return string spring equinox, summer solstice, fall equinox, winter solstice or blank
      */
     public static function Solstices(){
         $today = new DateTime(date("F d"));

@@ -14,7 +14,6 @@ class Elections {
         if(Elections::$stage == "start") Elections::StartElection();
         if(Elections::$stage == "polling") Elections::RunPoll();
         Services::Complete("NullHub::Election");
-        
     }
     /**
      * do we need to run an election?
@@ -166,7 +165,7 @@ class Elections {
         $count = 1;
         foreach($servers as $server){
             $vote = ServerRequests::LoadRemoteJSON($server['mac_address'],"/api/election/");
-            if(is_array($vote) && isset($vote['vote']) && is_array($vote['vote'])){
+            if(is_array($vote) && isset($vote['vote']) && is_array($vote['vote']) && count($vote['vote'])>0){
                 foreach($vote['vote'] as $v){
                     foreach($candidates as $candidate){
                         if($candidate['mac_address'] == $v['mac_address']) {
@@ -189,17 +188,42 @@ class Elections {
      */
     public static function CompleteElection(){
         if(Settings::LoadSettingsVar("election_stage") == "done") return;
+        Services::Start("NullHub::Election");
         Services::Log("NullHub::Election","CompleteElection");
         Settings::SaveSettingsVar("election_stage","done");
         Settings::SaveSettingsVar("election_manager","none");
-        if(Elections::IsElectionManager()) Elections::AnnounceWinner();
+        if(Elections::IsElectionManager()) {
+            Elections::CountVotes();
+            Elections::AnnounceWinner();    
+        }
+        Services::Complete("NullHub::Election");
+    }
+    /**
+     * update main
+     */
+    public static function ElectionResults($mac_address){
+        $main = Servers::GetMain();
+        $data = [];
+        if($main['mac_address'] == $mac_address){
+            $data['main'] = "no change";
+        } else {
+            $data['main'] = "changed";
+            $main['main'] = 0;
+            $res = Servers::SaveServer($main);
+            $data['old_main'] = $res['row'];
+            $server = Servers::ServerMacAddress($mac_address);
+            $server['main'] = 1;
+            $res = Servers::SaveServer($main);
+            $data['new_main'] = $res['row'];
+            $res = Settings::SaveSettingsVar("election_stage","done");
+        }
+        return $data;
     }
     /**
      * Announce Winner
      */
     public static function AnnounceWinner(){
         Services::Log("NullHub::Election","AnnounceWinner");
-        Elections::CountVotes();
     }
 }
 ?>

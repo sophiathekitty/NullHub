@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * figure out what type of server this is based on which plugins and extensions
+ * are currently installed
+ */
 function ServerType(){
     global $root_path;
     $type = "device";
@@ -29,6 +32,12 @@ function ServerType(){
 
     return $type;
 }
+/**
+ * see if a string contains a substring
+ * @param string $haystack the string to search
+ * @param string $needle the string to search for in the $haystack
+ * @return bool returns true if $haystack contains $needle otherwise false
+ */
 function str_contains ($haystack, $needle){
     return (strpos($haystack, $needle) !== false);
 }

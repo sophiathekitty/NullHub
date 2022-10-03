@@ -61,6 +61,6 @@ class RoomNeighbors extends clsModel{
     }
 }
 if(defined('VALIDATE_TABLES')){
-    clsModel::$models[] = new Rooms();
+    clsModel::$models[] = new RoomNeighbors();
 }
 ?>

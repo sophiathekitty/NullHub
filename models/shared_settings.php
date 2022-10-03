@@ -1,12 +1,12 @@
 <?php
 /**
- * depreciated
+ * @depreciated use ```Settings::LoadAllSettings()```
  */
 function LoadSettingVars(){
     return clsDB::$db_g->select("SELECT * FROM `settings`;");
 }
 /**
- * depreciated
+ * @depreciated use ```Settings::LoadSettingsVar($name)```
  */
 function LoadSettingVar($name){
     return Settings::LoadSettingsVar($name);
@@ -19,7 +19,7 @@ function LoadSettingVar($name){
     */
 }
 /**
- * depreciated
+ * @depreciated use ```Settings::SaveSettingsVar($name,$value)```
  */
 function SaveSettingVar($name,$value){
     return Settings::SaveSettingsVar($name,$value);
@@ -35,24 +35,25 @@ function SaveSettingVar($name,$value){
  * handles loading the Settings Vars
  */
 class Settings extends clsModel {
-    private static $settings = null;
+    private static $settings = [];
+    private static $instance = null;
     /**
      * @return Settings
      */
     private static function GetInstance(){
-        if(is_null(Settings::$settings)){
-            Settings::$settings = new Settings();
+        if(is_null(Settings::$instance)){
+            Settings::$instance = new Settings();
         }
-        return Settings::$settings;
+        return Settings::$instance;
     }
     /**
      * load all settings vars
-     * @return array an array of all the settings $settings[0]['name'], $settings[0]['value']
+     * @return array an array of all the settings $instance[0]['name'], $instance[0]['value']
      */
     public static function LoadAllSettings(){
         if(defined("SETUP_MODE")) return [];
-        $settings = Settings::GetInstance();
-        return $settings->LoadAll();
+        $instance = Settings::GetInstance();
+        return $instance->LoadAll();
     }
     /**
      * loads a settings var
@@ -60,13 +61,13 @@ class Settings extends clsModel {
      * @return array an array of settings
      */
     public static function LoadSettingsPallet($pallet){
-        $settings = [];
-        if(defined("SETUP_MODE")) return $settings;
+        $instance = [];
+        if(defined("SETUP_MODE")) return $instance;
         $rows = clsDB::$db_g->select("SELECT * FROM `Settings` WHERE `name` LIKE '$pallet%'");
         foreach($rows as $row){
-            $settings[$row['name']] = $row['value'];
+            $instance[$row['name']] = $row['value'];
         }
-        return $settings;
+        return $instance;
     }
     /**
      * loads a settings var
@@ -76,8 +77,8 @@ class Settings extends clsModel {
      */
     public static function LoadSettingsVar($name,$default = null){
         if(defined("SETUP_MODE")) return $default;
-        $settings = Settings::GetInstance();
-        return $settings->LoadVar($name,$default);
+        $instance = Settings::GetInstance();
+        return $instance->LoadVar($name,$default);
     }
     /**
      * save a setting var
@@ -87,8 +88,8 @@ class Settings extends clsModel {
      */
     public static function SaveSettingsVar($name,$value){
         if(defined("SETUP_MODE")) return $value;
-        $settings = Settings::GetInstance();
-        return $settings->SaveVar($name,$value);
+        $instance = Settings::GetInstance();
+        return $instance->SaveVar($name,$value);
     }
     /**
      * loads a settings var. will try to sync if 
@@ -99,11 +100,11 @@ class Settings extends clsModel {
      */
     public static function LoadSyncedSettingsVar($name,$default = null, $cache_minutes = 60){
         if(defined("SETUP_MODE")) return $default;
-        $settings = Settings::GetInstance();
-        if(SecondsToMinutes($settings->VarModifiedSeconds($name)) < $cache_minutes) return $settings->LoadVar($name,$default);
+        $instance = Settings::GetInstance();
+        if(SecondsToMinutes($instance->VarModifiedSeconds($name)) < $cache_minutes) return $instance->LoadVar($name,$default);
         $setting = ServerRequests::LoadHubJSON("/api/settings/?name=$name");
-        if(!isset($setting['name'],$setting['value'])) return $settings->LoadVar($name,$default);
-        $settings->SaveVar($setting['name'],$setting['value']);
+        if(!isset($setting['name'],$setting['value'])) return $instance->LoadVar($name,$default);
+        $instance->SaveVar($setting['name'],$setting['value']);
         return $setting['value'];
     }
     /**
@@ -114,8 +115,8 @@ class Settings extends clsModel {
     public static function SyncSettingsVar($name){
         $setting = ServerRequests::LoadHubJSON("/api/settings/?name=$name");
         if(!isset($setting['name'],$setting['value'])) return null;
-        $settings = Settings::GetInstance();
-        return $settings->SaveVar($setting['name'],$setting['value']);
+        $instance = Settings::GetInstance();
+        return $instance->SaveVar($setting['name'],$setting['value']);
     }
     public $table_name = "Settings";
     public $fields = [
@@ -169,12 +170,16 @@ class Settings extends clsModel {
      * @return string the value of the setting
      */
     public function LoadVar($name,$default = null){
+        if(isset(Settings::$settings[$name])) return Settings::$settings[$name];
         $var = $this->LoadWhere(['name'=>$name]);
         if(is_null($var) && !is_null($default)){
             $this->SaveVar($name,$default);
             return $default;
         }
-        if(!is_null($var)) return $var['value'];
+        if(!is_null($var)) {
+            Settings::$settings[$name] = $var['value'];
+            return $var['value'];
+        }
         return null;
     }
     /**

@@ -109,7 +109,7 @@ class nMapCrawler {
     }
 }
 /**
- * [depreciated] find network hosts use nMapCrawler::FindHosts()
+ * @depreciated find network hosts use ```nMapCrawler::FindHosts()```
  * @return array list of local hosts
  */
 function nMapHosts(){

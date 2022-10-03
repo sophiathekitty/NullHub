@@ -27,6 +27,13 @@ class Servers extends clsModel{
             'Default'=>"",
             'Extra'=>""
         ],[
+            'Field'=>"hub",
+            'Type'=>"varchar(100)",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"",
+            'Extra'=>""
+        ],[
             'Field'=>"type",
             'Type'=>"varchar(100)",
             'Null'=>"NO",

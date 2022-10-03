@@ -6,6 +6,8 @@ Services::Log("NullHub::EveryDay","nMap::ForgetUnknown");
 nMap::ForgetUnknown();
 Services::Log("NullHub::EveryDay","UserSync::pull");
 UserSync::pull();
+Services::Log("NullHub::EveryDay","Elections::CompleteElection");
+Elections::CompleteElection();    
 // find plugin services
 $plugins = FindPlugins($root_path."plugins/");
 define('main_already_included',true);

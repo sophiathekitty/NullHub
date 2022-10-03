@@ -1,4 +1,9 @@
 <?php
+/**
+ * get the average latency for a server
+ * @param string $mac_address the mac address of the server
+ * @return float the average latency
+ */
 function ServerLatency($mac_address){
     $requests = ServerRequests::LoadServerRequests($mac_address);
     Debug::LogGroup("ServerLatency",$mac_address,$requests);
@@ -10,6 +15,10 @@ function ServerLatency($mac_address){
     Debug::LogGroup("ServerLatency",$total);
     return $total/count($requests);
 }
+/**
+ * get latency reports for all of the online servers
+ * @return array list of servers with their latency report
+ */
 function RequestReport(){
     $servers = Servers::OnlineServers();
     for($i = 0; $i < count($servers); $i++){
@@ -17,6 +26,11 @@ function RequestReport(){
     }
     return $servers;
 }
+/**
+ * latency report for a server. how long it takes for each api and the average latency for all of them
+ * @param string $mac_address the mac address of the server
+ * @return array the latency report
+ */
 function LatencyReport($mac_address){
     $requests = ServerRequests::LoadServerRequests($mac_address);
     $report = [];

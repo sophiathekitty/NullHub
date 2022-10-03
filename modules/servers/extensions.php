@@ -1,14 +1,25 @@
 <?php
+/**
+ * find local extensions
+ * @param bool $verbose get a verbose report on installed extensions
+ * @return array a list of extension info
+ */
 function LocalExtensions($verbose = false){
     global $root_path;
     return ExtensionsFolder($root_path,"extensions/",$verbose);
 }
+/**
+ * checks if the extension exists in the extension folder
+ * @param string $extension the name of the extension ie: MealPlanner
+ */
 function HasExtension($extension){
     global $root_path;
     return is_dir($root_path."extensions/".$extension);
 }
-
-
+/**
+ * get a simple list of local extensions
+ * @return array list of extension names
+ */
 function FindLocalExtensions(){
     global $root_path;
     $shared_models_dir = opendir($root_path."extensions/");
@@ -24,7 +35,14 @@ function FindLocalExtensions(){
     return $extensions;    
 }
 
-
+/**
+ * crawl the extensions folder
+ * @notice use ```LocalExtensions()``` instead
+ * @param string $root the root path
+ * @param string $path the folder to crawl
+ * @param bool $verbose how much info to include in report of extension (like when folders were modified)
+ * @return array report on installed extensions
+ */
 function ExtensionsFolder($root,$path, $verbose = false){
     $extensions = [];
     //echo "$root$path\n";

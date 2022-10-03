@@ -9,7 +9,7 @@ function GetRemoteServerInfo($url){
     $info = file_get_contents("http://".$url."/api/info/");
     $data = json_decode($info,true);
     //echo $data->info->url;
-    print_r($data);
+    Debug::Log("GetRemoteServerInfo",$data);
     if(is_null($data)){
         $server = Servers::ServerIP($url);
         if(is_null($server)) return null;
@@ -27,10 +27,10 @@ function GetRemoteServerInfo($url){
 function TellOtherDeviceAboutMe($url){
     $server = Servers::ServerMacAddress(LocalMacAddress());
     $path = "http://".$url."/api/info/servers?name=".rawurlencode(Settings::LoadSettingsVar('name'))."&type=".rawurlencode(LoadSettingVar('type'))."&mac_address=".rawurlencode(LocalMacAddress())."&url=".$server['url']."&main=".Settings::LoadSettingsVar('main')."&server=".Settings::LoadSettingsVar('server');
-    echo $path."\n";
+    //echo $path."\n";
     $info = file_get_contents($path);
     $data = json_decode($info);
-    print_r($data);
+    Debug::Log("TellOtherDeviceAboutMe",$path,$data);
 }
 /**
  * if the main hub is currently offline try to get it's info to see if it's back online yet

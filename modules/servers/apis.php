@@ -1,9 +1,19 @@
 <?php
+/**
+ * find the local apis
+ * @return array a structured array of all the apis
+ */
 function LocalAPIs(){
     global $root_path;
     return APIFolder($root_path,"api/");
 }
-
+/**
+ * crawl the api folder
+ * @param string $root the root path
+ * @param string $path the current folder
+ * @param array $apis the list of apis
+ * @return array a structured array of all the apis
+ */
 function APIFolder($root,$path,$apis = []){
     //echo "<br><b>$root$path</b><br>";
     $shared_models_dir = opendir($root.$path);
@@ -27,6 +37,14 @@ function APIFolder($root,$path,$apis = []){
     closedir($shared_models_dir);
     return $apis;
 }
+/**
+ * crawl the api folder
+ * @param string $root the root path
+ * @param string $path the current folder
+ * @param string $api the parent api
+ * @param array $apis the list of apis
+ * @return array a structured array of all the apis
+ */
 function APIChildFolder($root,$path,$api,$apis){
     //echo "<br><b>$root$path</b><br>";
     $shared_models_dir = opendir($root.$path);
@@ -50,6 +68,15 @@ function APIChildFolder($root,$path,$api,$apis){
     closedir($shared_models_dir);
     return $apis;
 }
+/**
+ * crawl the grandchild of the api folder...
+ * @param string $root the root path
+ * @param string $path the current folder
+ * @param string $api the grandparent api
+ * @param string $parent the parent api
+ * @param array $apis the list of apis
+ * @return array a structured array of all the apis
+ */
 function APIGrandChildFolder($root,$path,$api,$parent,$apis){
     //echo "<br><b>$root$path</b><br>";
     $shared_models_dir = opendir($root.$path);

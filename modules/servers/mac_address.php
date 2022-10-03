@@ -1,11 +1,15 @@
 <?php
+/**
+ * gets the system hostname
+ * @return string the hostname
+ */
 function Hostname(){
     $hostname = shell_exec("hostname");
     $hostname = str_replace("\n","",$hostname);
     return $hostname;
 }
 /**
- * use LocalMac() for best results
+ * use ```LocalMac()``` for best results
  * @return string local mac address
  */
 function LocalMacAddress(){
@@ -58,7 +62,7 @@ function LocalMac(){
     return Settings::LoadSettingsVar("mac_address",LocalMacCache());
 }
 /**
- * use LocalMac() for best results
+ * use ```LocalMac()``` for best results
  * @return string local mac address
  */
 function LocalMacCache(){
@@ -73,7 +77,7 @@ function LocalMacCache(){
     return LocalMacAddress();
 }
 /**
- * use LocalIP() for best results
+ * use ```LocalIP()``` for best results
  * @return string ip address or junk
  */
 function wlan0Ip(){
@@ -81,7 +85,7 @@ function wlan0Ip(){
     return substr($ifconfig,strpos($ifconfig,"inet ")+5,strpos($ifconfig,"netmask") - ( strpos($ifconfig,"inet ")+5) - 2);
 }
 /**
- * use LocalMac() for best results
+ * use ```LocalMac()``` for best results
  * @return string local mac address
  */
 function wlan0Mac(){
@@ -92,7 +96,7 @@ function wlan0Mac(){
     return substr($ifconfig,strpos($ifconfig,"inet6")+6,strpos($ifconfig,"prefixlen") -( strpos($ifconfig,"inet6")+6) - 2);
 }
 /**
- * use LocalIP() for best results
+ * use ```LocalIP()``` for best results
  * @return string ip address or junk
  */
 function enp4s0Ip(){
@@ -100,7 +104,7 @@ function enp4s0Ip(){
     return substr($ifconfig,strpos($ifconfig,"inet ")+5,strpos($ifconfig,"netmask") - ( strpos($ifconfig,"inet ")+5) - 2);
 }
 /**
- * use LocalMac() for best results
+ * use ```LocalMac()``` for best results
  * @return string local mac address
  */
 function enp4s0Mac(){
@@ -111,7 +115,7 @@ function enp4s0Mac(){
     return substr($ifconfig,strpos($ifconfig,"inet6")+6,strpos($ifconfig,"prefixlen") -( strpos($ifconfig,"inet6")+6) - 2);
 }
 /**
- * use LocalIP() for best results
+ * use ```LocalIP()``` for best results
  * @return string ip address or junk
  */
 function wlp3s0Ip(){
@@ -119,7 +123,7 @@ function wlp3s0Ip(){
     return substr($ifconfig,strpos($ifconfig,"inet ")+5,strpos($ifconfig,"netmask") - ( strpos($ifconfig,"inet ")+5) - 2);
 }
 /**
- * use LocalMac() for best results
+ * use ```LocalMac()``` for best results
  * @return string local mac address
  */
 function wlp3s0Mac(){
@@ -130,7 +134,7 @@ function wlp3s0Mac(){
     return substr($ifconfig,strpos($ifconfig,"inet6")+6,strpos($ifconfig,"prefixlen") -( strpos($ifconfig,"inet6")+6) - 2);
 }
 /**
- * use LocalIP() for best results
+ * use ```LocalIP()``` for best results
  * @return string ip address or junk
  */
 function eth0Ip(){
@@ -138,7 +142,7 @@ function eth0Ip(){
     return substr($ifconfig,strpos($ifconfig,"inet ")+5,strpos($ifconfig,"netmask") - ( strpos($ifconfig,"inet ")+5) - 2);
 }
 /**
- * use LocalMac() for best results
+ * use ```LocalMac()``` for best results
  * @return string local mac address
  */
 function eth0Mac(){
