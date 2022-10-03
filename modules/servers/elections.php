@@ -19,11 +19,12 @@ class Elections {
      * do we need to run an election?
      */
     public static function MainOK(){
+        if(!Servers::CanBeMain()) return true;
         //if(!Servers::IsHub()) return true;
         if(Servers::IsMain()) return true;
         $main = Servers::GetMain();
         if($main['online'] == 1) return true;
-        $hub = Servers::GetMain();
+        $hub = Servers::GetHub();
         if($hub['mac_address'] == $main['mac_address']) return true;
         if($main['offline'] > 10) return Elections::CallElection();
         return true;
@@ -102,7 +103,6 @@ class Elections {
         $candidates = HubCandidates::AllCandidates();
         if(count($candidates) == 0) Elections::FindCandidates();
         foreach($candidates as $candidate){
-            
             Services::Log("NullHub::Election","RunPoll::".$candidate['mac_address']);
             $info = ServerRequests::LoadRemoteJSON($candidate['mac_address'],"/api/info");
             Debug::LogGroup("NullHub::Election","RunPoll--info",$info);
@@ -118,19 +118,19 @@ class Elections {
             $candidate['score'] = 0;
             $server = Servers::ServerMacAddress($candidate['mac_address']);
             Services::Log("NullHub::Election","RunPoll::type:".$server['type']);
-            Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
+            //Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
             if($server['type'] == "hub") $candidate['score'] += 100000;
-            Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
+            //Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
             if($server['type'] == "old_hub") $candidate['score'] += 175000;
-            Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
+            //Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
             if($server['type'] == "kiosk") $candidate['score'] += 50000;
-            Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
+            //Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
             if(isset($info['info']['dev']) && $info['info']['dev'] == "production") $candidate['score'] += 100000;
-            Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
+            //Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
             $candidate['score'] += ($candidate['plugins'] * 10000);
-            Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
+            //Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
             $candidate['score'] += ($candidate['extensions'] * 10000);
-            Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
+            //Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
             $candidate['score'] -= ($candidate['latency'] * 1000);
             Services::Log("NullHub::Election","RunPoll::score:".$candidate['score']);
             $report = HubCandidates::SaveCandidates($candidate);

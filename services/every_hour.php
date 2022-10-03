@@ -4,6 +4,8 @@ require_once("../includes/main.php");
 Services::Start("NullHub::EveryHour");
 Services::Log("NullHub::EveryHour","SyncRooms");
 SyncRooms();
+Services::Log("NullHub::EveryHour","SyncNeighbors");
+SyncNeighbors();
 Services::Log("NullHub::EveryHour","SyncServers");
 SyncServers();
 Services::Log("NullHub::EveryHour","nMapCrawler::FindHosts");

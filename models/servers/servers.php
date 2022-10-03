@@ -164,6 +164,15 @@ class Servers extends clsModel{
         return ($hub['mac_address'] == LocalMac()) && Servers::IsHub();
     }
     /**
+     * is this the main hub?
+     * @return bool returns true if this is the main hub
+     */
+    public static function CanBeMain($mac_address = null){
+        if(is_null($mac_address)) $mac_address = LocalMac();
+        $server = Servers::ServerMacAddress($mac_address);
+        return ($server['type'] == "hub" || $server['type'] == "kiosk" || $server['type'] == "old_hub");
+    }
+    /**
      * loads the online servers
      * @return array an array of server arrays
      */

@@ -56,4 +56,35 @@ function SyncRoomUrl($data){
     }
     return Rooms::AllRooms();
 }
+/**
+ * sync neighbors
+ */
+function SyncNeighbors(){
+    $hub = Servers::GetHub();
+    if($hub['type'] == "old_hub"){
+        // handle syncing from old hub
+        $rooms = Rooms::AllRooms();
+        foreach($rooms as $room){
+            SyncNeighborsLegacy($room['id']);
+        }
+    } else {
+        $data = ServerRequests::LoadMainJSON("/api/rooms/neighbors/");
+        if(is_array($data) && isset($data['neighbors'])){
+            foreach($data['neighbors'] as $neighbor){ 
+                RoomNeighbors::SaveNeighbor($neighbor);
+            }
+        }
+    }
+}
+/**
+ * sync neighbors from old hub
+ */
+function SyncNeighborsLegacy($room_id){
+    $data = ServerRequests::LoadMainJSON("/api/rooms/?room_id=$room_id&neighbors=1");
+    if(is_array($data) && isset($data['neighbors'])){
+        foreach($data['neighbors'] as $neighbor_id){
+            RoomNeighbors::SaveNeighbor(['room_id'=>$room_id,'neighbor_id'=>$neighbor_id]);
+        }
+    }
+}
 ?>

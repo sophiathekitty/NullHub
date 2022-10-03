@@ -38,16 +38,22 @@ class RoomNeighbors extends clsModel{
     /**
      * save a room neighbor relation
      * @param array $data json array of room neighbor 
+     * @todo maybe after i'm sure i'm never going to need the old hub i can take out the stuff
+     * for legacy syncing....
      */
     public static function SaveNeighbor($data){
         $rooms = RoomNeighbors::GetInstance();
         $data = $rooms->CleanData($data);
-        $room = $rooms->LoadById($data['id']);
-        //print_r($data);
+        // for legacy syncing...
+        $room = $rooms->LoadWhere(['room_id'=>$data['room_id'],'neighbor_id'=>$data['neighbor_id']]);
         if(is_null($room)){
-            $rooms->Save($data);
-        } else {
-            $rooms->Save($data,['id'=>$data['id']]);
+            // ok now but for non legacy syncing...
+            $room = $rooms->LoadById($data['room_id']);
+            if(is_null($room)){
+                $rooms->Save($data);
+            } else {
+                $rooms->Save($data,['id'=>$data['id']]);
+            }
         }
     }
     /**
@@ -58,6 +64,14 @@ class RoomNeighbors extends clsModel{
     public static function Neighbors($room_id){
         $rooms = RoomNeighbors::GetInstance();
         return $rooms->LoadAllWhere(['room_id'=>$room_id]);
+    }
+    /**
+     * get all the neighbors (like for syncing)
+     * @return array all the neighbors
+     */
+    public static function AllNeighbors(){
+        $rooms = RoomNeighbors::GetInstance();
+        return $rooms->LoadAll();
     }
 }
 if(defined('VALIDATE_TABLES')){

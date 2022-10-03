@@ -82,18 +82,22 @@ function ParseQuery($query,$parent = null){
         foreach($query as $key => $value){
             if(is_object($value) || is_array($value)){
                 $model = GetModel($key);
-                if(is_null($model)) JsonDie("Model:$key not found");
+                if(is_null($model)) {
+                    //JsonDie("Model:$key not found");
+                    if(!isset($data['message'])) $data["message"] = "Model:$key not found.";
+                    else $data["message"] .= " Model:$key not found.";
+                    continue;
+                }
                 $where = [];
                 $fields = [];
                 $children = [];
                 foreach($value as $k=>$v){
                     if(!is_array($v) && !is_object($v)){
-                        $fields[] = $k;
                         if($v != "*") $where[$k] = $v;
                         if(!is_null($parent) && strpos($v,":parent:") > -1){
                             $parent_key = str_replace(":parent:","",$v);
                             $where[$k] = $parent[$parent_key];
-                        }
+                        } else $fields[] = $k;
                     } else {
                         $children[$k] = $v;
                     }
