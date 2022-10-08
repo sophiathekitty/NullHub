@@ -54,7 +54,7 @@ class FloorsController extends Controller {
             if(this.debug) console.log("FloorController::RoomsBuilt-RoomLightsController",this.lights);
             this.view.model.getData(json=>{
                 json.rooms.forEach(room=>{
-                    this.lights.view.build(room.id);
+                    //this.lights.view.build(room.id);
                 });
             });
             this.lights.roomsReady();
@@ -66,7 +66,7 @@ class FloorsController extends Controller {
             if(this.debug) console.log("FloorController::RoomsBuilt-DisplayStatusIcons",this.displays);
             this.view.model.getData(json=>{
                 json.rooms.forEach(room=>{
-                    this.displays.build(room.id);
+                    //this.displays.build(room.id);
                 });
             });
         } catch (error) {
@@ -77,7 +77,7 @@ class FloorsController extends Controller {
             if(this.debug) console.log("FloorController::RoomsBuilt-TemperatureBug",this.temperature);
             this.view.model.getData(json=>{
                 json.rooms.forEach(room=>{
-                    this.temperature.build(room.id);
+                    //this.temperature.build(room.id);
                 });
             });
         } catch (error) {

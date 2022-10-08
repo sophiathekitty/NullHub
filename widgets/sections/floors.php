@@ -56,28 +56,22 @@ function printRoom($room){ global $root_path;
 
 ?>
 <section id="floors" class="main">
-    <div id="second_floor" level="1">
-    <?php
+    <div id="second_floor" level="1"><?php
     $rooms = Rooms::Floor("second");
     foreach($rooms['rooms'] as $room){
         printRoom($room);
     }
-    ?>
-    </div>
-    <div id="first_floor" level="0">
-    <?php
+    ?></div>
+    <div id="first_floor" level="0"><?php
     $rooms = Rooms::Floor("ground");
     foreach($rooms['rooms'] as $room){
         printRoom($room);
     }
-    ?>
-    </div>
-    <div id="basement_floor" level="-1">
-    <?php
+    ?></div>
+    <div id="basement_floor" level="-1"><?php
     $rooms = Rooms::Floor("basement");
     foreach($rooms['rooms'] as $room){
         printRoom($room);
     }
-    ?>
-    </div>
+    ?></div>
 </section>

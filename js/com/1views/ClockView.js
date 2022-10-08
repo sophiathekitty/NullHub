@@ -5,6 +5,7 @@ class ClockView extends View {
     constructor(debug = false){
         if(debug) console.log("ClockView::Constructor");
         super(new ClockModel(),new Template("clock","/templates/stamps/clock.html",null,60000, debug));
+        //super(new ClockModel(),new Template("clock","/widgets/clock.php",null,60000, debug));
         this.pallet = ColorPallet.getPallet("weather");
         this.chart = new HourlyChart("weather_hourly","weather_log","weather_chart","/plugins/NullWeather/api/weather/logs?hourly=1");
         try {

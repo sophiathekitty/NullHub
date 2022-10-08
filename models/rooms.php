@@ -24,6 +24,13 @@ class Rooms extends clsModel{
             'Type'=>"int(11)",
             'Null'=>"NO",
             'Key'=>"",
+            'Default'=>"0",
+            'Extra'=>""
+        ],[
+            'Field'=>"public",
+            'Type'=>"tinyint(1)",
+            'Null'=>"NO",
+            'Key'=>"",
             'Default'=>"1",
             'Extra'=>""
         ],[
@@ -195,16 +202,18 @@ class Rooms extends clsModel{
     }
     /**
      * load the rooms for a set floor
-     * @param string $floor the floor # you want to load... or ground (0) and basement (-1)
-     * @return array array of rooms for a set floor
+     * @param string|int $floor the floor # you want to load... or ground (0) and basement (-1)
+     * @param int|null $public set to 1 to only return public (shared/common) rooms...
+     * @return array array of rooms for a set floor ['floor'=>$floor,'rooms'=>$rooms->LoadAllWhere(['floor'=>$f])]
      */
-    public static function Floor($floor){
+    public static function Floor($floor, $public = null){
         $f = 0;
         if($floor == "second") $f = 1;
         if($floor == "ground") $f = 0;
         if($floor == "basement") $f = -1;
         $rooms = Rooms::GetInstance();
-        return ['floor'=>$floor,'rooms'=>$rooms->LoadAllWhere(['floor'=>$f])];
+        if(is_null($public)) return ['floor'=>$floor,'rooms'=>$rooms->LoadAllWhere(['floor'=>$f])];
+        return ['floor'=>$floor,'rooms'=>$rooms->LoadAllWhere(['floor'=>$f,'public'=>$public])];
     }
 }
 if(defined('VALIDATE_TABLES')){

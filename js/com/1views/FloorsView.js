@@ -9,7 +9,8 @@ class FloorsView extends View {
      */
     constructor(debug = false, refresh = 60000){
         if(debug) console.log("FloorsView::Constructor");
-        super(RoomsCollection.instance,new Template("floors","/templates/sections/floors.html"),new Template("room_card","/templates/stamps/room.html"),refresh,debug);
+        //super(RoomsCollection.instance,new Template("floors","/templates/sections/floors.html"),new Template("room_card","/templates/stamps/room.html"),refresh,debug);
+        super(RoomsCollection.instance,new Template("floors","/widgets/sections/floors.php"),new Template("room_card","/templates/stamps/room.html"),refresh,debug);
     }
     /**
      * build the floors and add the rooms
@@ -21,15 +22,16 @@ class FloorsView extends View {
                 if(this.debug) console.log("FloorsView::Build-template",html);
                 $("main.contents #floors").remove();
                 $(html).appendTo("main.contents");
+                //return;
                 this.model.getData(json=>{
                     if(this.debug) console.log("FloorsView::Build-data",json);
                     this.item_template.getData(itm_html=>{
                         if(this.debug) console.log("FloorsView::Build-item_template",itm_html);
                         json.rooms.forEach(room=>{
                             if(this.debug) console.log("FloorsView::Build-room",room.floor,room);
-                            $(itm_html).appendTo("#floors [level="+room.floor+"]").attr("room_id",room.id);
+                            //$(itm_html).appendTo("#floors [level="+room.floor+"]").attr("room_id",room.id);
                         });
-                        this.display();
+                        //this.display();
                         Settings.loadVar("room_id",room_id=>{
                             if(room_id && Number(room_id) != 0){
                                 this.model.getItem(room_id,room=>{

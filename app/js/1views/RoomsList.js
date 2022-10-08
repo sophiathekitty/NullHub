@@ -4,7 +4,8 @@
 class RoomsList extends View {
     constructor(debug = false){
         if(debug) console.log("RoomsList::Constructor");
-        super(new RoomsCollection(),new Template("rooms_list","/templates/sections/rooms.html"),new Template("rooms_item","/templates/items/room.html"));
+        //super(new RoomsCollection(),new Template("rooms_list","/templates/sections/rooms.html"),new Template("rooms_item","/templates/items/room.html"));
+        super(new RoomsCollection(),new Template("rooms_list","/widgets/sections/rooms_list.php"),new Template("rooms_item","/templates/items/room.html"));
     }
     /**
      * builds the room list
@@ -15,6 +16,7 @@ class RoomsList extends View {
             this.template.getData(html=>{
                 if(this.debug) console.log("RoomsList::Build-template",html);
                 $(html).appendTo(".app main");
+                return;
                 if(this.item_template && this.model){
                     this.item_template.getData(itm_html=>{
                         if(this.debug) console.log("RoomsList::Build-item_template",itm_html);
