@@ -13,6 +13,13 @@
         { "icon": "story", "extensions": ["sketchbook"], "format": "svg" },
         { "icon": "graphql", "extensions": ["graphnql"], "format": "svg" }
     ],
+    "vsicons.associations.files": [
+        { "icon": "jsmap", "extensions": ["js.php"], "format": "svg" },
+        { "icon": "cssmap", "extensions": ["css.php"], "format": "svg" },
+        { "icon": "cssmap", "extensions": ["views/css.php"], "filename": true, "format": "svg" },
+        { "icon": "jsmap", "extensions": ["views/js.php"], "filename": true, "format": "svg" },
+        { "icon": "json2", "extensions": ["views/json.php"], "filename": true, "format": "svg" }
+    ],
     "cSpell.words": [
         "pitft",
         "remaper",
