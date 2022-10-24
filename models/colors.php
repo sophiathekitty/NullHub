@@ -136,6 +136,17 @@ if(defined('VALIDATE_TABLES')){
         Colors::GetColor("month_11","calendar","#cc6633");
         Colors::GetColor("month_12","calendar","#9999ff");
 
+        Colors::GetColor("am","clock","#ffffcc");
+        Colors::GetColor("pm","clock","#ccffff");
+        Colors::GetColor("elevenEleven","clock","#6495ed");
+        Colors::GetColor("fourFiveSix","clock","#f4a460");
+        Colors::GetColor("oneOneOne","clock","#d87093");
+        Colors::GetColor("oneTwoThreeFour","clock","#663399");
+
+        Colors::GetColor("fourOhFour","stoner","#adff2f");
+        Colors::GetColor("fourTwenty","stoner","#008800");
+        Colors::GetColor("sevenTen","stoner","#daa520");
+
         // find colors to validate in plugins
         $plugins = FindPlugins($root_path."plugins/");
         foreach($plugins as $plugin){
