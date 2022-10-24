@@ -10,6 +10,8 @@ if(isset($_GET['floors'])){
     if(count($floor['rooms'])) $data['basement'] = $floor;
 } else if(isset($_GET['floor'])){
     $data['floor'] = Rooms::Floor($_GET['floor']);
+} else if(isset($_GET['room_id'])){
+    $data['room'] = Rooms::RoomId($_GET['room_id']);
 } else {
     $data['rooms'] = Rooms::AllRooms();
 }
