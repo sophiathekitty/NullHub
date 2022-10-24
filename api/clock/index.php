@@ -30,6 +30,8 @@ $data['moonset'] = Settings::LoadSettingsVar("moonset_txt","6:00");
 $data['moon_phase'] = Settings::LoadSettingsVar("moon_phase","0");
 $data['moon_out'] = 0;
 if(TimeOfDay::MoonOut()) $data['moon_out'] = 1;
+$data['sun_out'] = 0;
+if(TimeOfDay::SunOut()) $data['sun_out'] = 1;
 
 $today = new DateTime(date("F d"));
 // get the season dates

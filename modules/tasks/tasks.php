@@ -9,7 +9,7 @@ class TaskManager {
      */
     public static function AutomateTasks(){
         if(!Servers::IsMain()) return RemoteTasks::PullRemoteTasks();
-        echo "Automate Task Notification<br>";
+        Services::Start("TaskManager::AutomateTask");
         // this will need to be extended to automate local tasks
         $extensions = LocalExtensions();
         foreach($extensions as $extension){
@@ -17,9 +17,11 @@ class TaskManager {
             $content=@file_get_contents($extension['api']."/tasks");
             $data = json_decode($content,true);
             foreach($data['tasks'] as $task){
-                Tasks::SaveTask($task);
+                $rep = Tasks::SaveTask($task);
+                if(is_array($rep)) Services::Log("TaskManager::AutomateTask",$rep['error']);
             }
         }
+        Services::Complete("TaskManager::AutomateTask");
     }
     /**
      * complete a task

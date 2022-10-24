@@ -155,6 +155,21 @@ class Tasks extends clsModel {
         return Tasks::FindActive($all);
     }
     /**
+     * load today's active tasks for a room
+     * @param int $room_id the room id
+     * @return array array of tasks where completed is null and due is today? (looks like it's due => right now?)
+     */
+    public static function LoadActiveTasksTodayRoom($room_id, $include_global = true){
+        $tasks = Tasks::GetInstance();
+        $room = $tasks->LoadAllWhere(['due'=>date("Y-m-d H:i:s"),'room_id'=>$room_id]);
+        if($include_global){
+            $global = $tasks->LoadAllWhere(['due'=>date("Y-m-d H:i:s"),'room_id'=>0]);
+            $room = array_merge($global,$room);
+        }
+        usort($room,"TasksDueAsc");
+        return Tasks::FindActive($room);
+    }
+    /**
      * load due active tasks
      * @return array array of tasks where completed is null and due is before now
      */
@@ -169,7 +184,7 @@ class Tasks extends clsModel {
      */
     public static function SaveTask($data){
         $tasks = Tasks::GetInstance();
-        $tasks->PruneField('due',DaysToSeconds(5));
+        $tasks->PruneField('due',DaysToSeconds(2));
         $data['guid'] = md5($data['name'].$data['due']);
         $data = $tasks->CleanData($data);
         //print_r($data);
@@ -180,7 +195,10 @@ class Tasks extends clsModel {
         return $tasks->Save($data,['name'=>$data['name'],'due'=>$data['due']]);
     }
 }
-
+function TasksDueAsc($a,$b){
+    if($a['due'] == $b['due']) return 0;
+    return($a['due'] < $b['due']) ? -1 : 1;
+}
 
 if(defined('VALIDATE_TABLES')){
     clsModel::$models[] = new Tasks();

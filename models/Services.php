@@ -1,6 +1,8 @@
 <?php
 class Services extends clsModel {
     private static $instance = null;
+    public static $current_service = null;
+    private static $running = [];
     /**
      * @return Services|clsModel
      */
@@ -17,6 +19,8 @@ class Services extends clsModel {
      * @return array save report
      */
     public static function Start($service_name){
+        Services::$current_service = $service_name;
+        array_push(Services::$running,$service_name);
         Debug::LogGroup($service_name,"Started at ".date("H:i:s"));
         $services = Services::GetInstance();
         $service = $services->LoadWhere(['name'=>$service_name]);
@@ -34,6 +38,8 @@ class Services extends clsModel {
      * @return array save report
      */
     public static function Complete($service_name){
+        Services::$current_service = null;
+        array_pop(Services::$running);
         Debug::LogGroup($service_name,"Completed at ".date("H:i:s"));
         $services = Services::GetInstance();
         $service = $services->LoadWhere(['name'=>$service_name]);
@@ -50,6 +56,8 @@ class Services extends clsModel {
      */
     public static function Log($service_name,$message){
         Debug::LogGroup($service_name,date("H:i:s")."::".$message);
+        if(count(Services::$running) == 0) return null;
+        //if(is_null(Services::$current_service)) return null;
         $services = Services::GetInstance();
         $service = $services->LoadWhere(['name'=>$service_name]);
         if(is_null($service)) return null;

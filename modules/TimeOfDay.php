@@ -257,14 +257,56 @@ class TimeOfDay {
         if($h == $rise_hour && $m > $rise_min) return true;
         if($h == $set_hour && $m < $set_min) return true;    
         return false;
+    }    
+    /**
+    * is the sun out?
+    * @return bool returns true if there is sunrise data and the sun is out
+    */
+    public static function SunOut(){
+        $sunrise = Settings::LoadSettingsVar('sunrise_txt');
+        $sunset = Settings::LoadSettingsVar('sunset_txt');
+        list($rise_hour,$rise_min) = explode(":",$sunrise);
+        list($set_hour,$set_min) = explode(":",$sunset);
+        $h = (int)date('H');
+        $m = (int)date('i');
+        if($rise_hour > $set_hour){
+            if($h < $set_hour) return true;
+            $set_hour += 24;
+        }
+        if($h > $rise_hour && $h < $set_hour) return true;
+        if($h == $rise_hour && $m > $rise_min) return true;
+        if($h == $set_hour && $m < $set_min) return true;    
+        return false;
     }
     /**
      * is the moon out?
-     * @return bool returns true if there is moonrise data and the moon is out
+     * @return int returns true if there is moonrise data and the moon is out
      */
     public static function MoonOutBoolAsInt(){
         if(TimeOfDay::MoonOut()) return 1;
         return 0;
+    }
+    /**
+     * is the sun out?
+     * @return int returns true if there is sunrise data and the sun is out
+     */
+    public static function SunOutBoolAsInt(){
+        if(TimeOfDay::SunOut()) return 1;
+        return 0;
+    }
+    /**
+     * what percent of the moon's arc across the sky in the clock icon thing
+     * @warning not implimented yet
+     */
+    public static function MoonArcClockPercent(){
+
+    }
+    /**
+     * where in the clock icon sky is the sun currently
+     * @warning not implimented yet
+     */
+    public static function SunArcClockPercent(){
+
     }
     /**
      * moon phase as string
