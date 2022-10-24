@@ -147,6 +147,12 @@ if(defined('VALIDATE_TABLES')){
         Colors::GetColor("fourTwenty","stoner","#008800");
         Colors::GetColor("sevenTen","stoner","#daa520");
 
+        Colors::GetColor("hybrid","strains","#83b218");
+        Colors::GetColor("indica","strains","#6d335e");
+        Colors::GetColor("indicaHybrid","strains","#77bc1f");
+        Colors::GetColor("sativa","strains","#d34727");
+        Colors::GetColor("sativaHybrid","strains","#85c723");
+
         // find colors to validate in plugins
         $plugins = FindPlugins($root_path."plugins/");
         foreach($plugins as $plugin){

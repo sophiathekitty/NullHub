@@ -39,4 +39,10 @@ Colors::GetColor("fourOhFour","stoner","#adff2f");
 Colors::GetColor("fourTwenty","stoner","#008800");
 Colors::GetColor("sevenTen","stoner","#daa520");
 
+Colors::GetColor("hybrid","strains","#83b218");
+Colors::GetColor("indica","strains","#6d335e");
+Colors::GetColor("indicaHybrid","strains","#77bc1f");
+Colors::GetColor("sativa","strains","#d34727");
+Colors::GetColor("sativaHybrid","strains","#85c723");
+
 ?>
