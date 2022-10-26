@@ -22,7 +22,7 @@ function ServerType(){
         $type = "hub";
     } else if($installed == "NullDisplay/NullWeather/MealPlanner") {
         $type = "eInk display";
-    } else if($installed == "NullDisplay/NullWeather/") {
+    } else if($installed == "NullDisplay/NullWeather/" || "NullDisplay/NullSensors/NullWeather/") {
         $type = "micro display";
     } else if($installed == "NullSensors/") {
         $type = "thermometer";
