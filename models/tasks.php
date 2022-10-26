@@ -161,11 +161,14 @@ class Tasks extends clsModel {
      */
     public static function LoadActiveTasksTodayRoom($room_id, $include_global = true){
         $tasks = Tasks::GetInstance();
-        $room = $tasks->LoadAllWhere(['due'=>date("Y-m-d H:i:s"),'room_id'=>$room_id]);
-        if($include_global){
-            $global = $tasks->LoadAllWhere(['due'=>date("Y-m-d H:i:s"),'room_id'=>0]);
+        $room = $tasks->LoadWhereFieldBefore(['room_id'=>$room_id],'due',date("Y-m-d H:i:s"));
+        Debug::Log("LoadActiveTasksTodayRoom",$room);
+        if($include_global && (int)$room_id != 0){
+            $global = $tasks->LoadWhereFieldBefore(['room_id'=>0],'due',date("Y-m-d H:i:s"));
+            Debug::Log("LoadActiveTasksTodayRoom",$global);
             $room = array_merge($global,$room);
         }
+        Debug::Log("LoadActiveTasksTodayRoom",$room);
         usort($room,"TasksDueAsc");
         return Tasks::FindActive($room);
     }
