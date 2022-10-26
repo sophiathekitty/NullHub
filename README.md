@@ -141,6 +141,12 @@ cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . &&
 cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullDisplay.git 
 ```
 
+### Micro Display with room temperature all in one command
+
+```bash
+cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullSensors.git && git clone https://github.com/sophiathekitty/NullDisplay.git 
+```
+
 ### eInk Display all in one command
 
 ```bash
