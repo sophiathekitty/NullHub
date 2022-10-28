@@ -94,4 +94,15 @@ function ExtensionsFolder($root,$path, $verbose = false){
     closedir($shared_models_dir);
     return $extensions;
 }
+/**
+ * extension apis
+ */
+function LocalExtensionApis($apis){
+    $extensions = FindLocalExtensions();
+    foreach($extensions as $extension){
+        Debug::Log("/extensions/$extension/api/");
+        $apis = array_merge($apis,ServerRequests::LoadHostJSON(LocalIp(),"/extensions/$extension/api/"));
+    }
+    return $apis;
+}
 ?>

@@ -132,31 +132,31 @@ mysql_secure_installation
 ### Full Hub all in one command
 
 ```bash
-cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullLights.git && git clone https://github.com/sophiathekitty/NullSensors.git && git clone https://github.com/sophiathekitty/NullDisplay.git && git clone https://github.com/sophiathekitty/NullProfiles.git && cd ../extensions && git clone https://github.com/sophiathekitty/MealPlanner.git
+cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullLights.git && git clone https://github.com/sophiathekitty/NullSensors.git && git clone https://github.com/sophiathekitty/NullDisplay.git && git clone https://github.com/sophiathekitty/NullProfiles.git && cd ../extensions && git clone https://github.com/sophiathekitty/MealPlanner.git && sudo chmod 777 /var/www/html
 ```
 
 ### Micro Display all in one command
 
 ```bash
-cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullDisplay.git 
+cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullDisplay.git && sudo chmod 777 /var/www/html
 ```
 
 ### Micro Display with room temperature all in one command
 
 ```bash
-cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullSensors.git && git clone https://github.com/sophiathekitty/NullDisplay.git 
+cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullSensors.git && git clone https://github.com/sophiathekitty/NullDisplay.git && sudo chmod 777 /var/www/html
 ```
 
 ### eInk Display all in one command
 
 ```bash
-cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullDisplay.git && cd ../extensions && git clone https://github.com/sophiathekitty/MealPlanner.git
+cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullWeather.git && git clone https://github.com/sophiathekitty/NullDisplay.git && cd ../extensions && git clone https://github.com/sophiathekitty/MealPlanner.git && sudo chmod 777 /var/www/html
 ```
 
 ### Thermostat all in one command
 
 ```bash
-cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullSensors.git
+cd /var/www/html && git clone https://github.com/sophiathekitty/NullHub.git . && mkdir plugins && mkdir extensions && cd plugins && git clone https://github.com/sophiathekitty/NullSensors.git && sudo chmod 777 /var/www/html
 ```
 
 ### Individual commands for full install
