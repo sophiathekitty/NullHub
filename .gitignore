@@ -3,3 +3,4 @@ phpMyAdmin*
 backup.sql
 extentions/*
 plugins/*
+logs/*
