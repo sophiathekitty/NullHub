@@ -1,6 +1,6 @@
 <?php
 require_once("../../includes/main.php");
-$rooms = Rooms::AllRooms();
+$rooms = Rooms::ActiveRooms();
 function RoomItem($room){ ?>
     <li class="room" room_id="<?=$room['id'];?>">
         <a href="#" var="name" class="key"><?=$room['name'];?></a>

@@ -1,7 +1,17 @@
 <?php
 /**
+ * take a datetime string and convert it to
+ * @param string $time h:mm:ss
+ * @return string the percent as string "100%"
+ */
+function TimeToDayPercentString($time,$offset = 0){
+    list($hours,$min) = explode(":",$time);
+
+    return ((((($hours+$offset)*60) + $min) / (24*60))*100)."%";
+}
+/**
  * converts 24hour time string into a nice 12 hour time string
- * @param string $seconds h:mm:ss
+ * @param string $time h:mm:ss
  * @return string h:mma 12:10am
  */
 function Times24ToTime12Short($time){
@@ -12,13 +22,14 @@ function Times24ToTime12Short($time){
         $hours -= 12;
         $am = "pm";
     }
+    $hours = (int)$hours;
     if((int)$hours == 0) $hours = 12;
     if(is_null($minutes) || $minutes == "") return "$hours$am";
     return "$hours:$minutes$am";
 }
 /**
  * converts 24hour time string into a nice 12 hour time string
- * @param string $seconds h:mm:ss
+ * @param string $time h:mm:ss
  * @return string h:mma 12:10am
  */
 function Times24ToTime12Full($time){

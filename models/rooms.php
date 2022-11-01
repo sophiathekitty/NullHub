@@ -182,6 +182,14 @@ class Rooms extends clsModel{
         $rooms = Rooms::GetInstance();
         return $rooms->LoadAll();
     }
+        /**
+     * load all the rooms
+     * @return array array of all the rooms
+     */
+    public static function ActiveRooms(){
+        $rooms = Rooms::GetInstance();
+        return $rooms->LoadAllWhere(["hide_room"=>'0']);
+    }
     /**
      * load a room by id
      * @param int $id the room id
@@ -212,8 +220,8 @@ class Rooms extends clsModel{
         if($floor == "ground") $f = 0;
         if($floor == "basement") $f = -1;
         $rooms = Rooms::GetInstance();
-        if(is_null($public)) return ['floor'=>$floor,'rooms'=>$rooms->LoadAllWhere(['floor'=>$f])];
-        return ['floor'=>$floor,'rooms'=>$rooms->LoadAllWhere(['floor'=>$f,'public'=>$public])];
+        if(is_null($public)) return ['floor'=>$floor,'rooms'=>$rooms->LoadAllWhere(['floor'=>$f,'hide_room'=>'0'])];
+        return ['floor'=>$floor,'rooms'=>$rooms->LoadAllWhere(['floor'=>$f,'public'=>$public,'hide_room'=>'0'])];
     }
 }
 if(defined('VALIDATE_TABLES')){
