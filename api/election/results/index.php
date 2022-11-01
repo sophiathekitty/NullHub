@@ -1,5 +1,5 @@
 <?php
-require_once("../../includes/main.php");
+require_once("../../../includes/main.php");
 $stage = Settings::LoadSettingsVar("election_stage");
 $data = [];
 if(isset($_GET['election_results'])){
