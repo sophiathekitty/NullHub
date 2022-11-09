@@ -1,0 +1,119 @@
+dialog#main_menu {
+    position: fixed;
+    top:0px;
+    right:100%;
+    bottom: 0px;
+    background-color: var(--footer);
+    width: max-content;
+    overflow-y: auto;
+    min-height: 100vh;
+    border: none;
+    border-right: thin black solid;
+    padding: 0.5em 0.25em;
+    padding-bottom: 1em;
+    box-shadow: 5px 5px 5px black;
+    scrollbar-width: none;  /* Firefox */
+}
+dialog#main_menu::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+dialog#main_menu h1 {
+    margin: 0.2em;
+    padding: 0em;
+}
+dialog#main_menu h1 i {
+    font-size: 0.5em;
+    color: var(--hash);
+}
+dialog#main_menu h1 i::before,
+dialog#main_menu h1 i::after {
+    font-size: 1.15em;
+    color: var(--highlight);
+    font-weight: 100;
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+}
+dialog#main_menu h1 i::before {
+    content: '{';
+}
+dialog#main_menu h1 i::after {
+    content: '}';
+}
+dialog#main_menu nav {
+    font-size: 1em;
+}
+dialog#main_menu li .edit {
+    display: none;
+    width: 7em;
+}
+
+dialog#main_menu ul {
+    padding: 0.2em;
+    margin: 0.1em;
+    margin-left: auto;
+    margin-right: auto;
+    list-style: none;
+    max-width: 20em;
+}
+dialog#main_menu ul::before {
+    display: block;
+    color: var(--list_header_text);
+    background-color: var(--list_header_back);
+    padding: 0.25em;
+    font-size: 1.1em;
+    margin-top: 0.75em;
+}
+dialog#main_menu li {
+    padding: 0.2em;
+}
+dialog#main_menu li:nth-child(even){
+    background-color: var(--list_even);
+}
+li .value::after {
+    color: var(--text);
+    font-size: 0.75em;
+    margin-left: 0.5em;
+}
+li .key {
+    color: var(--text);
+    display: inline-block;
+    width: 7em;
+}
+li .value {
+    display: inline-block;
+    color: var(--list_value);
+}
+
+dialog#main_menu ul#device_settings::before{
+    content: "Device Settings";
+}
+
+dialog#main_menu ul#weather_settings::before{
+    content: "Weather Settings";
+}
+
+dialog#main_menu ul#light_settings::before{
+    content: "Light Settings";
+}
+
+dialog#main_menu ul#servers::before{
+    content: "Online Devices";
+}
+
+dialog#main_menu select {
+    width: auto;
+}
+dialog#main_menu [unit]::after{
+	content: attr(unit);
+}
+dialog#main_menu [units]::after{
+	content: attr(units);
+}
+
+dialog#main_menu [type="thermometer"]::before{
+    background-image: url(/images/thermometer-scale.png);
+}
+dialog#main_menu [type="display"]::before,
+dialog#main_menu [type="micro display"]::before{
+    background-image: url(/images/display-day.png);
+}

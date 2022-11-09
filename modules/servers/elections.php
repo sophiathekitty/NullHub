@@ -213,7 +213,7 @@ class Elections {
             $data['old_main'] = $res['row'];
             $server = Servers::ServerMacAddress($mac_address);
             $server['main'] = 1;
-            $res = Servers::SaveServer($main);
+            $res = Servers::SaveServer($server);
             $data['new_main'] = $res['row'];
             $res = Settings::SaveSettingsVar("election_stage","done");
         }

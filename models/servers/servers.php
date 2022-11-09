@@ -131,6 +131,19 @@ class Servers extends clsModel{
         return ['mac_address'=>LocalMac(),'name'=>Settings::LoadSettingsVar('name','null device'),'url'=>LocalIp(),'type'=>Settings::LoadSettingsVar('type','device'),'server'=>Settings::LoadSettingsVar('server','pi0'),'main'=>Settings::LoadSettingsVar('main',1),'enabled'=>Settings::LoadSettingsVar('enabled',1),'online'=>1];
     }
     /**
+     * get all hubs
+     */
+    public static function GetAllHubs(){
+        $servers = Servers::OnlineServers();
+        $hubs = [];
+        foreach($servers as $server){
+            if($server['type'] == "hub" || $server['type'] == "kiosk" || $server['type'] == "old_hub"){
+                $hubs[] = $server;
+            }
+        }
+        return $hubs;
+    }
+    /**
      * load the main hub even if it's offline
      * @return array the data array of the server
      */
@@ -180,6 +193,15 @@ class Servers extends clsModel{
         if(defined("SETUP_MODE")) return [];
         $servers = Servers::GetInstance();
         return $servers->Online();
+    }
+    /**
+     * loads the offline servers
+     * @return array an array of server arrays
+     */
+    public static function OfflineServers(){
+        if(defined("SETUP_MODE")) return [];
+        $servers = Servers::GetInstance();
+        return $servers->Offline();
     }
     /**
      * load server by ip address

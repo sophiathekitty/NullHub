@@ -247,5 +247,12 @@ define("START_TIME",microtime(true));
         }
         return $out;
     }
+    /**
+     * has phpMyAdmin
+     */
+    function hasPhpMyAdmin(){
+        global $root_path;
+        return is_dir("$root_path/phpMyAdmin/");
+    }
 //}
 ?>

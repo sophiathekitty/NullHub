@@ -11,7 +11,7 @@ class Settings extends Collection {
      */
     constructor(collection_name = "settings",item_name = "setting",get_url = "/api/settings/"){
         super(collection_name,item_name,get_url,get_url,"name","settings_");
-        this.pull_delay = 0;
+        this.pull_delay = 1000;
     }
     /**
      * static function for loading a var from the server
@@ -19,6 +19,7 @@ class Settings extends Collection {
      * @param {Function} callBack do something with the var you just loaded
      */
     static loadVar(var_name,callBack){
+        //console.debug("Settings::LoadVar",var_name);
         if(Settings.settings == null) Settings.settings = new Settings();
         Settings.settings.getVar(var_name,callBack);
     }
@@ -28,9 +29,11 @@ class Settings extends Collection {
      * @param {Function} callBack do something with the var you just loaded
      */
     getVar(var_name,callBack){
+        //console.debug("Settings::GetVar",var_name);
         this.getItem(var_name,data=>{
+            //console.debug("Settings::GetVar",var_name,data);
             if(data) callBack(data.value);
-            else console.log("GetVar fail?");
+            else console.error("GetVar fail?",var_name);
         });
     }
     /**
@@ -71,7 +74,7 @@ class Settings extends Collection {
                 }
                 if(this.errors < 0) this.errors = 0;
                 if(callBack) callBack(data);
-                Model.storage.getItem(this.name+"_changed",data);
+                //Model.storage.getItem(this.name+"_changed",data);
                 Model.server_errors--;
                 Model.push_requests_completed++;
                 if(Model.server_errors < 0) Model.server_errors = 0;
