@@ -16,7 +16,7 @@ class Faker {
     public static function FakeData($table_name,$data){
         Faker::TestMode();
         clsDB::$db_g->safe_insert($table_name,$data);
-        Debug::Log("Faker::FakeData",$table_name,$data);
+        //Debug::Log("Faker::FakeData",$table_name,$data);
     }
     /**
      * fake a series of data logs

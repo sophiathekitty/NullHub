@@ -202,9 +202,9 @@ class clsModel {
      * @param string $field the name of the field to search by
      * @param string $datetime the date to search by YYYY:MM:DD HH:MM:SS
      */
-    public function LoadWhereFieldAfter($where,$field,$datetime){
+    public function LoadWhereFieldAfter($where,$field,$datetime, $order = "ASC"){
         $where_txt = clsDB::$db_g->where_safe_string($where);
-        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE $where_txt AND `$field` > '$datetime';");
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE $where_txt AND `$field` > '$datetime' ORDER BY `$field` $order;");
     }
     /**
      * load WHERE $where AND `$field` < '$datetime'
