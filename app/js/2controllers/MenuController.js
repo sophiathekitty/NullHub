@@ -6,7 +6,6 @@ class MenuController extends Controller {
     constructor(debug = true){
         if(debug) console.info("MenuController::Constructor");
         super(new MenuView(),debug);
-        //this.clock = new ClockController();
     }
     /**
      * setup menu event handling
