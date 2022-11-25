@@ -53,6 +53,7 @@ class ClockView extends View {
                 $(".clock").attr("season",json.season);
                 $(".clock").attr("clouds",Math.round(json.clouds/25));
                 $(".clock").attr("moon_visible",json.moon_out);
+                $(".clock").attr("sun_visible",json.sun_out);
                 $(".clock [var=sunrise]").html(this.Time24to12(json.sunrise));
                 $(".clock [var=sunrise]").attr("unit",this.Time24toAM(json.sunrise));
                 $(".clock [var=sunset]").html(this.Time24to12(json.sunset));

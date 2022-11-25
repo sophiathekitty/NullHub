@@ -76,6 +76,7 @@
 .clock[show="date"] [var="sunset"],
 .clock[show="sunrise"] [var="date"],
 .clock[moon_visible="0"] .moon,
+.clock[sun_visible="0"] .sun,
 .clock .NullWeather,
 .clock .NullSensors,
 .clock .slideshow {
