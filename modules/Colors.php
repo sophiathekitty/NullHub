@@ -59,20 +59,28 @@ function ColorPalletStamp($p){
  */
 function SyncColorPallets(){
     if(Servers::IsHub()) return;
+    Services::Start("SyncColorPallets");
     $pallets = ServerRequests::LoadHubJSON("/api/colors/?pallet=1");
+    Services::Log("SyncColorPallets","pallets: ".count($pallets));
+    
     foreach($pallets['pallet'] as $pallet => $colors){
+        Services::Log("SyncColorPallets","pallet: $pallet");
         if(is_array($colors)) {
             foreach($colors as $id => $color){
                 if(is_array($color)){
                     if(count($color) == 2){
                         Colors::SetColor($id."_min",$color[0],$pallet);
                         Colors::SetColor($id."_max",$color[1],$pallet);
+                        Services::Log("SyncColorPallets","color: ".$id."_min : ".$color[0]);
+                        Services::Log("SyncColorPallets","color: ".$id."_max : ".$color[1]);
                     } else {
                         for($i = 0; $i < count($color); $i++){
                             Colors::SetColor($id."_".$i,$color[$i],$pallet);
+                            Services::Log("SyncColorPallets","color: ".$id."_$i : ".$color[$i]);
                         }
                     }
                 } else {
+                    Services::Log("SyncColorPallets","color: $id : $color");
                     Colors::SetColor($id,$color,$pallet);
                 }
             }
@@ -80,6 +88,7 @@ function SyncColorPallets(){
             Colors::SetColor($pallet,$colors);
         }
     }
+    Services::Complete("SyncColorPallets");
 }
 /**
  * lerp between two colors

@@ -7,6 +7,8 @@ Services::Log("NullHub::Setup","SyncRooms");
 SyncRooms();
 Services::Log("NullHub::Setup","UserSync::pull");
 UserSync::pull();
+Services::Log("NullHub::Setup","SyncColorPallets");
+SyncColorPallets();
 // find plugin services
 $plugins = FindPlugins($root_path."plugins/");
 define('main_already_included',true);

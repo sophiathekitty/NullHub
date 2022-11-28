@@ -6,6 +6,8 @@ Services::Log("NullHub::EveryDay","nMap::ForgetUnknown");
 nMap::ForgetUnknown();
 Services::Log("NullHub::EveryDay","UserSync::pull");
 UserSync::pull();
+Services::Log("NullHub::EveryDay","SyncColorPallets");
+SyncColorPallets();
 Services::Log("NullHub::EveryDay","Elections::CompleteElection");
 Elections::CompleteElection();    
 // find plugin services
