@@ -6,6 +6,7 @@ if(!isset($_GET['simple'])){
     if($data['NullWeather']){
         try{
             $data['weather'] = WeatherLogs::CurrentWeather();
+            $data['daytime'] = Sunrise::LoadToday();
         } catch(Exception $e){
             Debug::Log($e);
         }

@@ -71,16 +71,16 @@ function SyncColorPallets(){
                     if(count($color) == 2){
                         Colors::SetColor($id."_min",$color[0],$pallet);
                         Colors::SetColor($id."_max",$color[1],$pallet);
-                        Services::Log("SyncColorPallets","color: ".$id."_min : ".$color[0]);
-                        Services::Log("SyncColorPallets","color: ".$id."_max : ".$color[1]);
+                        //Services::Log("SyncColorPallets","color: ".$id."_min : ".$color[0]);
+                        //Services::Log("SyncColorPallets","color: ".$id."_max : ".$color[1]);
                     } else {
                         for($i = 0; $i < count($color); $i++){
                             Colors::SetColor($id."_".$i,$color[$i],$pallet);
-                            Services::Log("SyncColorPallets","color: ".$id."_$i : ".$color[$i]);
+                            //Services::Log("SyncColorPallets","color: ".$id."_$i : ".$color[$i]);
                         }
                     }
                 } else {
-                    Services::Log("SyncColorPallets","color: $id : $color");
+                    //Services::Log("SyncColorPallets","color: $id : $color");
                     Colors::SetColor($id,$color,$pallet);
                 }
             }
