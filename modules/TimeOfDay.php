@@ -243,8 +243,13 @@ class TimeOfDay {
      * @return bool returns true if there is moonrise data and the moon is out
      */
     public static function MoonOut(){
+        if(!HasPlugin("NullWeather")) return false;
+        $daytime = Sunrise::LoadToday();
+        return ($daytime['moon_percent'] != 0);
+        /*
         $moonrise = Settings::LoadSettingsVar('moonrise_txt');
         $moonset = Settings::LoadSettingsVar('moonset_txt');
+        if(is_null($moonrise) || is_null($moonset)) return false;
         list($rise_hour,$rise_min) = explode(":",$moonrise);
         list($set_hour,$set_min) = explode(":",$moonset);
         $h = (int)date('H');
@@ -257,6 +262,7 @@ class TimeOfDay {
         if($h == $rise_hour && $m > $rise_min) return true;
         if($h == $set_hour && $m < $set_min) return true;    
         return false;
+        */
     }    
     /**
     * is the sun out?

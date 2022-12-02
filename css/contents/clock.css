@@ -92,12 +92,22 @@
 .clock[show="description"] [var="description"]{
     display: inline-block;
 }
+.clock .sky #sun_holder {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+}
+.clock .sky #moon_holder {
+    position: absolute;
+    bottom: 35%;
+    left: 50%;
+}
 .clock .sky .moon {
     position: absolute;
-    top:1em;
-    left:1em;
-    width:2em;
-    height:2em;
+    top:-0.5em;
+    left:-4em;
+    width:1em;
+    height:1em;
     z-index: 0;
     border: none !important;
     box-shadow: #ffffff11 0.1em 0.1em 0.25em,#ffffff11 -0.1em -0.1em 0.25em,#ffffff11 -0.1em 0.1em 0.25em,#ffffff11 0.1em -0.1em 0.25em;
@@ -105,8 +115,8 @@
 
 .clock .sky .sun {
     position: absolute;
-    top:1em;
-    left:1em;
+    top:-0.5em;
+    left:-7em;
     width:1em;
     height:1em;
     z-index: 0;
@@ -118,40 +128,40 @@
     display: none;
 }
 [time_of_day="morning"] .sky .sun {
-    top:2.5em;
-    left:-0.5em;
+    /*top:2.5em;
+    left:-0.5em;*/
     width:2em;
     height:2em;
     background-color: #ffb78d;
 }
 [time_of_day="evening"] .sky .sun {
-    top:2.5em;
+    /*top:2.5em;
     left:3.5em;
     width:2em;
-    height:2em;
+    height:2em;*/
     background-color: #ffd82a;
 }
 [time_of_day="day"] .sky .moon {
-    top:0.5em;
+    /*top:0.5em;
     left:3em;
     width:1em;
-    height:1em;
+    height:1em;*/
     opacity: 0.25;
     mix-blend-mode: screen;
 }
 [time_of_day="morning"] .sky .moon {
-    top:1.25em;
+    /*top:1.25em;
     left:3em;
     width:1.5em;
-    height:1.5em;
+    height:1.5em;*/
     opacity: 0.5;
     mix-blend-mode: lighten;
 }
 [time_of_day="evening"] .sky .moon {
-    top:2em;
+    /*top:2em;
     left:-0.25em;
     width:2em;
-    height:2em;
+    height:2em;*/
     opacity: 0.75;
     mix-blend-mode: lighten;
 }

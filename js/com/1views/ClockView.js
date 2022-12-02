@@ -38,7 +38,7 @@ class ClockView extends View {
         }
     }
     /**
-     * update the time and other datas
+     * update the time and other data
      */
     display(){
         if(this.debug) console.log("ClockView::Display");
@@ -130,7 +130,24 @@ class ClockView extends View {
                                 });
                             });
                         });
-                    }            
+                    }
+                    // rotate the sun and moon
+                    this.sunrise_time = json.daytime.sunrise_time;
+                    this.sunset_time = json.daytime.sunset_time;
+                    
+                    if('moonrise_time_yesterday' in json.daytime){
+                        var now = Math.floor(Date.now() / 1000);
+                        if(now < json.daytime.moonset_time){
+                            this.moonrise_time = json.daytime.moonrise_time_yesterday;
+                            this.moonset_time = json.daytime.moonset_time;        
+                        } else {
+                            this.moonrise_time = json.daytime.moonrise_time;
+                            this.moonset_time = json.daytime.moonset_time_tomorrow;
+                        }
+                    } else {
+                        this.moonrise_time = json.daytime.moonrise_time;
+                        this.moonset_time = json.daytime.moonset_time;    
+                    }
                 }
                 if(json.NullSensors){
                     $(".clock .indoors[var=temp]").html(Math.round(json.indoors.temp));
@@ -145,6 +162,34 @@ class ClockView extends View {
             });
         }
         if(this.indoor) this.indoor.displayWeather();
+    }
+    /**
+     * rotate and scale the sun and moon
+     */
+    displaySunMoon(){
+        if('moonset_time' in this){
+            var now = Math.floor(Date.now() / 1000);
+            var sun_percent = 0;
+            var moon_percent = 0;
+            
+            if(this.sunrise_time < now && now < this.sunset_time){
+                sun_percent = (now-this.sunrise_time)/(this.sunset_time-this.sunrise_time);
+            }
+            if(this.moonrise_time < now && now < this.moonset_time){
+                moon_percent = (now-this.moonrise_time)/(this.moonset_time-this.moonrise_time);
+            }
+            var sun_scale = 4*Math.abs(sun_percent-0.5)+1;
+            var moon_scale = 3.5*Math.abs(moon_percent-0.5)+1;
+            if(sun_scale < 1) sun_scale = 1;
+            if(moon_scale < 1) moon_scale = 1;
+            $(".clock #sun_holder").css("transform","rotate("+((130*sun_percent)+35)+"deg)");
+            $(".clock #moon_holder").css("transform","rotate("+((260*moon_percent)-20)+"deg)");
+            $(".clock #moon_holder .moon").css("transform","rotate("+((-260*moon_percent)+20)+"deg)");
+            $(".clock #sun_holder .sun").css("width",sun_scale+"em");
+            $(".clock #sun_holder .sun").css("height",sun_scale+"em");
+            $(".clock #moon_holder .moon").css("width",moon_scale+"em");
+            $(".clock #moon_holder .moon").css("height",moon_scale+"em");
+        }
     }
     /**
      * calculates if the current time is past solar noon
@@ -176,6 +221,6 @@ class ClockView extends View {
         if(h == 0) h = 12;
         if(m < 10) m = "0"+m;
         $(".clock [var=time]").html(h+":"+m);
-
+        this.displaySunMoon();
     }
 }
