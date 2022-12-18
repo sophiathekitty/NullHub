@@ -72,6 +72,7 @@ function ExtensionsFolder($root,$path, $verbose = false){
             }
             
             $extension['path'] = "http://".LocalIp().Settings::LoadSettingsVar('path',"/").$path.$file."/";
+            $extension['local'] = $path.$file."/";
             $extension['app'] = "http://".LocalIp().Settings::LoadSettingsVar('path',"/").$path.$file."/app";
             $extension['api'] = "http://".LocalIp().Settings::LoadSettingsVar('path',"/").$path.$file."/api";
             $extension['hash'] = GitHash($root.$path.$file."/");//FolderHash($root.$path.$file."/"); //hash("crc32b",FolderModifiedDate($root.$path.$file."/api/").FolderModifiedDate($root.$path.$file."/models/").FolderModifiedDate($root.$path.$file."/modules/"));

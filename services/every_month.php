@@ -17,7 +17,7 @@ Services::Log("NullHub::EveryMonth","Plugins -- done");
 $extensions = LocalExtensions();
 Services::Log("NullHub::EveryMonth","Extensions -- start");
 foreach($extensions as $extension){
-    if(is_file($extension['path']."services/every_month.php")){
+    if(is_file($root_path.$extension['local']."services/every_month.php")){
         Services::Log("NullHub::EveryMonth","Extensions -- ".$extension['id']);
         $info = file_get_contents($extension['path']."services/every_month.php");
     }

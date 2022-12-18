@@ -27,7 +27,7 @@ Services::Log("NullHub::EveryHour","Plugins -- done");
 $extensions = LocalExtensions();
 Services::Log("NullHub::EveryHour","Extensions -- start");
 foreach($extensions as $extension){
-    if(is_file($extension['path']."services/every_hour.php")){
+    if(is_file($root_path.$extension['local']."services/every_hour.php")){
         Services::Log("NullHub::EveryHour","Extensions -- ".$extension['id']);
         $info = file_get_contents($extension['path']."services/every_hour.php");
     }

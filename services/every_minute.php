@@ -22,11 +22,13 @@ foreach($plugins as $plugin){
 Services::Log("NullHub::EveryMinute","Plugins -- done");
 // extensions 
 $extensions = LocalExtensions();
-Services::Log("NullHub::EveryMinute","Extensions -- start");
+Services::Log("NullHub::EveryMinute","Extensions -- start ".count($extensions));
 foreach($extensions as $extension){
-    if(is_file($extension['path']."services/every_minute.php")){
-        Services::Log("NullHub::EveryMinute","Extensions -- ".$extension['id']);
+    if(is_file($root_path.$extension['local']."services/every_minute.php")){
+        Services::Log("NullHub::EveryMinute","Extensions -- ".$extension['id']." ".$extension['path']."services/every_minute.php");
         $info = file_get_contents($extension['path']."services/every_minute.php");
+    } else {
+        Services::Log("NullHub::EveryMinute","Extensions -missing?- ".$root_path.$extension['local']."services/every_minute.php");
     }
 }
 

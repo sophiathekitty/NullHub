@@ -25,7 +25,7 @@ if($min == "0" || $min == "5" || (int)$min == 0 || (int)$min == 5){
     $extensions = LocalExtensions();
     Services::Log("NullHub::EveryFiveMinutes","Extensions -- start");
     foreach($extensions as $extension){
-        if(is_file($extension['path']."services/every_five_minutes.php")){
+        if(is_file($root_path.$extension['local']."services/every_five_minutes.php")){
             Services::Log("NullHub::EveryFiveMinutes","Extensions -- ".$extension['id']);
             $info = file_get_contents($extension['path']."services/every_five_minutes.php");
         }

@@ -24,7 +24,7 @@ Services::Log("NullHub::Setup","Plugins -- done");
 $extensions = LocalExtensions();
 Services::Log("NullHub::Setup","Extensions -- start");
 foreach($extensions as $extension){
-    if(is_file($extension['path']."services/setup.php")){
+    if(is_file($root_path.$extension['local']."services/setup.php")){
         Services::Log("NullHub::Setup","Extensions -- ".$extension['id']);
         $info = file_get_contents($extension['path']."services/setup.php");
     }

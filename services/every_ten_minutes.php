@@ -22,7 +22,7 @@ if($min == "1" || (int)$min == 1){
     $extensions = LocalExtensions();
     Services::Log("NullHub::EveryTenMinutes","Extensions -- start");
     foreach($extensions as $extension){
-        if(is_file($extension['path']."services/every_ten_minutes.php")){
+        if(is_file($root_path.$extension['local']."services/every_ten_minutes.php")){
             Services::Log("NullHub::EveryTenMinutes","Extensions -- ".$extension['id']);
             $info = file_get_contents($extension['path']."services/every_ten_minutes.php");
         }

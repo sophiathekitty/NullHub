@@ -19,7 +19,7 @@ Services::Log("NullHub::EveryWeek","nMap::Plugins -- done");
 $extensions = LocalExtensions();
 Services::Log("NullHub::EveryWeek","Extensions -- start");
 foreach($extensions as $extension){
-    if(is_file($extension['path']."services/every_week.php")){
+    if(is_file($root_path.$extension['local']."services/every_week.php")){
         Services::Log("NullHub::EveryWeek","Extensions -- ".$extension['id']);
         $info = file_get_contents($extension['path']."services/every_week.php");
     }

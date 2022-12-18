@@ -4,3 +4,4 @@ backup.sql
 extentions/*
 plugins/*
 logs/*
+uploads/*
