@@ -4,6 +4,15 @@
  */
 class View {
     static refresh_ratio = 1;
+    static clock_delay_seconds = 15;
+    static slideshow = [];
+    static clock = [];
+    static every_minute = [];
+    static every_five_minute = [];
+    static every_ten_minute = [];
+    static every_hour = [];
+    static every_day = [];
+    static sections = {};
     /**
      * Create a view
      * @param {Model|Collection|HourlyChart|Model[]} model The data loading object. can be an array of Models
@@ -29,16 +38,129 @@ class View {
         //setTimeout(this.refresh.bind(this),this.refresh_rate);
     }
     /**
-     * Refresh the view with a dynamic refresh rate based on View.refresh_ratio
-     * use bind to pass the instance to this function
-     * example: this.refresh.bind(this)
+     * add a view to the clock refresh loop
+     * @param {View} view the view to refresh
+     * @param {string} element only refresh if element is visible
+     */
+    static AddClockRefresh(view,element){
+        View.AddToRefreshLoop(View.every_minute,view,element);
+    }
+    /**
+     * add a view to the slideshow refresh loop
+     * @param {View} view the view to refresh
+     * @param {string} element only refresh if element is visible
+     */
+    static AddSlideshowRefresh(view,element){
+        View.AddToRefreshLoop(View.every_minute,view,element);
+    }
+    /**
+     * add a view to the every minute refresh loop
+     * @param {View} view the view to refresh
+     * @param {string} element only refresh if element is visible
+     */
+    static AddMinuteRefresh(view,element){
+        View.AddToRefreshLoop(View.every_minute,view,element);
+    }
+    /**
+     * add a view to the every five minute refresh loop
+     * @param {View} view the view to refresh
+     * @param {string} element only refresh if element is visible
+     */
+    static AddFiveMinuteRefresh(view,element){
+        View.AddToRefreshLoop(View.every_five_minute,view,element);
+    }
+    /**
+     * add a view to the every ten minute refresh loop
+     * @param {View} view the view to refresh
+     * @param {string} element only refresh if element is visible
+     */
+    static AddTenMinuteRefresh(view,element){
+        View.AddToRefreshLoop(View.every_ten_minute,view,element);
+    }
+    /**
+     * add a view to the every hour refresh loop
+     * @param {View} view the view to refresh
+     * @param {string} element only refresh if element is visible
+     */
+    static AddHourRefresh(view,element){
+        View.AddToRefreshLoop(View.every_hour,view,element);
+    }
+    /**
+     * add a view to the every day refresh loop
+     * @param {View} view the view to refresh
+     * @param {string} element only refresh if element is visible
+     */
+    static AddDayRefresh(view,element){
+        View.AddToRefreshLoop(View.every_minute,view,element);
+    }    
+    /**
+     * add a view to an update loop
+     * @param {Array<ViewRefresh>} loop the update loop to add to
+     * @param {View} view the view to update
+     * @param {string} element the element that needs to be visible to update
+     */
+    static AddToRefreshLoop(loop,view,element){
+        var refresh_view = new ViewRefresh(view,element);
+        loop.push(refresh_view);
+    }
+    /**
+     * 
+     * @param {View} view the view to update
+     * @param {string} section the section to update when section is loaded
+     */
+    static AddSectionRefresh(view,section){
+        // add to section refresh
+        if(section in View.sections){
+            View.sections[section].push(view);
+        } else {
+            View.sections[section] = [view];
+        }
+    }
+    /**
+     * runs all the refresh loops
+     */
+    static RefreshLoop(){
+        var now = new Date();
+        var seconds = now.getSeconds();
+        var minutes = now.getMinutes();
+        var hours = now.getHours();
+        if(seconds < View.clock_delay_seconds){
+            View.RefreshViews(View.every_minute);
+            if(minutes == 1){
+                View.RefreshViews(View.every_hour);
+                if(hours == 0){
+                    View.RefreshViews(View.every_day);
+                }
+            }
+            if(Math.floor(minutes/10) == minutes/10){
+                View.RefreshViews(View.every_ten_minute);
+            }
+            if(Math.floor(minutes/5) == minutes/5){
+                View.RefreshViews(View.every_five_minute);
+            }
+        }
+    }
+    /**
+     * updates all the views in an array will just return if views list is empty
+     * @param {Array<ViewRefresh>} views the list of views to update 
+     */
+    static RefreshViews(views){
+        if(views.length == 0) return;
+        views.forEach((view)=>{
+            view.refresh();
+        });
+    }
+    /**
+     * If not overwritten will call display function.
+     * called when view has been added to a refresh loop.
+     * @example View.AddMinuteRefresh(this,"#floors");
      */
     refresh(){
         //console.log("refresh view",this.model.name);
         //console.log("refresh ratio",View.refresh_ratio,this.refresh_rate*View.refresh_ratio);
         this.display();
         //setTimeout(this.refresh.bind(this),this.refresh_rate*View.refresh_ratio);
-        View.refresh_ratio += 0.01;
+        //View.refresh_ratio += 0.01;
     }
     /**
      * Just populates the data doesn't build any elements. (unless it needs to just call the build)
@@ -406,6 +528,30 @@ class ReMapper {
     }
 
 }
-$(document).mousemove(function(e){
+/**
+ * refresh view class
+ */
+class ViewRefresh{
+    /**
+     * 
+     * @param {View} view the view to refresh
+     * @param {string} element the element that needs to be visible to refresh
+     */
+    constructor(view,element){
+        this.view = view;
+        this.section = section;
+        this.element = element;
+    }
+    refresh(){
+        if($(this.element).is(":visible")){
+            this.view.refresh();
+        }
+    }
+}
+$(document).on('mousemove',(e)=>{
     View.refresh_ratio = 1;
+});
+$(document).on('ready',()=>{
+    View.clock_interval = setInterval(View.RefreshLoop,View.clock_delay_seconds*1000);
+
 });

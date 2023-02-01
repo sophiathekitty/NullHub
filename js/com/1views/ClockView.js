@@ -84,7 +84,11 @@ class ClockView extends View {
                 if(h == 0) h = 12;
                 if(m < 10) m = "0"+m;
                 $(".clock [var=time]").html(h+":"+m);
-                // display weather info
+                /**
+                 * 
+                 *  Null Weather Stuff
+                 * 
+                 */
                 if(json.NullWeather){
                     $(".clock .outdoors[var=temp]").html(Math.round(json.weather.temp));
                     this.pallet.getColorLerp("temp",json.weather.temp,color=>{
@@ -149,6 +153,11 @@ class ClockView extends View {
                         this.moonset_time = json.daytime.moonset_time;    
                     }
                 }
+                /**
+                 * 
+                 *  Null Sensors Stuff
+                 * 
+                 */
                 if(json.NullSensors){
                     $(".clock .indoors[var=temp]").html(Math.round(json.indoors.temp));
                     this.pallet.getColorLerp("temp",json.indoors.temp,color=>{
@@ -189,6 +198,10 @@ class ClockView extends View {
             $(".clock #sun_holder .sun").css("height",sun_scale+"em");
             $(".clock #moon_holder .moon").css("width",moon_scale+"em");
             $(".clock #moon_holder .moon").css("height",moon_scale+"em");
+            if(sun_percent <= 0 || sun_percent > 1) $(".clock").attr("sun_visible",0);
+            else $(".clock").attr("sun_visible",1);
+            if(moon_percent <= 0 || moon_percent > 1) $(".clock").attr("moon_visible",0);
+            else $(".clock").attr("moon_visible",1);
         }
     }
     /**
@@ -207,10 +220,10 @@ class ClockView extends View {
 
     }
     /**
-     * acting as an alias for display()
+     * just refreshes the clock
      */
     refresh(){
-        if(this.debug) console.log("ClockView::Refresh");
+        //if(this.debug) console.log("ClockView::Refresh");
         //this.display();
         var date = new Date();
         var h = date.getHours();

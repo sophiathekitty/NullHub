@@ -82,6 +82,7 @@ define("START_TIME",microtime(true));
                 break;
             default:
                 if($_SERVER['PHP_SELF'] == "/api/info/setup/index.php") break;
+                if(strpos($_SERVER['PHP_SELF'],"setup") > -1) break;
                 $data = ['error'=>constant("SETUP_MODE")];
                 $data['api'] = $_SERVER['PHP_SELF'];
                 $data['server'] = $_SERVER;
