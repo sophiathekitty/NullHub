@@ -241,5 +241,14 @@ function WeeksToHours($weeks){
 function WeeksToMinutes($weeks){
     return SecondsToMinutes(WeeksToSeconds($weeks));
 }
-
+/**
+ * Merge to floats together
+ * ($a * $percent)+($b * (1 - $percent))
+ * @param float $a the first number
+ * @param float $b the second number
+ * @param float $percent the percentage of the first number to use.  $a * $percent + $b * (1-$percent)
+ */
+function MergeFloats($a,$b,$percent = 0.5){
+    return ($a*$percent)+($b*(1-$percent));
+}
 ?>

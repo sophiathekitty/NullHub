@@ -112,5 +112,44 @@ class HourlyChart {
         }
         return $averages;
     }
+    /**
+     * merge two hourly charts into one (average the hourly data together and figure out the min and max)
+     * @param array $dataA the first hourly chart
+     * @param array $dataB the second hourly chart
+     * @param float $percent the percent of the first field to use. $dataA * $percent + $dataB * (1-$percent)
+     * @param array $fields a list of fields to average
+     * @return array the average of the two charts
+     */
+    public function Merge($dataA,$dataB,$fields,$percent=0.5){
+        Debug::Log("HourlyChart::Merge",$dataA,$dataB,$fields,$percent);
+        $data = [];
+        for($h = 0; $h < 24; $h++){
+            $data[$h] = ['hour'=>"$h"];
+            if($h < 10) $data[$h] = ['hour'=>"0$h"];
+            foreach($fields as $field){
+                if(isset($dataA[$h][$field]) && isset($dataB[$h][$field]) && is_numeric($dataA[$h][$field]) && is_numeric($dataB[$h][$field])){
+                    Debug::Log("HourlyChart::Merge","merge lists");
+                    $data[$h][$field] = round(MergeFloats($dataA[$h][$field],$dataB[$h][$field],$percent),2);
+                    //$data[$h][$field] = round((($dataA[$h][$field]*$percent)+($dataB[$h][$field]*(1-$percent))),2);
+                    //$data[$h][$field] = round(($dataA[$h][$field]+$dataB[$h][$field])/2,2);
+                    if($dataA[$h][$field."_max"] > $dataB[$h][$field."_max"]) $data[$h][$field."_max"] = $dataA[$h][$field."_max"];
+                    else $data[$h][$field."_max"] = $dataB[$h][$field."_max"];
+                    if($dataA[$h][$field."_min"] < $dataB[$h][$field."_min"]) $data[$h][$field."_min"] = $dataA[$h][$field."_min"];
+                    else $data[$h][$field."_min"] = $dataB[$h][$field."_min"];
+                } else if(isset($dataA[$h][$field]) && is_numeric($dataA[$h][$field])){
+                    Debug::Log("HourlyChart::Merge","Use data A");
+                    $data[$h][$field] = $dataA[$h][$field];
+                    $data[$h][$field."_max"] = $dataA[$h][$field."_max"];
+                    $data[$h][$field."_min"] = $dataA[$h][$field."_min"];
+                } else if(isset($dataB[$h][$field]) && is_numeric($dataB[$h][$field])){
+                    Debug::Log("HourlyChart::Merge","Use data B");
+                    $data[$h][$field] = $dataA[$h][$field];
+                    $data[$h][$field."_max"] = $dataB[$h][$field."_max"];
+                    $data[$h][$field."_min"] = $dataB[$h][$field."_min"];
+                }
+            }
+        }
+        return $data;
+    }
 }
 ?>
