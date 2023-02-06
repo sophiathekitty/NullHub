@@ -197,7 +197,7 @@ class clsModel {
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `$field` < '$datetime';");
     }
     /**
-     * load WHERE $where AND `$field` > '$datetime'
+     * load all WHERE $where AND `$field` > '$datetime'
      * @param array $where a keyed array to build where text ['field'=>$value]
      * @param string $field the name of the field to search by
      * @param string $datetime the date to search by YYYY:MM:DD HH:MM:SS

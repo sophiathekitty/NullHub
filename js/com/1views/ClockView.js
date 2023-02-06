@@ -91,6 +91,7 @@ class ClockView extends View {
                  */
                 if(json.NullWeather){
                     $(".clock .outdoors[var=temp]").html(Math.round(json.weather.temp));
+                    $(".clock .outdoors[var=temp]").attr("title",(Math.round(json.weather.temp*10)/10)+"° | "+(Math.round(json.weather.temp_max*10)/10)+"° / "+(Math.round(json.weather.temp_min*10)/10)+"°");
                     this.pallet.getColorLerp("temp",json.weather.temp,color=>{
                         $(".clock .outdoors[var=temp]").css("color",color);
                     });
@@ -160,10 +161,12 @@ class ClockView extends View {
                  */
                 if(json.NullSensors){
                     $(".clock .indoors[var=temp]").html(Math.round(json.indoors.temp));
+                    $(".clock .indoors[var=temp]").attr("title","Temp: "+(Math.round(json.indoors.temp*10)/10)+"° | "+(Math.round(json.indoors.temp_max*10)/10)+"° / "+(Math.round(json.indoors.temp_min*10)/10)+"°");
                     this.pallet.getColorLerp("temp",json.indoors.temp,color=>{
                         $(".clock .indoors[var=temp]").css("color",color);
                     });
                     $(".clock .indoors[var=hum]").html(Math.round(json.indoors.hum));
+                    $(".clock .indoors[var=hum]").attr("title","Hum: "+(Math.round(json.indoors.hum*10)/10)+"% | "+(Math.round(json.indoors.hum_max*10)/10)+"% / "+(Math.round(json.indoors.hum_min*10)/10)+"%");
                     this.pallet.getColorLerp("hum",json.indoors.hum,color=>{
                         $(".clock .indoors[var=hum]").css("color",color);
                     });
