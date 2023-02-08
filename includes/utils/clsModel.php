@@ -169,6 +169,7 @@ class clsModel {
      * @return array returns the array for the table rows loaded
      */
     public function LoadAllWhere($where,$order = null,$fields = null){
+        //Debug::Log("clsModel::LoadAllWhere",$where);
         return clsDB::$db_g->safe_select($this->table_name,$where,$order,$fields);
     }
     /**

@@ -121,16 +121,16 @@ if(!defined('MYSQL_CLASS')){
 		function where_safe_string($where, $table = null){
 			$regex = array("/\"/","/\'/");
 			$replace = array("&quot;","&apos;");
-			$where = preg_replace($regex,$replace,$where);
+			$where_safe = preg_replace($regex,$replace,$where);
 			$first = true;
 			$sql = "";
-			foreach($where as $key => $value){
+			foreach($where_safe as $key => $value){
 				if(!$first) $sql .= " AND";
 				if(is_null($table)){
-					if(is_null($value)) $sql .= " `$key` IS NULL";
+					if(is_null($where[$key])) $sql .= " `$key` IS NULL";
 					else $sql .= " `$key` = '$value'";
 				} else{ 
-					if(is_null($value)) $sql .= " `$table`.`$key` IS NULL";
+					if(is_null($where[$key])) $sql .= " `$table`.`$key` IS NULL";
 					else $sql .= " `$table`.`$key` = '$value'";
 				}
 				$first = false;
@@ -157,12 +157,13 @@ if(!defined('MYSQL_CLASS')){
 			if(!is_null($where)){
 				$regex = array("/\"/","/\'/");
 				$replace = array("&quot;","&apos;");
-				$where = preg_replace($regex,$replace,$where);
+				$where_safe = preg_replace($regex,$replace,$where);
 				$sql .= " WHERE";
 				$first = true;
-				foreach($where as $key => $value){
+				foreach($where_safe as $key => $value){
+					//Debug::Log("clsDB::safe_select",$key,$value,is_null($value),is_null($where[$key]));
 					if(!$first) $sql .= " AND";
-					if(is_null($value)) $sql .= " `$key` IS NULL";
+					if(is_null($where[$key])) $sql .= " `$key` IS NULL";
 					else $sql .= " `$key` = '$value'";
 					$first = false;
 				}
