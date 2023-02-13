@@ -6,14 +6,15 @@ function printRoom($room){ global $root_path;
         <div class="room card" room_id="<?=$room['id'];?>" activity="<?=$room['activity'];?>" lights_on_in_room="<?=$room['lights_on_in_room'] ? "0" : "1";?>" lights_on_in_neighbors="<?=$room['lights_on_in_neighbors'] ? "0" : "1";?>" neighbors_lights_off_percent="<?=$room['neighbors_lights_off_percent'];?>">
             <h1>
                 <span var="name"><?=$room['name'];?></span>
-                <span class="time_sensors">
+                <!--<span class="time_sensors">
                     <span var="IsTimeForBed" val="<?=$room['IsTimeForBed'] ? "0" : "1";?>" title="<?=$room['IsTimeForBed'] ? "Is" : "Not";?> Time for Bed In <?=$room['name'];?>"></span>
                     <span var="IsBedtimeHours" val="<?=$room['IsBedtimeHours'] ? "0" : "1";?>" title="<?=$room['IsBedtimeHours'] ? "Is" : "Not";?> Bedtime Hours In <?=$room['name'];?>"></span>
                     <span var="IsTimeToGetUp" val="<?=$room['IsTimeToGetUp'] ? "0" : "1";?>" title="<?=$room['IsTimeToGetUp'] ? "Is" : "Not";?> Time To Get Up In <?=$room['name'];?>"></span>
                     <span var="IsDayInside" val="<?=$room['IsDayInside'] ? "0" : "1";?>" title="<?=$room['IsDayInside'] ? "Is" : "Not";?> Daylight Inside Of <?=$room['name'];?>"></span>
                     <span var="IsDayTime" val="<?=$room['IsDayTime'] ? "0" : "1";?>" title="<?=$room['IsDayTime'] ? "Is" : "Not";?> Daylight Outside"></span>
-                </span>
+                </span>-->
                 <span class="sensors"><?php
+                if(HasPlugin("NullProfiles")) echo file_get_contents("http://localhost/plugins/NullProfiles/widgets/current_room_use.php?room_id=".$room['id']);
                 if(HasPlugin("NullDisplay")) echo file_get_contents("http://localhost/plugins/NullDisplay/widgets/room_displays.php?room_id=".$room['id']);
                 if(HasPlugin("NullSensors")) echo file_get_contents("http://localhost/plugins/NullSensors/widgets/room_temperature_bug.php?room_id=".$room['id']);
                 ?></span>

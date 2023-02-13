@@ -8,6 +8,7 @@ function RoomItem($room){ ?>
             if(HasPlugin("NullLights")) echo file_get_contents("http://localhost/plugins/NullLights/widgets/room_lights.php?room_id=".$room['id']);
         ?></nav>
         <span class="sensors"><?php
+            if(HasPlugin("NullProfiles")) echo file_get_contents("http://localhost/plugins/NullProfiles/widgets/current_room_use.php?room_id=".$room['id']);
             if(HasPlugin("NullDisplay")) echo file_get_contents("http://localhost/plugins/NullDisplay/widgets/room_displays.php?room_id=".$room['id']);
             if(HasPlugin("NullSensors")) echo file_get_contents("http://localhost/plugins/NullSensors/widgets/room_temperature_bug.php?room_id=".$room['id']);
         ?></span>

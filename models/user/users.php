@@ -95,6 +95,15 @@ class Users extends clsModel{
         return $instance->LoadAll();
     }
     /**
+     * get a user
+     * @param int $user_id the user id
+     * @return array array of all the users
+     */
+    public static function UserId($user_id){
+        $instance = new Users();
+        return $instance->LoadWhere(['id'=>$user_id]);
+    }
+    /**
      * get all the users with a level over 3.
      * @return array array of users that live here
      */

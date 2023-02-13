@@ -13,6 +13,7 @@ class FloorsController extends Controller {
         this.lights = null;
         this.temperature = null;
         this.displays = null;
+        this.room_uses = null;
     }
     /**
      * build view and start refresh interval
@@ -52,11 +53,6 @@ class FloorsController extends Controller {
         try {
             this.lights = new RoomLightsController();
             if(this.debug) console.log("FloorController::RoomsBuilt-RoomLightsController",this.lights);
-            this.view.model.getData(json=>{
-                json.rooms.forEach(room=>{
-                    //this.lights.view.build(room.id);
-                });
-            });
             this.lights.roomsReady();
         } catch (error) {
             if(this.debug) console.warn("FloorsController::RoomsBuilt-RoomLightsController not available",error);
@@ -64,24 +60,20 @@ class FloorsController extends Controller {
         try {
             this.displays = new DisplayStatusIcons();
             if(this.debug) console.log("FloorController::RoomsBuilt-DisplayStatusIcons",this.displays);
-            this.view.model.getData(json=>{
-                json.rooms.forEach(room=>{
-                    //this.displays.build(room.id);
-                });
-            });
         } catch (error) {
             if(this.debug) console.warn("FloorsController::RoomsBuilt-DisplayStatusIcons not available",error);
         }
         try {
             this.temperature = new TemperatureBug();
             if(this.debug) console.log("FloorController::RoomsBuilt-TemperatureBug",this.temperature);
-            this.view.model.getData(json=>{
-                json.rooms.forEach(room=>{
-                    //this.temperature.build(room.id);
-                });
-            });
         } catch (error) {
             if(this.debug) console.warn("FloorsController::RoomsBuilt-TemperatureBug not available",error);
+        }
+        try {
+            this.room_uses = new RoomUseView();
+            if(this.debug) console.log("FloorController::RoomsBuilt-RoomUseView",this.room_uses);
+        } catch (error) {
+            if(this.debug) console.warn("FloorsController::RoomsBuilt-RoomUseView not available",error);
         }
     }
     /**
@@ -100,6 +92,13 @@ class FloorsController extends Controller {
             this.view.model.getData(json=>{
                 json.rooms.forEach(room=>{
                     this.displays.display(room.id);
+                });
+            });
+        }
+        if(this.room_uses){
+            this.view.model.getData(json=>{
+                json.rooms.forEach(room=>{
+                    this.room_uses.display(room.id);
                 });
             });
         }
