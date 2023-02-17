@@ -16,7 +16,7 @@ class MenuController extends Controller {
         /**
          * show menu
          */
-        this.click("header","h1",e=>{
+        this.click("header","button.main_menu_btn",e=>{
             if(this.debug) console.debug("MenuController::header h1::Click");
             e.preventDefault();
             this.view.show();
