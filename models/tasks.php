@@ -83,6 +83,13 @@ class Tasks extends clsModel {
             'Default'=>null,
             'Extra'=>""
         ],[
+            'Field'=>"length_minutes",
+            'Type'=>"int(11)",
+            'Null'=>"YES",
+            'Key'=>"",
+            'Default'=>null,
+            'Extra'=>""
+        ],[
             'Field'=>"completed",
             'Type'=>"datetime",
             'Null'=>"YES",

@@ -255,5 +255,25 @@ define("START_TIME",microtime(true));
         global $root_path;
         return is_dir("$root_path/phpMyAdmin/");
     }
+    /**
+     * Get the json from the post data
+     */
+    function GetPostJSON(){
+        if(count($_POST)){
+            $query = [];
+            foreach($_POST as $key => $value){
+                $json_key = json_decode($key,true);
+                $json_value = json_decode($value,true);
+                if(is_null($json_value) && !is_null($json_key)) $query[] = $json_key;
+                if(!is_null($json_value)) $query[] = $json_value;
+                if(is_null($json_key) && is_null($json_value)) Debug::Log(['key'=>$key,'value'=>$value]);
+            }
+            if(count($query) == 1) return $query[0];
+            if(count($query) > 1){
+                return $query;
+            }
+        }
+        return null;    
+    }
 //}
 ?>

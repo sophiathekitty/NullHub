@@ -1,8 +1,5 @@
 <?php
-
-use PhpMyAdmin\Session;
-
- require_once("../../includes/main.php");
+require_once("../../includes/main.php");
 $default_name = "null device";
 $default_type = ServerType();
 $default_dev = $hash =  GitHash($root_path);
@@ -21,6 +18,9 @@ if($room_id){
     $room = Rooms::RoomId($room_id);
     if(!is_null($room)) $room_name = $room['name'];
 }
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 ?>
 <dialog class="side menu" id="main_menu">
     <h1 class="null" type="<?=Settings::LoadSettingsVar('type',$default_type);?>"><?=Settings::LoadSettingsVar('name',$default_name);?> <i><?=Settings::LoadSettingsVar('server',Hostname());?></i></h1>

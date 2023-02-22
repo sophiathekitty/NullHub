@@ -22,6 +22,10 @@ function OutputJson($data){
     if(count($_POST) > 0) $data['post'] = $_POST;
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+    
     echo json_encode($data, JSON_PRETTY_PRINT);
     if(json_last_error()) JsonDie(json_last_error_msg());
     if(!is_null(clsDB::$db_g)) clsDB::$db_g->CloseDB();

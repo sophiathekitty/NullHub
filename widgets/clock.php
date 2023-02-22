@@ -15,6 +15,10 @@ $sun_scale = 4*abs($sun_percent-0.5)+1;
 if($moon_scale < 1) $moon_scale = 1;
 if($sun_scale < 1) $sun_scale = 1;
 if(HasPlugin("NullSensors")) $indoors = AverageIndoorTemperature();
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 ?>
 <div id="clock" time="<?=date("g:i");?>" time_of_day="<?=TimeOfDay::TimeOfDayString()?>" day="<?=date("D");?>" month="<?=date("M");?>" season="<?=TimeOfDay::Season()?>" clouds="<?=Settings::LoadSettingsVar("clouds","0");?>" moon_visible="<?=TimeOfDay::MoonOutBoolAsInt();?>" NullWeather="<?=HasPluginBoolAsString("NullWeather")?>" NullSensors="<?=HasPluginBoolAsString("NullSensors")?>" class="clock">
     <div class="sky" moon_phase="<?=TimeOfDay::MoonPhaseString();?>" afternoon="<?=TimeOfDay::AfternoonBoolAsString();?>">

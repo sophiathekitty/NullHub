@@ -15,7 +15,11 @@ function RoomItem($room){ ?>
         <span var="lights_on_in_room" class="bool light" val="<?=$room['lights_on_in_room'];?>"></span>
         <span var="lights_on_in_neighbors" class="bool light" val="<?=$room['lights_on_in_neighbors'];?>"></span>
     </li>
-<?php } ?>
+<?php }
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+?>
 <section id="rooms_list" class="sidebar bottom">
     <h1>rooms</h1>
     <ul collection="rooms"><?php foreach($rooms as $room) RoomItem($room); ?></ul>
