@@ -132,6 +132,76 @@ class clsModel {
         return true;
     }
     /**
+     * add the guid to the data
+     * @param array $data
+     * @param string $args a list of field names. if none included will return null
+     * @return array the $data with $data['guid']
+     */
+    public function AddGUID($data){
+        if(isset($data['guid'])) return $data;
+        $args = func_get_args();
+        $fields = [];
+        if(count($args) == 1) {
+            $field = $this->guid_fields;
+        } else{
+            for($i = 1; $i < count($args); $i++){
+                if(is_string($args[$i])) $fields[] = $args[$i];
+            }    
+        }
+        if(count($fields) < 1) return null;
+        $guid_text = "";
+        foreach($fields as $field){
+            if(isset($data[$field])) $guid_text .= $data[$field];
+            else {
+                if($field == "created") $guid_text .= date("Y-m-d H:i:s");
+            }
+        }
+        if($guid_text == "") $guid_text = date("Y-m-d H:i:s").".".rand(0,10000);
+        $data['guid'] = md5($guid_text);
+        return $data;
+    }
+    /**
+     * make a guid for the data
+     * @param array $data
+     * @param string $args a list of field names. if none included will return null
+     * @return string the GUID string
+     */
+    public function MakeGUID($data){
+        if(isset($data['guid'])) return $data['guid'];
+        $args = func_get_args();
+        $fields = [];
+        if(count($args) == 1) {
+            $field = $this->guid_fields;
+        } else{
+            for($i = 1; $i < count($args); $i++){
+                if(is_string($args[$i])) $fields[] = $args[$i];
+            }    
+        }
+        if(count($fields) < 1) return null;
+        $guid_text = "";
+        foreach($fields as $field){
+            if(isset($data[$field])) $guid_text .= $data[$field];
+            else {
+                if($field == "created") $guid_text .= date("Y-m-d H:i:s");
+            }
+        }
+        if($guid_text == "") $guid_text = date("Y-m-d H:i:s").".".rand(0,10000);
+        return md5($guid_text);
+    }
+    /**
+     * name without tail number "item 1"
+     * @param string $name the name to remove the number from ("item 1")
+     * @return string the $name without the number "item"
+     */
+    public function RemoveTailNumber($name){
+        $number = substr($name,strlen($name)-1);
+        while((is_numeric($number) || $number == " ")&&strlen($name)>2){
+            $name = substr($name,0,strlen($name)-1);
+            $number = substr($name,strlen($name)-1);
+        }
+        return $name;
+    }
+    /**
      * loads all of the rows in the table
      * @return array database rows
      */
@@ -237,6 +307,31 @@ class clsModel {
      */
     public function LoadFieldBetweenWhere($where_string,$field,$start,$end){
         return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE $where_string AND `$field` BETWEEN '$start' AND '$end';");
+    }
+    /**
+     * load WHERE `$field` BETWEEN '$start' AND '$end'
+     * @param string $start_field the name of the earlier field (`start_date`)
+     * @param string $end_field the name of the later field (`stop_date`)
+     * @param string $datetime end date YYYY:MM:DD HH:MM:SS
+     * @return array the table array $rows[0]
+     */
+    public function LoadFieldsBetween($start_field,$end_field,$datetime,$order = null){
+        $order_txt = "";
+        if(!is_null($order)) $order_txt = clsDB::$db_g->order_safe_string($order);
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` WHERE `$start_field` <= '$datetime' AND `$end_field` >= '$datetime'$order_txt;");
+    }
+    /**
+     * load WHERE `$field` BETWEEN '$start' AND '$end' ($start_field <= $datetime AND $stop_field >= $datetime)
+     * @param string $start_field the name of the earlier field (`start_date`)
+     * @param string $end_field the name of the later field (`stop_date`)
+     * @param string $datetime end date YYYY:MM:DD HH:MM:SS
+     * @return array the table array $rows[0]
+     */
+    public function LoadWhereFieldsBetween($where,$start_field,$end_field,$datetime,$order = null){
+        $order_txt = "";
+        if(!is_null($order)) $order_txt = clsDB::$db_g->order_safe_string($order);
+        $where_string = clsDB::$db_g->where_safe_string($where);
+        return clsDB::$db_g->select("SELECT * FROM `".$this->table_name."` $where_string AND `$start_field` <= '$datetime' AND `$end_field` >= '$datetime'$order_txt;");
     }
     /**
      * load WHERE TIME(`$field`) BETWEEN '$hour:00:00' AND '$hour:59:59'
@@ -453,10 +548,12 @@ class clsModel {
         }
         $sql .= " FROM `".$this->table_name."` INNER JOIN ";
         $sql .= "`".$model->table_name."` on `".$model->table_name."`.`$model_on` = `".$this->table_name."`.`$on`";
-        $sql .= " WHERE ";
-        if(!is_null($model_where)) $sql .= clsDB::$db_g->where_safe_string($model_where,$model->table_name);
-        $sql .= " ";
-        if(!is_null($where)) $sql .= clsDB::$db_g->where_safe_string($where,$this->table_name);
+        if(!is_null($where) || !is_null($model_where)){
+            $sql .= " WHERE ";
+            if(!is_null($model_where)) $sql .= clsDB::$db_g->where_safe_string($model_where,$model->table_name);
+            $sql .= " ";
+            if(!is_null($where)) $sql .= clsDB::$db_g->where_safe_string($where,$this->table_name);    
+        }
         //echo "\n\n".$sql."\n\n";
         $rows = clsDB::$db_g->select($sql);
         $err = clsDB::$db_g->get_err();
@@ -499,6 +596,7 @@ class clsModel {
             "Extra"=>"auto_increment"
         ]
     ];
+    public $guid_fields = [];
     public $hourly_type = "";
     /**
      * constructor function

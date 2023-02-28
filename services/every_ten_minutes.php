@@ -2,7 +2,7 @@
 $min = substr(date("i"),1);
 //echo "[$min]\n";
 if($min == "1" || (int)$min == 1){
-    require_once("../includes/main.php");
+    if(!defined("EVERY_MINUTE")) require_once("../includes/main.php");
     Services::Start("NullHub::EveryTenMinutes");
     //Settings::SaveSettingsVar("Services::EveryTenMinutesStart",date("H:i:s"));
     Services::Log("NullHub::EveryTenMinutes","CheckOfflineHub");
@@ -12,9 +12,10 @@ if($min == "1" || (int)$min == 1){
     define('main_already_included',true);
     Services::Log("NullHub::EveryTenMinutes","Plugins -- start");
     foreach($plugins as $plugin){
-        if(is_file($plugin."services/every_ten_minute.php")){
+        if(is_file($plugin."services/every_ten_minutes.php")){
             Services::Log("NullHub::EveryTenMinutes","Plugins -- $plugin");
-            require_once($plugin."services/every_teb_minute.php");
+            require_once($plugin."services/every_ten_minutes.php");
+            //Services::Log("NullHub::EveryTenMinutes","Plugins -- $plugin -- done");
         }
     }
     Services::Log("NullHub::EveryTenMinutes","Plugins -- done");
@@ -31,5 +32,5 @@ if($min == "1" || (int)$min == 1){
     Services::Complete("NullHub::EveryTenMinutes");
     //Settings::SaveSettingsVar("Services::EveryTenMinutesDone",date("H:i:s"));
 }
-OutputJson([]);
+if(!defined("EVERY_MINUTE")) OutputJson([]);
 ?>

@@ -55,6 +55,13 @@ class Rooms extends clsModel{
             'Default'=>"0",
             'Extra'=>""
         ],[
+            'Field'=>"light_level",
+            'Type'=>"float",
+            'Null'=>"NO",
+            'Key'=>"",
+            'Default'=>"0",
+            'Extra'=>""
+        ],[
             'Field'=>"sunlight_offset",
             'Type'=>"int(11)",
             'Null'=>"NO",

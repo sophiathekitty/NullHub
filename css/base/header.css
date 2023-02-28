@@ -11,18 +11,33 @@ header h1 {
     font-size: 2em;
 }
 header .main_menu_btn {
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin: 0.1em;
     font-size: 2em;
     width: 1em;
-    height: 1em;
+    height: 0.75em;
     background: none;
     border: none;
-    background-image: url(/images/hamburger-menu.png);
+    /*background-image: url(/images/hamburger-menu.png);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
+    */
     cursor: pointer;
+}
+header .main_menu_btn span {
+    display: block;
+    width: 1em;
+    height: 0.10em;
+    background-color: var(--link);
+    border: none;
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+header .main_menu_btn:hover span {
+    background-color: var(--null);
 }
 @media( min-width: 1000px){
     header {

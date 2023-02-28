@@ -31,6 +31,12 @@ header("Pragma: no-cache");
             <a href="/tests/" target="_blank">tests</a>
         <?php } ?>
     </nav>
+    <?php if(HasPlugin("NullProfiles")) { ?>
+        <nav class="check-ins">
+            <a href="#home_today" model="DailyScheduleOverrides" schedule="day off" date="<?=date("Y-m-d");?>">Check-in</a>
+            <a href="#home_tomorrow" model="DailyScheduleOverrides" schedule="day off" date="<?=date("Y-m-d",time()+DaysToSeconds(1));?>">Tomorrow</a>
+        </nav>
+    <?php } ?>
     <ul id="device_settings" model="settings">
         <li>
             <span class="key">name</span>

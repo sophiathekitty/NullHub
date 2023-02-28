@@ -109,7 +109,7 @@ class ImageFile extends clsModel {
         if(isset($data['tags'])){
             $tags = explode(",",$data['tags']);
             if(!isset($data['guid'])){
-                $data['guid'] = ImageFile::MakeGUID($data['path'],$data['file']);
+                $data['guid'] = ImageFile::MakeImageGUID($data['path'],$data['file']);
             }
             foreach($tags as $tag){
                 ImageTags::SaveTag(['guid'=>$data['guid'],'tag',$tag]);
@@ -117,7 +117,7 @@ class ImageFile extends clsModel {
         }
         $data = $instance->CleanData($data);
         if(isset($data['guid']) && !is_null(ImageFile::ImageGUID($data['guid']))) return $instance->Save($data,['guid'=>$data['guid']]);
-        $data['guid'] = ImageFile::MakeGUID($data['path'],$data['file']);
+        $data['guid'] = ImageFile::MakeImageGUID($data['path'],$data['file']);
         return $instance->Save($data);
     }
     /**
@@ -126,7 +126,7 @@ class ImageFile extends clsModel {
      * @param string $file the image filename "image.jpg"
      * @return string the guid hash of the filepath md5($path.$file)
      */
-    public static function MakeGUID($path,$file){
+    public static function MakeImageGUID($path,$file){
         return md5($path.$file);
     }
 }

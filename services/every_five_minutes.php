@@ -2,7 +2,7 @@
 $min = substr(date("i"),1);
 //echo "minute: $min == 0 or 5?\n";
 if($min == "0" || $min == "5" || (int)$min == 0 || (int)$min == 5){
-    require_once("../includes/main.php");
+    if(!defined("EVERY_MINUTE")) require_once("../includes/main.php");
     //Settings::SaveSettingsVar("Services::EveryFiveMinutesStart",date("H:i:s"));
     Services::Start("NullHub::EveryFiveMinutes");
     Services::Log("NullHub::EveryFiveMinutes","nMapCrawler::CheckHosts");
@@ -35,5 +35,5 @@ if($min == "0" || $min == "5" || (int)$min == 0 || (int)$min == 5){
     Services::Complete("NullHub::EveryFiveMinutes");
     //Settings::SaveSettingsVar("Services::EveryFiveMinutesDone",date("H:i:s"));
 }
-OutputJson([]);
+if(!defined("EVERY_MINUTE")) OutputJson([]);
 ?>

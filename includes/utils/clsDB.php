@@ -138,6 +138,27 @@ if(!defined('MYSQL_CLASS')){
 			return $sql;
 		}
 		/**
+		 * parse an order array into a safe string
+		 */
+		function order_safe_string($order, $table = null){
+			$regex = array("/\"/","/\'/");
+			$replace = array("&quot;","&apos;");
+			$order_safe = preg_replace($regex,$replace,$order);
+			$sql = " ORDER BY ";
+			$first = true;
+			foreach($order_safe as $key => $value){
+				if(!$first){
+					$sql .= ", ";
+				}
+				if(is_null($table))
+					$sql .= "`$key` $value";
+				else
+					$sql .= "`$table`.`$key` $value";
+				$first = false;
+			}
+			return $sql;
+		}
+		/**
 		 * generates the sql from where array and order array and sanitizes where input
 		 * @param string $table the name of the table
 		 * @param array|null $where keyed array of where search ["key"=>"value","foo"=>"bar"] leave null to not include WHERE

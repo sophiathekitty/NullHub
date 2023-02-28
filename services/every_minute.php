@@ -36,5 +36,8 @@ foreach($extensions as $extension){
 Services::Log("NullHub::EveryMinute","Extensions -- done");
 Services::Complete("NullHub::EveryMinute");
 //Settings::SaveSettingsVar("Services::EveryMinuteDone",date("H:i:s"));
+define("EVERY_MINUTE",true);
+require_once("every_five_minutes.php");
+require_once("every_ten_minutes.php");
 OutputJson([]);
 ?>
