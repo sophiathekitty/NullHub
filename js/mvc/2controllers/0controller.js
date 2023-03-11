@@ -123,6 +123,26 @@ class Controller {
      * @param {string} child_selector the child element
      * @param {Function} callBack what to do when event happens
      */
+    removeListenerForEvent(event, selector, child_selector){
+        $(selector).off(event,child_selector);
+    }
+    /**
+     * this adds an event listener to an element $(selector).on(event,null,callBack);
+     * @param {string} event the name of the event
+     * @param {string} selector the element selector
+     * @param {Function} callBack what to do when event happens
+     */
+    removeListenerForEvent(event, selector){
+        $(selector).off(event,null);
+    }
+    /**
+     * this adds an event to a child element $(selector).on(event,child_selector,callBack);
+     * i think this might allow for a parent element with dynamic child elements?
+     * @param {string} event the name of the event
+     * @param {string} selector the parent element
+     * @param {string} child_selector the child element
+     * @param {Function} callBack what to do when event happens
+     */
     listenForEvent(event, selector, child_selector, callBack){
         $(selector).on(event,child_selector,callBack);
     }

@@ -35,7 +35,7 @@ class ColorPallet extends Collection {
     getColor(color,callBack,alpha = ""){
         // get a simple color
         this.getData(data=>{
-            if(data) callBack(data[color]+alpha);
+            if(data) callBack(data.pallet[color]+alpha);
         });
     }
     /**
@@ -53,7 +53,7 @@ class ColorPallet extends Collection {
     getColorIndex(color,index,callBack,alpha=""){
         this.getData(data=>{
             if(data){
-                callBack(data[color][index]+alpha);
+                callBack(data.pallet[color][index]+alpha);
             } 
         });
 

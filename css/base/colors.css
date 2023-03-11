@@ -12,13 +12,13 @@ html {
     --hash: lightseagreen;
     --shadow:black;
 
-    --sun: #6ca9c9;
-    --mon: #6ac46a;
-    --tue: #d1c173;
-    --wed: #d879b1;
-    --thu: #947bd8;
-    --fri: #82e587;
-    --sat: #ed8787;
+    --sun: #6ca9c9;/*#6ca9c9;*/
+    --mon: #746cc8;/*#6ac46a;*/
+    --tue: #ba6cc8;/*#d1c173;*/
+    --wed: #c86c91;/*#d879b1;*/
+    --thu: #c88c6c;/*#947bd8;*/
+    --fri: #c0c86c;/*#82e587;*/
+    --sat: #7ac86c;/*#ed8787;*/
 
     --month_1: #9933cc;
     --month_2: #990000;
