@@ -468,6 +468,19 @@ class View {
         var min = date.getMinutes()
         return (((((hours+offset)*60) + min) / (24*60))*100)+"%";
     }
+    /**
+     * Maps a time of day to the percentage of the day
+     * @param  {Date}     date    The time of day
+     * @param  {Number}   offset  The hours offset for time of day
+     * @return {Number}           The percentage of the day the time is
+     */
+    TimeToDayPercent(time,offset = 0){
+        var time_a = time.split(":");
+        var hours = Number(time_a[0]);
+        var min = Number(time_a[1]);
+        console.log("Views::TimeToDayPercent",time,offset,time_a,hours,min);
+        return (((((hours+offset)*60) + min) / (24*60))*100)+"%";
+    }
     DateTimeToTimeString(time){
         var dt = time.split(" ");
         return this.Time24to12(dt[1])+this.Time24toAM(dt[1]);
