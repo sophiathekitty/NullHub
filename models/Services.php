@@ -12,7 +12,21 @@ class Services extends clsModel {
         }
         return Services::$instance;
     }
-
+    /**
+     * load a list of instances
+     */
+    public static function AllServices(){
+        $instance = Services::GetInstance();
+        return $instance->LoadAllWhere(null,['name'=>"ASC"],['name','last_start','last_done']);
+    }
+    /**
+     * load a service by its name
+     * @param string $name the name of the service to load
+     */
+    public static function ServiceName($name){
+        $instance = Services::GetInstance();
+        return $instance->LoadWhere(['name'=>$name]);
+    }
     /**
      * start running a service
      * @param string $service_name the name of the service being tracked
