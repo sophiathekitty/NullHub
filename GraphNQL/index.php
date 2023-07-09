@@ -46,6 +46,12 @@ if(isset($_GET['models'])){
  * Get the query from the post data
  */
 function GetQuery(){
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Get the JSON data from the request body
+        $json = file_get_contents('php://input');
+        return json_decode($json,true);
+    }
+    /*
     if(count($_POST)){
         $query = [];
         foreach($_POST as $key => $value){
@@ -60,6 +66,7 @@ function GetQuery(){
             return $query;
         }
     }
+    */
     return null;    
 }
 /**

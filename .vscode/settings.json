@@ -27,5 +27,6 @@
         "vals",
         "wemo",
         "wemos"
-    ]
+    ],
+    "php.validate.executablePath": "D:/php/php.exe"
 }
