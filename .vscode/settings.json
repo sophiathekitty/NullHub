@@ -21,6 +21,8 @@
         { "icon": "json2", "extensions": ["views/json.php"], "filename": true, "format": "svg" }
     ],
     "cSpell.words": [
+        "Govee",
+        "govees",
         "pitft",
         "remaper",
         "tinytuya",

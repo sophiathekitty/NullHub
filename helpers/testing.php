@@ -3,7 +3,7 @@
 //define("DEBUG","ECHO");
 require_once("../includes/main.php");
 //echo " World\n";
-
+/*
 //$model = new clsModel();
 $data = [];
 $pallet = GenerateColorPallet("#6ca9c9",7,1);
@@ -31,6 +31,18 @@ foreach($pallet as $color){
     SetHubColor("month_$i",$color,"calendar");
 }
 $data['months'] = $pallet;
-
+*/
+//$data = GoveeAPI::DeviceList();
+//Govee::FindDevices();
+//Govee::Observe();
+/*
+$govees = GoveeLights::AllLights();
+foreach($govees as $govee){
+    $govee['target_state'] = 1;
+    Govee::SetState($govee);
+}
+*/
+if(isset($_GET['state'])) LightGroups::SetState(22,$_GET['state']);
+else LightGroups::SetState(22,1);
 OutputJson($data);
 ?>
