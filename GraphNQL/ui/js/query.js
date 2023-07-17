@@ -14,6 +14,7 @@ $(function(){
     TestPostJSON({
         "Rooms":{
             "id":"*",
+            "name":"*",
             "floor":"-1",
             "WeMoLights":{
                 "room_id":":parent:id",

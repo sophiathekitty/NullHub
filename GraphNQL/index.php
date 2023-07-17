@@ -42,6 +42,19 @@ if(isset($_GET['models'])){
     OutputJson($data);
     die();
 }
+OutputJson(NullQuery::Handle());
+die();
+
+
+
+
+
+
+// old code... that i moved to a module NullQuery
+
+
+
+
 /**
  * Get the query from the post data
  */
