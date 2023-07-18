@@ -166,4 +166,7 @@ header("Pragma: no-cache");
         <a href="/helpers/" target="_blank">helpers</a>
         <?php } ?>
     </nav>
+    <?php if(UserSession::UserLevelCheck(5)) { ?><nav>
+        <a href="#" id="show_services" target="_blank">services</a>
+    </nav><?php } ?>
 </dialog>

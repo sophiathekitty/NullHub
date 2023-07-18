@@ -6,6 +6,7 @@ class MenuController extends Controller {
     constructor(debug = true){
         if(debug) console.info("MenuController::Constructor");
         super(new MenuView(),debug);
+        this.services = new ServicesView();
     }
     /**
      * setup menu event handling
@@ -119,5 +120,43 @@ class MenuController extends Controller {
             });
             
         });
+        /**
+         * services sub menus
+         */
+        /**
+         * show services list
+         */
+        this.click("body","dialog#main_menu a#show_services",e=>{
+            if(this.debug) console.debug("MenuController::dialog#main_menu a#show_services::Click");
+            e.preventDefault();
+            this.services.show();
+        });
+
+        /**
+         * hide services list
+         */
+        this.click("body","dialog#services-list h1",e=>{
+            if(this.debug) console.debug("MenuController::dialog#services-list h1::Click");
+            e.preventDefault();
+            this.services.hide();
+        });
+        /**
+         * show service logs
+         */
+        this.click("body","dialog#services-list li a",e=>{
+            if(this.debug) console.debug("MenuController::dialog#dialog#services-list li a::Click",$(e.currentTarget).attr("service"));
+            e.preventDefault();
+            this.services.showLogs($(e.currentTarget).attr("service"));
+        });
+
+        /**
+         * hide service logs
+         */
+        this.click("body","dialog#service-logs-view h1",e=>{
+            if(this.debug) console.debug("MenuController::dialog#service-logs-view h1::Click");
+            e.preventDefault();
+            this.services.hideLogs();
+        });
+
     }
 }

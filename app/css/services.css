@@ -1,0 +1,67 @@
+dialog#services-list,
+dialog#service-logs-view {
+    position: fixed;
+    top:0px;
+    right:100%;
+    bottom: 0px;
+    background-color: var(--footer);
+    width: max-content;
+    overflow-y: auto;
+    min-height: 100vh;
+    min-width:20em;
+    border: none;
+    border-right: thin black solid;
+    padding: 0.5em 0.25em;
+    padding-bottom: 1em;
+    box-shadow: 5px 5px 5px black;
+    scrollbar-width: none;  /* Firefox */
+    color: var(--text);
+}
+dialog#services-list::-webkit-scrollbar,
+dialog#service-logs-view::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+dialog#services-list h1,
+dialog#service-logs-view h1 {
+    margin: 0.2em;
+    padding: 0em;
+    color: var(--highlight);
+}
+dialog#service-logs-view h2 {
+    margin: 0.2em;
+    padding: 0em;
+    font-size: 1.2em;
+    color: var(--null);
+}
+dialog#service-logs-view h3 {
+    margin: 0.2em;
+    padding: 0em;
+    font-size: 1.1em;
+    color: var(--null);
+}
+dialog#services-list ul,
+dialog#service-logs-view ul {
+    padding: 0.2em;
+    margin: 0.1em;
+    margin-left: auto;
+    margin-right: auto;
+    list-style: none;
+}
+dialog#services-list li,
+dialog#service-logs-view li {
+    padding: 0.2em;
+}
+dialog#services-list li:nth-child(even),
+dialog#service-logs-view li:nth-child(even) {
+    background-color: var(--list_even);
+}
+
+dialog#service-logs-view li::before{
+    display: inline-block;
+	content: attr(time);
+    font-size: 0.75em;
+    color: var(--null);
+    margin-right: 1em;
+    width: 6em;
+    text-align: right;
+}
