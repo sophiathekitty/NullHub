@@ -81,6 +81,23 @@ class FloorsController extends Controller {
      */
     refresh(){
         this.view.refresh();
+        this.view.model.getData(json=>{
+            json.rooms.forEach(room=>{
+                if(this.temperature){
+                    this.temperature.refresh(room.id);
+                }
+                if(this.displays){
+                    this.displays.display(room.id);
+                }
+                if(this.room_uses){
+                    this.room_uses.display(room.id);
+                }
+                if(this.lights){
+                    this.lights.view.charts.refresh(room.id);
+                }
+            });
+        });
+        /*
         if(this.temperature){
             this.view.model.getData(json=>{
                 json.rooms.forEach(room=>{
@@ -102,5 +119,6 @@ class FloorsController extends Controller {
                 });
             });
         }
+        */
     }
 }
