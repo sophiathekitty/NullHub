@@ -78,6 +78,24 @@ class Services extends clsModel {
         $service['logs'] .= "\n".date("H:i:s")."::".$message;
         return $services->Save($service,['name'=>$service_name]);
     }
+    /**
+     * add a warning message to the service logs
+     * @param string $service_name the name of the service being tracked
+     * @param string $message the message to add to the logs
+     * @return array save report
+     */
+    public static function Warn($service_name,$message){
+        return Services::Log($service_name,"[warn]$message");
+    }
+    /**
+     * add a warning message to the service logs
+     * @param string $service_name the name of the service being tracked
+     * @param string $message the message to add to the logs
+     * @return array save report
+     */
+    public static function Error($service_name,$message){
+        return Services::Log($service_name,"[error]$message");
+    }
 
     public $table_name = "Services";
     public $fields = [

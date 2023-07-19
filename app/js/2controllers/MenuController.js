@@ -157,6 +157,21 @@ class MenuController extends Controller {
             e.preventDefault();
             this.services.hideLogs();
         });
-
+        /**
+         * filter logs
+         */
+        this.listenForEvent("input","body","#logs_filter_input",e=>{
+            const filterText = $(e.currentTarget).val().toLowerCase();
+            $('#service-logs li').each(function() {
+                var liText = $(this).text();
+                if (liText.toLowerCase().indexOf(filterText) !== -1 || filterText == "") {
+                    // The filter text is found in this <li> element
+                    $(this).show();
+                } else {
+                    // The filter text is not found in this <li> element
+                    $(this).hide();
+                }
+            });
+        });
     }
 }

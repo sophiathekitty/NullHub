@@ -14,12 +14,12 @@ dialog#service-logs-view {
     padding: 0.5em 0.25em;
     padding-bottom: 1em;
     box-shadow: 5px 5px 5px black;
-    scrollbar-width: none;  /* Firefox */
+    scrollbar-width: none;  
     color: var(--text);
 }
 dialog#services-list::-webkit-scrollbar,
 dialog#service-logs-view::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+    display: none;  
 }
 dialog#services-list h1,
 dialog#service-logs-view h1 {
@@ -64,4 +64,31 @@ dialog#service-logs-view li::before{
     margin-right: 1em;
     width: 6em;
     text-align: right;
+}
+
+dialog#service-logs-view li[type="warn"]::before{
+    color: goldenrod;
+}
+dialog#service-logs-view li[type="error"]::before{
+    color: red;
+}
+
+dialog#service-logs-view li[type="start"]{
+    color: var(--highlight);
+}
+dialog#service-logs-view li[type="done"]{
+    color: var(--null);
+}
+dialog#service-logs-view input#logs_filter_input{
+    width: 95%;
+    background-color: var(--list_even);
+    color: var(--text);
+    padding: 0.5em;
+}
+
+dialog#services-list li[status="running"] a {
+    color: var(--null);
+}
+dialog#services-list li[status="error"] a {
+    color: var(--highlight);
 }

@@ -19,7 +19,18 @@ class ServicesLogs{
         $service['logs'] = [];
         foreach($logs as $log){
             list($time,$message) = explode("::",$log,2);
-            $service['logs'][] = ['time'=>$time,'message'=>$message];
+            $type = "log";
+            if (substr($message, 0, 7) === "[error]") {
+                $type = "error";
+                $message = substr($message, 7);
+            }
+            if (substr($message, 0, 6) === "[warn]") {
+                $type = "warning";
+                $message = substr($message, 6);
+            }
+            if($message == "Start") $type = "start";
+            if($message == "Done") $type = "done";
+            $service['logs'][] = ['time'=>$time, 'type'=>$type,'message'=>$message];
         }
         return $service;
     }

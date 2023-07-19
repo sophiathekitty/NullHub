@@ -29,7 +29,8 @@ if($start_time > $done_time){
         </li>
     </ul>
     <h3>Logs</h3>
+    <input type="text" id="logs_filter_input" placeholder="Type to filter Logs">
     <ul id="service-logs"><?php foreach($logs['logs'] as $log) {?>
-        <li time="<?=Times24ToTime12Full($log['time']);?>"><?=$log['message'];?></li>
+        <li time="<?=Times24ToTime12Full($log['time']);?>" type="<?=$log['type'];?>"><?=$log['message'];?></li>
     <?php } ?></ul>
 </dialog>
