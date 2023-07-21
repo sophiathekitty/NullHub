@@ -21,9 +21,11 @@
         { "icon": "json2", "extensions": ["views/json.php"], "filename": true, "format": "svg" }
     ],
     "cSpell.words": [
+        "Chromecasts",
         "Govee",
         "govees",
         "pitft",
+        "pychromecast",
         "remaper",
         "tinytuya",
         "tuya",
