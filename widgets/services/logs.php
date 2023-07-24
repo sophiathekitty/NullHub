@@ -7,7 +7,7 @@ $start_time = strtotime($logs['last_start']);
 $done_time = strtotime($logs['last_done']);
 if($start_time > $done_time){
     // is running? or not finishing?
-    if($start_time - $done_time > MinutesToSeconds(5)) $log_status = "error";
+    if($start_time - $done_time > MinutesToSeconds(15)) $log_status = "error";
     else $log_status = "running";
 }
 ?>
@@ -31,6 +31,6 @@ if($start_time > $done_time){
     <h3>Logs</h3>
     <input type="text" id="logs_filter_input" placeholder="Type to filter Logs">
     <ul id="service-logs"><?php foreach($logs['logs'] as $log) {?>
-        <li time="<?=Times24ToTime12Full($log['time']);?>" type="<?=$log['type'];?>"><?=$log['message'];?></li>
+        <li time="<?=Times24ToTime12Full($log['time']);?>" type="<?=$log['type'];?>"><span class="trace"><?=$log['trace'];?></span><?=$log['message'];?></li>
     <?php } ?></ul>
 </dialog>

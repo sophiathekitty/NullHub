@@ -7,7 +7,7 @@ function ServiceStatus($service){
     $done_time = strtotime($service['last_done']);
     if($start_time > $done_time){
         // is running? or not finishing?
-        if($start_time - $done_time > MinutesToSeconds(5)) $status = "error";
+        if($start_time - $done_time > MinutesToSeconds(15)) $status = "error";
         else $status = "running";
     }
     return $status;

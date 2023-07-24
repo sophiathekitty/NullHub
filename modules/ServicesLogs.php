@@ -17,6 +17,14 @@ class ServicesLogs{
         $service = Services::ServiceName($service_name);
         $logs = explode("\n",$service['logs']);
         $service['logs'] = [];
+        $service['status'] = "ok";
+        $start_time = strtotime($service['last_start']);
+        $done_time = strtotime($service['last_done']);
+        if($start_time > $done_time){
+            // is running? or not finishing?
+            if($start_time - $done_time > MinutesToSeconds(15)) $service['status'] = "error";
+            else $service['status']= "running";
+        }
         foreach($logs as $log){
             list($time,$message) = explode("::",$log,2);
             $type = "log";
@@ -30,7 +38,15 @@ class ServicesLogs{
             }
             if($message == "Start") $type = "start";
             if($message == "Done") $type = "done";
-            $service['logs'][] = ['time'=>$time, 'type'=>$type,'message'=>$message];
+            // The regex pattern
+            $pattern = '/\b(\w+(?:::\w+)+)\b/';
+            preg_match_all($pattern,$message,$matches);
+            $trace = "";
+            if(count($matches)){
+                $trace = $matches[0][0];
+                $message = substr($message, strlen($trace));
+            }
+            $service['logs'][] = ['time'=>$time, 'type'=>$type,'message'=>$message,'trace'=>$trace];
         }
         return $service;
     }

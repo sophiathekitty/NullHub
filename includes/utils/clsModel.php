@@ -417,6 +417,7 @@ class clsModel {
      */
     public function DeleteFieldValue($field,$value){
         clsDB::$db_g->_query("DELETE FROM `".$this->table_name."` WHERE `$field` = '$value';");
+        return ['sql'=>clsDB::$db_g->last_sql,'error'=>clsDB::$db_g->get_err()];
     }
     /**
      * delete all records in table and reset auto_increment

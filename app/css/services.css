@@ -92,3 +92,7 @@ dialog#services-list li[status="running"] a {
 dialog#services-list li[status="error"] a {
     color: var(--highlight);
 }
+dialog#service-logs-view li span.trace {
+    color: grey;
+    font-style: italic;
+}
