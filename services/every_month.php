@@ -8,8 +8,12 @@ define('main_already_included',true);
 Services::Log("NullHub::EveryMonth","Plugins -- start");
 foreach($plugins as $plugin){
     if(is_file($plugin."services/every_month.php")){
-        Services::Log("NullHub::EveryMonth","Plugins -- $plugin");
-        require_once($plugin."services/every_month.php");
+        try{
+            Services::Log("NullHub::EveryMonth","Plugins -- $plugin");
+            require_once($plugin."services/every_month.php");
+        } catch(Error $e){
+            Services::Error("NullHub::EveryMonth",$e->getMessage());
+        }
     }
 }
 Services::Log("NullHub::EveryMonth","Plugins -- done");
@@ -18,8 +22,12 @@ $extensions = LocalExtensions();
 Services::Log("NullHub::EveryMonth","Extensions -- start");
 foreach($extensions as $extension){
     if(is_file($root_path.$extension['local']."services/every_month.php")){
-        Services::Log("NullHub::EveryMonth","Extensions -- ".$extension['id']);
-        $info = file_get_contents($extension['path']."services/every_month.php");
+        try{
+            Services::Log("NullHub::EveryMonth","Extensions -- ".$extension['id']);
+            $info = file_get_contents($extension['path']."services/every_month.php");
+        } catch(Error $e){
+            Services::Error("NullHub::EveryMonth",$e->getMessage());
+        }
     }
 }
 Services::Log("NullHub::EveryMonth","Extensions -- done");

@@ -42,7 +42,23 @@ foreach($govees as $govee){
     Govee::SetState($govee);
 }
 */
-if(isset($_GET['state'])) LightGroups::SetState(22,$_GET['state']);
-else LightGroups::SetState(22,1);
+//if(isset($_GET['state'])) LightGroups::SetState(22,$_GET['state']);
+//else LightGroups::SetState(22,1);
+/*
+try {
+    $data = [];
+    // Code that may throw an exception or error
+    SomeCass::FakeFunction();
+} catch (Exception $e) {
+    // This block will handle exceptions of type Exception (or its subclasses)
+    $data['exception'] = "An exception occurred: " . $e->getMessage();
+} catch (Error $e) {
+    // This block will handle fatal errors, parse errors, and recoverable errors (PHP 7.0 - 7.3)
+    $data['error'] = "An error occurred: " . $e->getMessage();
+} catch (RuntimeException $e) {
+    // Represents errors that occur during runtime, often indicating programming errors or unexpected conditions.
+    $data['runtime_exception'] = "An error occurred: " . $e->getMessage();
+}
+*/
 OutputJson($data);
 ?>
