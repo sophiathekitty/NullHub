@@ -14,6 +14,7 @@ class FloorsController extends Controller {
         this.temperature = null;
         this.displays = null;
         this.room_uses = null;
+        this.light_profiles = null;
     }
     /**
      * build view and start refresh interval
@@ -75,6 +76,12 @@ class FloorsController extends Controller {
         } catch (error) {
             if(this.debug) console.warn("FloorsController::RoomsBuilt-RoomUseView not available",error);
         }
+        try {
+            this.light_profiles= new LightProfileIcon();
+            if(this.debug) console.log("FloorController::RoomsBuilt-LightProfileIcon",this.light_profiles);
+        } catch (error) {
+            if(this.debug) console.warn("FloorsController::RoomsBuilt-LightProfileIcon not available",error);
+        }
     }
     /**
      * handles refreshing the floors views
@@ -91,6 +98,9 @@ class FloorsController extends Controller {
                 }
                 if(this.room_uses){
                     this.room_uses.display(room.id);
+                }
+                if(this.light_profiles){
+                    this.light_profiles.display(room.id);
                 }
                 if(this.lights){
                     this.lights.view.charts.refresh(room.id);

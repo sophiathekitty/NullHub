@@ -1,6 +1,26 @@
 #floors .room.card .details {
     display: none;
-    flex-direction: column;
+    flex-direction: row;
+}
+#floors .room.card .details ul{
+    margin: 0.25em;
+    margin-left: 1em;
+    padding-left: 1.25em;
+    border-left: #cccccc11 thin solid;
+}
+#floors .room.card .details ul:first-of-type{
+    padding-left: 0em;
+    border-left: none;
+}
+#floors .room.card .details ul.daytime_hours::before{
+    content: 'Daytime Hours';
+}
+#floors .room.card .details ul::before{
+    display: block;
+    color: var(--list_header_text);
+    background-color: var(--list_header_back);
+    font-size: 1.1em;
+    padding: 0.25em;
 }
 
 #floors[room_id="1"] .room.card[room_id="1"] .details,

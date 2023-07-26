@@ -14,6 +14,7 @@ function printRoom($room){ global $root_path;
                     <span var="IsDayTime" val="<?=$room['IsDayTime'] ? "0" : "1";?>" title="<?=$room['IsDayTime'] ? "Is" : "Not";?> Daylight Outside"></span>
                 </span>-->
                 <span class="sensors"><?php
+                if(HasPlugin("NullLights")) echo file_get_contents("http://localhost/plugins/NullLights/widgets/room_light_profile_icon.php?room_id=".$room['id']);
                 if(HasPlugin("NullProfiles")) echo file_get_contents("http://localhost/plugins/NullProfiles/widgets/current_room_use.php?room_id=".$room['id']);
                 if(HasPlugin("NullDisplay")) echo file_get_contents("http://localhost/plugins/NullDisplay/widgets/room_displays.php?room_id=".$room['id']);
                 if(HasPlugin("NullSensors")) echo file_get_contents("http://localhost/plugins/NullSensors/widgets/room_temperature_bug.php?room_id=".$room['id']);
@@ -23,8 +24,7 @@ function printRoom($room){ global $root_path;
                 if(HasPlugin("NullLights")) echo file_get_contents("http://localhost/plugins/NullLights/widgets/room_lights.php?room_id=".$room['id']);
                 ?></div>
             <div class="details">
-                <h2>Daytime Hours</h2>
-                <ul>
+                <ul class="daytime_hours">
                     <li>
                         <span class="key">Bedtime</span>
                         <span class="val" var="bedtime" val="<?=$room['bedtime'];?>"><?=Times24ToTime12Short($room['bedtime']);?></span>
@@ -46,6 +46,7 @@ function printRoom($room){ global $root_path;
                         <span class="val" var="sunset" val="<?=$room['sunset'];?>"><?=Times24ToTime12Short($room['sunset']);?></span>
                     </li>    
                 </ul>
+                <?php if(HasPlugin("NullLights")) echo file_get_contents("http://localhost/plugins/NullLights/widgets/room_profile_widget.php?room_id=".$room['id']); ?>
             </div>
             <div class="charts"><?php    
                 if(HasPlugin("NullLights")) echo file_get_contents("http://localhost/plugins/NullLights/widgets/room_lights_charts.php?room_id=".$room['id']);
