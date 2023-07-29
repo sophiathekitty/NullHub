@@ -29,7 +29,7 @@ class Servers extends clsModel{
         ],[
             'Field'=>"hub",
             'Type'=>"varchar(100)",
-            'Null'=>"NO",
+            'Null'=>"YES",
             'Key'=>"",
             'Default'=>"",
             'Extra'=>""
@@ -265,10 +265,13 @@ class Servers extends clsModel{
             //print_r($server);
             //print_r($data);
             if($server['mac_address'] != $data['mac_address']){
+                Debug::Log("Servers::SaveServer","Server mac_address and Data mac_address don't match",$server,$data);
                 if($server['name'] != $data['name'] && $server['server'] != $data['server']) return $servers->Save($data);
                 return $servers->Save($data,['url'=>$data['url']]);
             }
-            return $servers->Save($data,['mac_address'=>$data['mac_address']]);
+            $save = $servers->Save($data,['mac_address'=>$data['mac_address']]);
+            Debug::Log("Servers::SaveServer","Save Exiting Server",$data,$save);
+            return $save;
         }
         Debug::Log("Servers::SaveServer","Save new server",$data);
         return $servers->Save($data);

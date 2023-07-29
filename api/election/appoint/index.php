@@ -11,9 +11,11 @@ if(isset($_GET['mac_address'])){
     } else {
         $data = Elections::ElectionResults($_GET['mac_address']);
         $servers = Servers::OnlineServers();
+        $data['servers'] = [];
         foreach($servers as $server){
             if($server['mac_address'] != LocalMac() && $server['type'] != "grow_manager"){
-                ServerRequests::LoadRemoteJSON($server['mac_address'],"/api/election/results/?election_results=".$_GET['mac_address']);
+                $res = ServerRequests::LoadRemoteJSON($server['mac_address'],"/api/election/results/?election_results=".$_GET['mac_address']);
+                $data['servers'][] = ['server'=>$server,'results'=>$res];
             }
         }
     }

@@ -209,12 +209,18 @@ class Elections {
         } else {
             $data['main'] = "changed";
             $main['main'] = 0;
+            //$data['main_array'] = $main;
             $res = Servers::SaveServer($main);
             $data['old_main'] = $res['row'];
+            //$data['old_main_error'] = $res['error'];
             $server = Servers::ServerMacAddress($mac_address);
             $server['main'] = 1;
+            //$data['server_array'] = $server;
             $res = Servers::SaveServer($server);
             $data['new_main'] = $res['row'];
+            //$data['new_main_error'] = $res['error'];
+            //$data['new_main_server'] = Servers::ServerMacAddress($mac_address);
+            //$data['new_get_main'] = Servers::GetMain();
             $res = Settings::SaveSettingsVar("election_stage","done");
         }
         return $data;
