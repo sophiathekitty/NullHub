@@ -18,7 +18,7 @@ class TaskManager {
             $data = json_decode($content,true);
             foreach($data['tasks'] as $task){
                 $rep = Tasks::SaveTask($task);
-                if(is_array($rep)) Services::Log("TaskManager::AutomateTask",$rep['error']);
+                if(is_array($rep) && $rep['error'] != "") Services::Error("TaskManager::AutomateTask",$rep['error']);
             }
         }
         Services::Complete("TaskManager::AutomateTask");

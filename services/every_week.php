@@ -22,7 +22,7 @@ foreach($plugins as $plugin){
         }
     }
 }
-Services::Log("NullHub::EveryWeek","nMap::Plugins -- done");
+Services::Log("NullHub::EveryWeek","Plugins -- done");
 // extensions 
 $extensions = LocalExtensions();
 Services::Log("NullHub::EveryWeek","Extensions -- start");

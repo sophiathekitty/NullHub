@@ -63,7 +63,9 @@ class RoomNeighbors extends clsModel{
      */
     public static function Neighbors($room_id){
         $rooms = RoomNeighbors::GetInstance();
-        return $rooms->LoadAllWhere(['room_id'=>$room_id]);
+        $neighbors = $rooms->LoadAllWhere(['room_id'=>$room_id]);
+        if(count($neighbors) == 0) $neighbors = $rooms->LoadAllWhere(['neighbor_id'=>$room_id]);
+        return $neighbors;
     }
     /**
      * get all the neighbors (like for syncing)
