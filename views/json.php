@@ -38,4 +38,13 @@ function JsonDie($message){
     OutputJson(["die"=>$message]);
     die();
 }
+/**
+ * die but with json output instead of just text
+ * @param string $message the last words
+ */
+function JsonError($message,$code = 500){
+    http_response_code($code);
+    OutputJson(["error"=>$message]);
+    die();
+}
 ?>
