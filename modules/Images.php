@@ -68,4 +68,20 @@ class ImageStamps {
         return $images;
     }
 }
+/**
+ * a util function that looks at a folder and returns a list of images without the extensions
+ * @param string $folder the folder to look in
+ * @return array a list of image names without the extensions
+ * @note this is used to get a list of images in a folder
+ */
+function ImageFolderToList($folder){
+    $images = [];
+    $files = scandir($folder);
+    foreach($files as $file){
+        if($file != "." && $file != ".."){
+            $images[] = substr($file,0,strrpos($file,"."));
+        }
+    }
+    return $images;
+}
 ?>

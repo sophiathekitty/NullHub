@@ -22,6 +22,13 @@ class UserSession {
         return UserSession::$user_session;
     }
     /**
+     * get user id from session data
+     */
+    public static function GetUserId(){
+        UserSession::GetUserSession();
+        return UserSession::$session['user']['id'];
+    }
+    /**
      * get the session UserSession::$session
      * @return array the session array 
      */
