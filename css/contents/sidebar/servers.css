@@ -21,15 +21,17 @@
 #servers [type="grow_manager"] a::before{
     background-image: url(/images/greenhouse.png);
 }
-#servers [type="thermometer"] a::before{
+#servers [type="pico"] a::before,
+#servers [type="thermometer"] a::before {
     background-image: url(/images/thermometer-scale.png);
 }
+#servers [type="kiosk"] a::before,
 #servers [type="display"] a::before,
 #servers [type="micro display"] a::before{
     background-image: url(/images/display-day.png);
 }
 
-#servers [offline="1"] a::after{
+#servers [online="0"] a::after{
     content: '';
     display: inline-block;
     width: 1em;
