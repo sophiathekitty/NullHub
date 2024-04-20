@@ -35,5 +35,5 @@
         "wemo",
         "wemos"
     ],
-    "php.validate.executablePath": "D:/php/php.exe"
+    "php.validate.executablePath": "C:/php/php.exe"
 }

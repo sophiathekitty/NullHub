@@ -60,5 +60,9 @@ try {
     $data['runtime_exception'] = "An error occurred: " . $e->getMessage();
 }
 */
+$data = [
+    'paths'=>LinkingRooms::FindAllPaths(),
+    'linking_rooms'=>LinkingRooms::FindAllLinkingRoomsVerbose()
+];
 OutputJson($data);
 ?>

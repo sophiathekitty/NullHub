@@ -64,7 +64,9 @@ class RoomNeighbors extends clsModel{
     public static function Neighbors($room_id){
         $rooms = RoomNeighbors::GetInstance();
         $neighbors = $rooms->LoadAllWhere(['room_id'=>$room_id]);
-        if(count($neighbors) == 0) $neighbors = $rooms->LoadAllWhere(['neighbor_id'=>$room_id]);
+        // append the neighbors that are the neighbor_id
+        $neighbors = array_merge($neighbors,$rooms->LoadAllWhere(['neighbor_id'=>$room_id]));
+        //if(count($neighbors) == 0) $neighbors = $rooms->LoadAllWhere(['neighbor_id'=>$room_id]);
         return $neighbors;
     }
     /**
