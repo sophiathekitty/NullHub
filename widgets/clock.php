@@ -28,7 +28,7 @@ header("Pragma: no-cache");
         <?php if(HasPlugin("NullWeather")) { ?><div class="current_weather" var="icon" icon="<?=$weather['icon'];?>" main="<?=$weather['main'];?>"></div><?php } ?>
     </div>
     <div var="time" unit="<?=date("a");?>"><?=date("g:i");?></div>
-    <?php if(HasPlugin("NullWeather")) { ?><div class="temp outdoors NullWeather" var="temp" unit="fahrenheit" style="color:<?=interpolateColor(Colors::GetColor("temp_".floor($weather['temp']/10)),Colors::GetColor("temp_".ceil($weather['temp']/10)),($weather['temp']/10)-floor($weather['temp']/10));?>"><?=$weather['temp'];?></div><?php } ?>
+    <?php if(HasPlugin("NullWeather")) { ?><div class="temp outdoors NullWeather" var="temp" unit="fahrenheit" style="color:<?=interpolateColor(Colors::GetColor("temp_".floor($weather['temp']/10)),Colors::GetColor("temp_".ceil($weather['temp']/10)),($weather['temp']/10)-floor($weather['temp']/10));?>"><?=round($weather['temp']);?></div><?php } ?>
     <div var="day_of_week"><?=date("D");?></div>
     <div class="slideshow" var="date"><?=date("M j, Y");?></div>
     <div class="slideshow" var="sunrise" unit=""><?=Times24ToTime12Short(Settings::LoadSettingsVar("sunrise_txt","6:00"))?></div>

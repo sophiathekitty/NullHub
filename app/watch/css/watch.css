@@ -1,0 +1,68 @@
+body.watch
+{
+    margin: 0px;
+    padding: 0px;
+}
+.watch .clock
+{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+}
+.watch .clock .sky 
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 96vw;
+    height: 96vh;
+    border-radius: 100%;
+    border-width: 2vh;
+    z-index: 1;
+}
+.watch .clock [var="time"]
+{
+    position: absolute;
+    top: 25vh;
+    left: 0px;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30vh;
+    z-index: 2;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+    text-shadow: 5px 5px 10px black;
+}
+.watch .clock [var="time"]::after{
+    font-size: 0.25em;
+}
+.watch .clock .NullWeather.outdoors[var="temp"]
+{
+    position: absolute;
+    top: 50vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20vh;
+    z-index: 2;
+}
+.watch .clock .indoors[var="temp"]
+{
+    position: absolute;
+    top: 10vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15vh;
+    z-index: 2;
+}
+.watch .clock .temp_chart.simple.NullWeather,
+.watch .clock .indoors.NullSensors[var="hum"]
+{
+    display: none;
+}

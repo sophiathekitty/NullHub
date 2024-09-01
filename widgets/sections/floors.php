@@ -47,6 +47,10 @@ function printRoom($room){ global $root_path;
                     </li>    
                 </ul>
                 <?php if(HasPlugin("NullLights")) echo file_get_contents("http://localhost/plugins/NullLights/widgets/room_profile_widget.php?room_id=".$room['id']); ?>
+                <?php if(HasPlugin("NullProfiles")) {
+                    echo "<span class=\"room-use-details\">";
+                    echo file_get_contents("http://localhost/plugins/NullProfiles/widgets/active_room_use.php?room_id=".$room['id']);
+                    echo "</span>"; } ?>
             </div>
             <div class="charts"><?php    
                 if(HasPlugin("NullLights")) echo file_get_contents("http://localhost/plugins/NullLights/widgets/room_lights_charts.php?room_id=".$room['id']);

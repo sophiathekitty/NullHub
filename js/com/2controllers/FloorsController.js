@@ -14,6 +14,7 @@ class FloorsController extends Controller {
         this.temperature = null;
         this.displays = null;
         this.room_uses = null;
+        this.room_use_info = null;
         this.light_profiles = null;
     }
     /**
@@ -77,6 +78,12 @@ class FloorsController extends Controller {
             if(this.debug) console.warn("FloorsController::RoomsBuilt-RoomUseView not available",error);
         }
         try {
+            this.room_use_info = new RoomUseInfoView();
+            if(this.debug) console.log("FloorController::RoomsBuilt-RoomUseInfoView",this.room_use_info);
+        } catch (error) {
+            if(this.debug) console.warn("FloorsController::RoomsBuilt-RoomUseInfoView not available",error);
+        }
+        try {
             this.light_profiles= new LightProfileIcon();
             if(this.debug) console.log("FloorController::RoomsBuilt-LightProfileIcon",this.light_profiles);
         } catch (error) {
@@ -98,6 +105,9 @@ class FloorsController extends Controller {
                 }
                 if(this.room_uses){
                     this.room_uses.display(room.id);
+                }
+                if(this.room_use_info){
+                    this.room_use_info.display(room.id);
                 }
                 if(this.light_profiles){
                     this.light_profiles.display(room.id);
